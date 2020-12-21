@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Flex,
@@ -19,7 +20,7 @@ import {
 import { Link as RLink } from 'react-router-dom';
 import FoodTruckImg from '../../assets/foodTruck.jpg';
 
-export default function FavListItem() {
+export default function FavListItem({ deets }) {
   return (
     <ListItem
       padding="1.25rem 1.875rem"
@@ -32,7 +33,7 @@ export default function FavListItem() {
         <Flex flex="1" maxW="250px" pos="relative">
           <Link
             as={RLink}
-            to="/"
+            to={`/truck/${deets.id}`}
             w="100%"
             h="100%"
             display="inline-block"
@@ -41,8 +42,8 @@ export default function FavListItem() {
             zIndex="10"
           >
             <Image
-              src={FoodTruckImg}
-              alt="test"
+              src={deets.hero_image || FoodTruckImg}
+              alt={deets.name}
               objectFit="cover"
               w="100%"
               h="100%"
@@ -68,7 +69,7 @@ export default function FavListItem() {
               m="0"
               lineHeight="1.5rem"
             >
-              Truck Title Goes here
+              {deets.name}
             </Heading>
             {/* TYPE */}
             <Flex
@@ -79,7 +80,7 @@ export default function FavListItem() {
               color="#808080"
             >
               <FaHamburger style={{ marginRight: '.5rem' }} />
-              Truck Category
+              {deets.cuisine_type}
             </Flex>
             {/* LOCATION */}
             <Flex
@@ -90,9 +91,9 @@ export default function FavListItem() {
               color="#808080"
             >
               <FaMapPin style={{ marginRight: '.5rem' }} />
-              City, State
+              {deets.address}
             </Flex>
-            {/* Phone? */}
+            {/* Phone?
             <Flex
               direction="row"
               alignItems="center"
@@ -102,7 +103,7 @@ export default function FavListItem() {
             >
               <FaPhone style={{ marginRight: '.5rem' }} />
               Phone
-            </Flex>
+            </Flex> */}
             {/* REVIEWS */}
             <Flex
               direction="row"
@@ -136,8 +137,7 @@ export default function FavListItem() {
               lineHeight="1.25rem"
               textColor="#848484"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-              in pulvinar neque. Nulla finibus lobortis pulvinar.
+              {deets.description}
             </Text>
           </Box>
         </Flex>
