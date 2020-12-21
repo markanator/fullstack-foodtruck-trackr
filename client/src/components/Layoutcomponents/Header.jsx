@@ -34,10 +34,12 @@ import React from 'react';
 import { FaPizzaSlice, FaTruck } from 'react-icons/fa';
 import { Link as RLink, useHistory } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
+import { useQueryClient } from 'react-query';
 import { useUserContext } from '../../context/UserContext';
 import { isLoggedIn } from '../../utils/isLoggedIn';
 import { LoginSchema } from '../../Forms/Schemas/LoginSchema';
 import { SignUpSchema } from '../../Forms/Schemas/SignUpSchema';
+import { useLoginMutation } from '../../RQ/mutations/useLoginMutation';
 
 export default function Header() {
   let RightSide;
@@ -67,30 +69,33 @@ export default function Header() {
             Add Listing
           </Button>
         )}
-        <Menu>
+        <Menu zIndex={999}>
           <MenuButton as={Button} colorScheme="red">
             Dashboard
           </MenuButton>
-          <MenuList>
+          <MenuList zIndex={999}>
             <MenuGroup
               textAlign="left"
               title={`Sign in as: ${userState.userInfo.username}`}
+              zIndex={999}
             >
               <MenuItem
                 as={RLink}
                 to={`/dashboard/${userState.userInfo.username}`}
+                zIndex={999}
               >
                 Dashboard
               </MenuItem>
               <MenuItem
                 as={RLink}
                 to={`/dashboard/${userState.userInfo.username}/settings`}
+                zIndex={999}
               >
                 Settings
               </MenuItem>
             </MenuGroup>
             <MenuDivider />
-            <MenuItem>Logout</MenuItem>
+            <MenuItem zIndex={999}>Logout</MenuItem>
           </MenuList>
         </Menu>
       </>
@@ -115,7 +120,7 @@ export default function Header() {
   }
 
   return (
-    <Flex as="header" w="full" py=".5rem" boxShadow="md" zIndex="10">
+    <Flex as="header" w="full" py=".5rem" boxShadow="md" zIndex={10}>
       <Container m="auto" w="full" maxW="7xl">
         <Center direction="row" w="full">
           <Box w="20%">
@@ -141,7 +146,7 @@ export default function Header() {
               Mark's Portfolio
             </Link>
           </Box>
-          <Box w="40%" textAlign="right">
+          <Box w="40%" textAlign="right" zIndex={10}>
             {RightSide}
           </Box>
         </Center>
@@ -154,14 +159,16 @@ const LoginBtnModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useHistory();
   const { setUserState } = useUserContext();
+  const queryClient = useQueryClient();
+
+  const { mutate } = useLoginMutation();
 
   function onSubmit(values) {
-    Axios.post(`${process.env.REACT_APP_HOSTED_BACKEND}/user/auth/login`, {
-      ...values,
-      email: values.email,
-    })
-      .then(({ data }) => {
-        // console.log(data);
+    mutate(values, {
+      onError: (error) => {
+        console.log(error.response);
+      },
+      onSuccess: ({ data }) => {
         window.localStorage.setItem('token', data.token);
         setUserState({
           isLoggedIn: true,
@@ -170,10 +177,11 @@ const LoginBtnModal = () => {
           },
           token: data.token,
         });
-        // push user
+        queryClient.setQueryData('user', data.user);
+        // push them
         router.push(`/dashboard/${data.user.username}`);
-      })
-      .catch((err) => console.error(err));
+      },
+    });
   }
 
   return (

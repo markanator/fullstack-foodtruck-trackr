@@ -12,6 +12,7 @@ import UserProvider from './context/UserContext';
 import ListingsPage from './pages/ListingsPage';
 import TruckDetails from './pages/TruckDetails';
 import CreateTruckForm from './pages/CreateTruckForm';
+import UserSettingsPage from './pages/UserSettingsPage';
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,9 @@ const App = () => (
           </Route>
           <PrivateRoute exact path="/dashboard/:username">
             <Dashboard />
+          </PrivateRoute>
+          <PrivateRoute exact path="/dashboard/:username/settings">
+            <UserSettingsPage />
           </PrivateRoute>
           <PrivateRoute path="/add-truck">
             <CreateTruckForm />
