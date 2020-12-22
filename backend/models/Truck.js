@@ -26,6 +26,7 @@ const findById = (id) => {
       "cuisine_type",
       "price_range",
       "address",
+      "views",
       "arrival_time",
       "departure_time",
       "operator_id",
@@ -47,6 +48,7 @@ const fetchAll = () => {
     "cuisine_type",
     "price_range",
     "address",
+    "views",
     "arrival_time",
     "departure_time",
     "operator_id",
@@ -66,6 +68,13 @@ const update = async (id, truckData, {lng, lat}) => {
 
   return findById(id);
 };
+
+const addPagevisited = async (truckID) => {
+  const truck = await findById(truckID);
+  await db("trucks").update({views: truck.views + 1}).where({id: truckID});
+
+  return true;
+}
 
 
 const find = (params) => {
@@ -92,5 +101,6 @@ module.exports = {
   update,
   insert,
   remove,
-  fetchAll
+  fetchAll,
+  addPagevisited,
 }

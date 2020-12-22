@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const addFavoritesAndOwned = require("../utils/addFavoritesAndOwned");
+const addTotalTruckViews = require("../utils/addTotalViews");
 const createToken = require("../utils/createToken");
 // const addTruckRatings = require("../utils/addTruckRatings");
 // const addMenuItems = require("../utils/addMenuItems");
@@ -21,7 +22,7 @@ const loginUser = async (req, res) => {
   try {
     const token = await createToken(req.user);
     delete req.user.password;
-    // await addFavoritesAndOwned(req.user);
+    await addFavoritesAndOwned(req.user);
     return res.status(200).json({ user: req.user, token });
   } catch (error) {
     console.log(error);
@@ -31,6 +32,7 @@ const loginUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   delete req.user.password;
+  await addTotalTruckViews(req.user);
   await addFavoritesAndOwned(req.user);
   return res.status(200).json(req.user);
 };

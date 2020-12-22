@@ -10,6 +10,7 @@ exports.up = function (knex) {
     tbl.datetime("arrival_time");
     tbl.datetime("departure_time");
     tbl.string("address");
+    tbl.integer("views").default(0);
     //! FIRST: CREATE EXTENSION postgis;
     // geolocation storing
     tbl.specificType("coordinates", "geometry(point, 4326)");

@@ -59,6 +59,19 @@ const getTruckById = async (req, res) => {
   }
 };
 
+const addPageview = async (req,res) => {
+  try {
+    await Truck.addPagevisited(req.params.id);
+
+    return res.status(200).json({
+      message: "Success",
+    });
+  }
+  catch(err){
+    return res.status(500).json({error: err.message});
+  }
+}
+
 const editTruck = async (req, res) => {
   try {
     if (req.user.id !== req.truck.operator_id){
@@ -188,4 +201,5 @@ module.exports = {
   addFoodToTruck,
   deleteFood,
   editFood,
+  addPageview,
 };

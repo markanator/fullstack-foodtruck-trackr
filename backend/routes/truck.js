@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.get("/", TruckController.getTrucks);
 router.get("/:id", [validateTruck], TruckController.getTruckById);
+router.get("/visited/:id", TruckController.addPageview);
 
 
 router.use(validateToken);
