@@ -7,10 +7,11 @@ const editTruckRequirements = require("../middleware/editTruckRequirements");
 const createMenuItemRequirements = require("../middleware/createMenuItemRequirements");
 const validateFood = require("../middleware/validateFood");
 const editFoodItemRequirements = require("../middleware/editFoodItemRequirements");
+const paginatedTruckResults = require("../middleware/paginatedResults");
 
 const router = express.Router();
 
-router.get("/", TruckController.getTrucks);
+router.get("/",paginatedTruckResults(), TruckController.getTrucks);
 router.get("/search", TruckController.search);
 router.get("/:id", [validateTruck], TruckController.getTruckById);
 router.get("/visited/:id", TruckController.addPageview);

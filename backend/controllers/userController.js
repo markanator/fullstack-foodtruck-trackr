@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
     const user = await User.insert(req.body);
     const token = await createToken(user);
     delete user.password;
-    // await addFavoritesAndOwned(user);
+    await addFavoritesAndOwned(user);
     return res.status(201).json({ user, token });
   } catch (error) {
     console.log(error);

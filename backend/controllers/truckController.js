@@ -25,12 +25,12 @@ const addTruck = async (req, res) => {
 
 const getTrucks = async (req, res) => {
   try {
-    const trucks = await Truck.fetchAll();
-    const user_id = req.user ? req.user.id : null;
-    await addTruckRatings(trucks, user_id);
-    await addMenuItems(trucks);
+    // const trucks = await Truck.fetchAll();
+    // const user_id = req.user ? req.user.id : null;
+    // await addTruckRatings(trucks, user_id);
+    // await addMenuItems(trucks);
 
-    return res.status(200).json(trucks);
+    return res.status(200).json(res.paginatedResults);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Server is malfunctioning" });
