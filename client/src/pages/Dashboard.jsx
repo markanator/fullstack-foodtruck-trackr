@@ -1,29 +1,20 @@
-import { Box, Container, Flex, Heading, List, Text } from '@chakra-ui/react';
+import { Box, Container, Flex, Heading, List } from '@chakra-ui/react';
 import React from 'react';
 import {
+  FaChartLine,
   FaListUl,
   FaMapMarkerAlt,
-  FaChartLine,
   FaRegUser,
 } from 'react-icons/fa';
-import Axios from 'axios';
-import { useQuery } from 'react-query';
+import DEFIMG from '../assets/random_street.jpg';
+import DashStatCard from '../components/Dashboard/DashStatCard';
 // locals
 import FavListItem from '../components/Dashboard/FavListItem';
 import Layout from '../components/Layout';
-import DEFIMG from '../assets/random_street.jpg';
-import DashStatCard from '../components/Dashboard/DashStatCard';
+import { useGetSelfQuery } from '../RQ/query/useGetSelfQuery';
 
 const Dashboard = () => {
-  const token = localStorage.getItem('token');
-
-  const { data, isLoading, isError } = useQuery('user', () =>
-    Axios.get(`${process.env.REACT_APP_HOSTED_BACKEND}/user`, {
-      headers: {
-        Authorization: token,
-      },
-    }).then((resp) => resp.data)
-  );
+  const { data, isLoading, isError } = useGetSelfQuery();
 
   if (isLoading) {
     return (
@@ -131,13 +122,13 @@ const Dashboard = () => {
               />
               <DashStatCard
                 color="#f39f00"
-                number={0}
+                number={data.totalTruckViews}
                 text="Total Views"
                 Icon={FaChartLine}
               />
               <DashStatCard
                 color="#002758"
-                number={0}
+                number={data.totalTruckReviews}
                 text="Total Reviews"
                 Icon={FaRegUser}
               />
@@ -166,8 +157,11 @@ const Dashboard = () => {
                   : 'My Favorites'}
               </Heading>
               <List backgroundColor="white" borderRadius="0 0 4px 4px">
-                {trucks.map((truck) => (
-                  <FavListItem key={truck.name} deets={truck} />
+                {trucks.map((truck, idx) => (
+                  <FavListItem
+                    key={`truck-${truck.name}-${idx}`}
+                    deets={truck}
+                  />
                 ))}
               </List>
             </Box>

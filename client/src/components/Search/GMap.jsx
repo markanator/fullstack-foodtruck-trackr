@@ -78,18 +78,14 @@ export function Locate({ panTo }) {
 }
 
 //! MAIN FUNCTION
-export default function GMap() {
+export default function GMap({ trucks }) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
     libraries,
   });
-  const {
-    data: truckData,
-    isError,
-    isLoading: trucksLoading,
-  } = useTrucksQuery();
-
   const [selected, setSelected] = useState(null);
+  // fetch trucks
+  // const { data } = useTrucksQuery();
 
   // retain state without causing rerender
   const mapRef = React.useRef();
@@ -105,6 +101,11 @@ export default function GMap() {
 
   if (loadError) return <p>Error Loading Map</p>;
   if (!isLoaded) return <p>Loading Map</p>;
+
+  // react query data renamed to truck
+  // const { trucks } = data;
+
+  // console.log('maps trucks', trucks);
 
   return (
     <Box w="full" h="full">
@@ -122,10 +123,10 @@ export default function GMap() {
         <SearchBar panTo={panTo} />
         <Locate panTo={panTo} />
         {/* asdasda */}
-        {truckData &&
-          truckData.map((truck) => (
+        {trucks &&
+          trucks.map((truck, idx) => (
             <Marker
-              key={truck.name}
+              key={truck.name + idx}
               position={{
                 lat: truck.latitude,
                 lng: truck.longitude,

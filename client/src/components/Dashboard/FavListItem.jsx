@@ -9,13 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
-import {
-  FaHamburger,
-  FaMapPin,
-  FaPhone,
-  FaStar,
-  FaStarHalf,
-} from 'react-icons/fa';
+import { FaHamburger, FaMapPin, FaStar, FaStarHalf } from 'react-icons/fa';
 
 import { Link as RLink } from 'react-router-dom';
 import FoodTruckImg from '../../assets/foodTruck.jpg';
@@ -60,17 +54,21 @@ export default function FavListItem({ deets }) {
             top=".5rem"
             verticalAlign="top"
           >
-            <Heading
-              as="h3"
-              fontSize="1.25rem"
-              bottom="2px"
-              pos="relative"
-              fontWeight="600"
-              m="0"
-              lineHeight="1.5rem"
-            >
-              {deets.name}
-            </Heading>
+            <Link as={RLink} to={`/truck/${deets.id}`} display="inline-flex">
+              <Heading
+                as="h3"
+                display="inherit"
+                w="auto"
+                fontSize="1.25rem"
+                bottom="2px"
+                pos="relative"
+                fontWeight="600"
+                m="0"
+                lineHeight="1.5rem"
+              >
+                {deets.name}
+              </Heading>
+            </Link>
             {/* TYPE */}
             <Flex
               direction="row"

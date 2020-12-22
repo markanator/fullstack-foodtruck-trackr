@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-lone-blocks */
 import {
   Box,
   Button,
+  ButtonGroup,
   Container,
   Flex,
   Menu,
@@ -10,8 +12,9 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
+import { useQueryClient } from 'react-query';
 // locals
 import Layout from '../components/Layout';
 import GMap from '../components/Search/GMap';
@@ -20,9 +23,20 @@ import { useTrucksQuery } from '../RQ/query/useTrucksQuery';
 import NewsletterSection from '../components/NewsletterSection';
 
 export default function ListingsPage() {
-  const { data: truckList, isLoading, isError } = useTrucksQuery();
+  const queryClient = useQueryClient();
+  const [page, setPage] = useState(1);
+  // fetch trucks
+  const { data: trucks, isLoading, isError } = useTrucksQuery(page);
+  // fetch cached pageInfo that was set above
+  const info = queryClient.getQueryData('pageInfo');
 
-  // console.log('render');
+  const handleNextClick = useCallback(() => {
+    setPage((old) => old + 1);
+  }, []);
+  const handlePrevClick = useCallback(() => {
+    setPage((old) => old - 1);
+  }, []);
+  console.log('render');
   return (
     <Layout>
       <Flex direction="column">
@@ -34,7 +48,7 @@ export default function ListingsPage() {
           direction="column"
         >
           {/* MAP & SEARCH */}
-          <GMap />
+          <GMap trucks={trucks} />
         </Flex>{' '}
         <Container maxW="6xl">
           {/* FILTERING */}
@@ -104,16 +118,41 @@ export default function ListingsPage() {
             </Box>
           </Flex>
           {/* LISTINGS */}
-          <Box mx="-1rem" className="row" mb="4rem">
-            {isLoading ? <Text>Loading...</Text> : null}
-            {isError ? (
+          <Box mx="-1rem" className="row" mb="2rem">
+            {isLoading ? (
+              <Text>Loading...</Text>
+            ) : isError ? (
               <Text>Oops, an error occured try again later...</Text>
-            ) : null}
-            {truckList &&
-              truckList.map((truck, idx) => (
+            ) : trucks ? (
+              trucks.map((truck, idx) => (
                 <TruckListingCard key={`${idx}-${truck.slug}`} info={truck} />
-              ))}
+              ))
+            ) : null}
           </Box>
+          {/* PAGINATIONS */}
+          <Flex
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            mb="4rem"
+          >
+            <ButtonGroup isAttached mx="auto">
+              <Button
+                size="lg"
+                disabled={info?.prev === null}
+                onClick={handlePrevClick}
+              >
+                Prev
+              </Button>
+              <Button
+                size="lg"
+                disabled={info?.next === null}
+                onClick={handleNextClick}
+              >
+                Next
+              </Button>
+            </ButtonGroup>
+          </Flex>
         </Container>
       </Flex>
       {/* SEND EMAIL */}
