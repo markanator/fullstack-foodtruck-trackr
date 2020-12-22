@@ -27,11 +27,11 @@ import { useFetchTruckDetails } from '../RQ/query/useFetchTruckDetails';
 //! MAIN EXPORT PAGE
 export default function TruckDetails() {
   const { truckID } = useParams();
-  const [truck, setTruck] = useState({});
+  // const [truck, setTruck] = useState({});
   // const queryClient = useQueryClient();
 
   // react query fetch
-  const { isLoading, isError } = useFetchTruckDetails(truckID, setTruck);
+  const { isLoading, isError, data: truck } = useFetchTruckDetails(truckID);
 
   useEffect(() => {
     async function addPageView() {
@@ -68,8 +68,6 @@ export default function TruckDetails() {
             <MainDetailsCard truck={truck} />
             {/* DESCRIPTION */}
             <TruckSocials truck={truck} />
-            {/* TAGS */}
-            <TruckTags />
             {/* MENU ITEMS  */}
             <TruckMenuList list={truck.foodItems} />
           </Flex>
@@ -168,7 +166,13 @@ export default function TruckDetails() {
                   }}
                 >
                   Arrive
-                  <Box>09:00 AM - 09:00 PM</Box>
+                  <Box>
+                    {`${new Date(
+                      truck.arrival_time
+                    ).toLocaleDateString()} @ ${new Date(
+                      truck.arrival_time
+                    ).toLocaleTimeString()}`}
+                  </Box>
                 </ListItem>
                 <ListItem
                   display="inline-flex"
@@ -187,7 +191,11 @@ export default function TruckDetails() {
                   }}
                 >
                   Depart
-                  <Box>09:00 AM - 09:00 PM</Box>
+                  <Box>{`${new Date(
+                    truck.departure_time
+                  ).toLocaleDateString()} @ ${new Date(
+                    truck.departure_time
+                  ).toLocaleTimeString()}`}</Box>
                 </ListItem>
               </List>
             </Box>

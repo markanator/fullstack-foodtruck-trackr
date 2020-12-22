@@ -125,7 +125,7 @@ export default function Header() {
     <Flex as="header" w="full" py=".5rem" boxShadow="md" zIndex={10}>
       <Container m="auto" w="full" maxW="7xl">
         <Center direction="row" w="full">
-          <Box w="20%">
+          <Box w="50%">
             <Link as={RLink} to="/" textDecoration="none" color="#ff0129">
               {/* <img src={logo} alt="site" height={38} width={142} /> */}
               <Text fontSize="1.5rem" fontWeight="700" color="#ff0129">
@@ -133,22 +133,7 @@ export default function Header() {
               </Text>
             </Link>
           </Box>
-          <Box w="40%">
-            {/* <Link as={RLink} to="/" mr="4rem">
-              HOME
-            </Link> */}
-            <Link
-              href="https://github.com/markanator/foodtrucktrackr-frontend"
-              isExternal
-              mr="1rem"
-            >
-              Project Github
-            </Link>
-            <Link href="https://markambrocio.com" isExternal>
-              Mark's Portfolio
-            </Link>
-          </Box>
-          <Box w="40%" textAlign="right" zIndex={10}>
+          <Box w="50%" textAlign="right" zIndex={10}>
             {RightSide}
           </Box>
         </Center>

@@ -26,7 +26,7 @@ export default function TruckSocials({ truck }) {
         <Button colorScheme="twitter" leftIcon={<FaTwitter />}>
           Twitter
         </Button>
-        <Button background="#e1306c" color="white" leftIcon={<FaInstagram />}>
+        <Button colorScheme="pink" leftIcon={<FaInstagram />}>
           Instagram
         </Button>
         <Button
