@@ -8,6 +8,10 @@ const findByTruckId = (truck_id) => {
   return db("truck_ratings").where({ truck_id });
 };
 
+const findRatingsByUserID = (user_id) => {
+  return db("truck_ratings").where({ user_id });
+}
+
 const insert = (user_id, truck_id, rating) => {
   return db("truck_ratings")
     .insert({ user_id, truck_id, rating })
@@ -23,4 +27,5 @@ module.exports = {
   findByTruckId,
   insert,
   update,
+  findRatingsByUserID,
 };

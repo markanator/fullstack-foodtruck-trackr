@@ -189,6 +189,24 @@ const rateTruck = async (req, res) => {
   }
 };
 
+const search = async (req,res) => {
+  try {
+    // search using queries
+    const trucks = await Truck.SearchByQuery(req.query);
+    // add to results
+    const user_id = req.user ? req.user.id : null;
+    await addTruckRatings(trucks, user_id);
+    await addMenuItems(trucks);
+    // return search results
+    return res.status(200).json(trucks);
+  }
+  catch(err) {
+    console.log(err);
+  }
+
+
+}
+
 module.exports = {
   addTruck,
   getTrucks,
@@ -202,4 +220,5 @@ module.exports = {
   deleteFood,
   editFood,
   addPageview,
+  search,
 };

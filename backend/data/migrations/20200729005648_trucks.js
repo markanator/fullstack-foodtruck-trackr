@@ -9,6 +9,7 @@ exports.up = function (knex) {
     tbl.string("price_range");
     tbl.datetime("arrival_time");
     tbl.datetime("departure_time");
+    tbl.datetime("created_at").notNullable().defaultTo(knex.fn.now());
     tbl.string("address");
     tbl.integer("views").default(0);
     //! FIRST: CREATE EXTENSION postgis;

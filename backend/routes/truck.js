@@ -11,6 +11,7 @@ const editFoodItemRequirements = require("../middleware/editFoodItemRequirements
 const router = express.Router();
 
 router.get("/", TruckController.getTrucks);
+router.get("/search", TruckController.search);
 router.get("/:id", [validateTruck], TruckController.getTruckById);
 router.get("/visited/:id", TruckController.addPageview);
 

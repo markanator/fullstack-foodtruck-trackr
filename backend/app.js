@@ -13,7 +13,7 @@ server.use("/user", UserRouter);
 server.use("/trucks", TruckRouter);
 
 server.get("/", (req, res) => {
-  res.status(200).json({ serverStatus: "Working" });
+  res.status(200).json({ message: "Server up." });
 });
 
 module.exports = server;

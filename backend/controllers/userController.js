@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const addFavoritesAndOwned = require("../utils/addFavoritesAndOwned");
+const addTotalTruckReviews = require("../utils/addTotalTruckReviews");
 const addTotalTruckViews = require("../utils/addTotalViews");
 const createToken = require("../utils/createToken");
 // const addTruckRatings = require("../utils/addTruckRatings");
@@ -33,6 +34,7 @@ const loginUser = async (req, res) => {
 const getUser = async (req, res) => {
   delete req.user.password;
   await addTotalTruckViews(req.user);
+  await addTotalTruckReviews(req.user);
   await addFavoritesAndOwned(req.user);
   return res.status(200).json(req.user);
 };

@@ -54,6 +54,7 @@ const fetchAll = () => {
     "operator_id",
     st.x("coordinates").as("longitude"),
     st.y("coordinates").as("latitude"))
+    .orderBy("id", "desc")
     .limit(9);
 }
 
@@ -77,27 +78,53 @@ const addPagevisited = async (truckID) => {
 }
 
 
-const find = (params) => {
-  const query = db("trucks as t");
+const SearchByQuery = (searchQ) => {
+  console.log("ATTEMPTING SEARCH");
+  const query = db("trucks as t").select(
+    "id",
+    "name",
+    "slug",
+    "hero_image",
+    "description",
+    "cuisine_type",
+    "price_range",
+    "address",
+    "views",
+    "arrival_time",
+    "departure_time",
+    "operator_id",
+    st.x("coordinates").as("longitude"),
+    st.y("coordinates").as("latitude"));
 
-  if (params.isOpen === "true") {
-    const date = new Date();
-    const minutes = date.getHours() * 60 + date.getMinutes();
-    query
-      .where("t.arrival_time", "<", minutes)
-      .andWhere("t.departure_time", ">", minutes);
-  }
-  if (params.operatorId) {
-    console.log("TRUCK owner RUNNING");
-    query.where("t.operator_id", + params.operatorId);
-  }
+    if (searchQ.category) {
+      console.log("🔎 SEARCH FOR:::", searchQ.category);
+      query.where("t.cuisine_type","=", searchQ.category)
+    }
+
+    if (searchQ.sort && searchQ.sortType) {
+      console.log("🔎 SORTED:::", searchQ.sort, searchQ.sortType);
+      let searchParam;
+      switch(searchQ.sort){
+        case "name":
+          searchParam = "name"
+          break;
+        case "id":
+          searchParam = "id"
+          break;
+        default:
+          searchParam = "name";
+          break
+      }
+      query.orderBy(`t.${searchParam}`,`${searchQ.sortType}`)
+    }
+
   return query;
 };
 
 
 module.exports = {
   findById,
-  find,
+  SearchByQuery,
   update,
   insert,
   remove,
