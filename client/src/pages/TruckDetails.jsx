@@ -22,29 +22,16 @@ import TruckHeroImage from '../components/TruckDetails/TruckHeroImage';
 import TruckMenuList from '../components/TruckDetails/TruckMenuList';
 import TruckSocials from '../components/TruckDetails/TruckSocials';
 import TruckTags from '../components/TruckDetails/TruckTags';
+import { useFetchTruckDetails } from '../RQ/query/useFetchTruckDetails';
 
 //! MAIN EXPORT PAGE
 export default function TruckDetails() {
   const { truckID } = useParams();
   const [truck, setTruck] = useState({});
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   // react query fetch
-  const { isLoading, isError } = useQuery(
-    ['truck', parseInt(truckID)],
-    async () =>
-      Axios.get(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/${truckID}`
-      ).then((res) => res.data),
-    {
-      onSuccess: (data) => {
-        setTruck({ ...data });
-      },
-      onError: (err) => {
-        console.log(err);
-      },
-    }
-  );
+  const { isLoading, isError } = useFetchTruckDetails(truckID, setTruck);
 
   useEffect(() => {
     async function addPageView() {

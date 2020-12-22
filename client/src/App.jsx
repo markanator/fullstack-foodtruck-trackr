@@ -13,6 +13,7 @@ import ListingsPage from './pages/ListingsPage';
 import TruckDetails from './pages/TruckDetails';
 import CreateTruckForm from './pages/CreateTruckForm';
 import UserSettingsPage from './pages/UserSettingsPage';
+import EditTruck from './pages/EditTruck';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,9 @@ const App = () => (
           </PrivateRoute>
           <PrivateRoute path="/add-truck">
             <CreateTruckForm />
+          </PrivateRoute>
+          <PrivateRoute path="/edit-truck/:id">
+            <EditTruck />
           </PrivateRoute>
           <Route path="/search-trucks">
             <ListingsPage />

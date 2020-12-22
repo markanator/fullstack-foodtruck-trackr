@@ -1,18 +1,35 @@
 /* eslint-disable react/prop-types */
 import {
   Box,
+  Button,
   Flex,
   Heading,
   Image,
   Link,
   ListItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
+import Axios from 'axios';
 import React from 'react';
-import { FaHamburger, FaMapPin, FaStar, FaStarHalf } from 'react-icons/fa';
-
+import {
+  FaHamburger,
+  FaMapPin,
+  FaStar,
+  FaStarHalf,
+  FaTrashAlt,
+} from 'react-icons/fa';
 import { Link as RLink } from 'react-router-dom';
+// locals
 import FoodTruckImg from '../../assets/foodTruck.jpg';
+import { useOwnerDeleteTruck } from '../../RQ/mutations/useOwnerDeleteTruck';
 
 export default function FavListItem({ deets }) {
   return (
@@ -40,7 +57,7 @@ export default function FavListItem({ deets }) {
               alt={deets.name}
               objectFit="cover"
               w="100%"
-              h="100%"
+              h="150px"
               rounded=".5rem"
               boxShadow="lg"
             />
@@ -75,7 +92,7 @@ export default function FavListItem({ deets }) {
               alignItems="center"
               m=".125rem"
               verticalAlign="sub"
-              color="#808080"
+              textColor="gray.500"
             >
               <FaHamburger style={{ marginRight: '.5rem' }} />
               {deets.cuisine_type}
@@ -86,7 +103,7 @@ export default function FavListItem({ deets }) {
               alignItems="center"
               m=".125rem"
               verticalAlign="sub"
-              color="#808080"
+              textColor="gray.500"
             >
               <FaMapPin style={{ marginRight: '.5rem' }} />
               {deets.address}
@@ -108,7 +125,7 @@ export default function FavListItem({ deets }) {
               alignItems="center"
               mt=".25rem"
               verticalAlign="sub"
-              color="#808080"
+              color="yellow.400"
             >
               <FaStar />
               <FaStar style={{ marginLeft: '.5rem' }} />
@@ -133,14 +150,71 @@ export default function FavListItem({ deets }) {
               mt="5px"
               fontSize="1rem"
               lineHeight="1.25rem"
-              textColor="#848484"
+              textColor="gray.500"
             >
               {deets.description}
             </Text>
           </Box>
         </Flex>
+
+        <Flex direction="column" alignItems="center" m="auto">
+          <Button
+            as={RLink}
+            to={`/edit-truck/${deets.id}`}
+            colorScheme="blue"
+            w="full"
+            mb="1rem"
+          >
+            Edit
+          </Button>
+          <DeleteTruckModal truck={deets} />
+        </Flex>
       </Flex>
       {/* <Box>edit deets</Box> */}
     </ListItem>
+  );
+}
+
+function DeleteTruckModal({ truck }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { mutate } = useOwnerDeleteTruck();
+
+  return (
+    <>
+      <Button onClick={onOpen} colorScheme="red">
+        Open Modal
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Confirm Delete Truck</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              Are you sure you want to delete <strong>{truck.name}</strong>?
+            </Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="gray" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button
+              variant="outline"
+              colorScheme="red"
+              rightIcon={<FaTrashAlt />}
+              onClick={() => {
+                mutate(truck.id, {
+                  onSuccess: () => onClose(),
+                });
+              }}
+            >
+              Confirm
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
