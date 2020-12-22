@@ -77,6 +77,16 @@ const addPagevisited = async (truckID) => {
   return true;
 }
 
+const find = async (params) => {
+  const query = db("trucks as t");
+
+  if (params.operatorId) {
+    console.log("RUNNING");
+    query.where("t.operator_id","=", params.operatorId);
+  }
+
+  return query;
+}
 
 const SearchByQuery = (searchQ) => {
   console.log("ATTEMPTING SEARCH");
@@ -129,5 +139,6 @@ module.exports = {
   insert,
   remove,
   fetchAll,
+  find,
   addPagevisited,
 }
