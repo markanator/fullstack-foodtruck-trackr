@@ -9,7 +9,7 @@ import {
   ListItem,
 } from '@chakra-ui/react';
 import Axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPhoneAlt, FaRegClock, FaStore } from 'react-icons/fa';
 // locals
 import { useQuery, useQueryClient } from 'react-query';
@@ -46,12 +46,22 @@ export default function TruckDetails() {
     }
   );
 
+  useEffect(() => {
+    async function addPageView() {
+      Axios.get(
+        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/visited/${truckID}`
+      ).then((res) => res.data);
+    }
+    addPageView();
+  }, []);
+
   if (isLoading) {
     return <p>Loading Truck Deets...</p>;
   }
   if (isError) {
     return <p>Oops, an error occured, try again later...</p>;
   }
+
   return (
     <Layout>
       <Flex direction="column" as="main">

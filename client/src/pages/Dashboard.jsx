@@ -125,7 +125,7 @@ const Dashboard = () => {
             <Flex direction="row" flexWrap="wrap" justifyContent="space-evenly">
               <DashStatCard
                 color="#1baf65"
-                number={0}
+                number={trucks.length}
                 text="Active Listings"
                 Icon={FaMapMarkerAlt}
               />

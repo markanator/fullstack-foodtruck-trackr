@@ -55,6 +55,7 @@ export default function Header() {
             mr="1rem"
             colorScheme="red"
             rightIcon={<FaPizzaSlice />}
+            size="lg"
           >
             Find Food
           </Button>
@@ -65,12 +66,13 @@ export default function Header() {
             mr="1rem"
             colorScheme="red"
             rightIcon={<FaTruck />}
+            size="lg"
           >
             Add Listing
           </Button>
         )}
         <Menu zIndex={999}>
-          <MenuButton as={Button} colorScheme="red">
+          <MenuButton as={Button} colorScheme="red" size="lg">
             Dashboard
           </MenuButton>
           <MenuList zIndex={999}>
