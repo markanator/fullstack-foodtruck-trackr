@@ -17,23 +17,30 @@ const insert = async (truckData,{lat,lng}) => {
 
 const findById = (id) => {
   return db("trucks")
-    .select(
-      "id",
-      "name",
-      "slug",
-      "hero_image",
-      "description",
-      "cuisine_type",
-      "price_range",
-      "address",
-      "views",
-      "arrival_time",
-      "departure_time",
-      "operator_id",
-      st.x("coordinates").as("longitude"),
-      st.y("coordinates").as("latitude"))
-    .where({ id })
+  .select(
+    "trucks.id",
+    "trucks.name",
+    "trucks.slug",
+    "trucks.hero_image",
+    "trucks.description",
+    "trucks.cuisine_type",
+    "trucks.price_range",
+    "trucks.address",
+    "trucks.phone",
+    "trucks.views",
+    "trucks.arrival_time",
+    "trucks.departure_time",
+    "trucks.operator_id",
+    "users.email as operator_email",
+    "users.first_name as operator_first_name",
+    "users.last_name as operator_last_name",
+    "users.avatar_url as operator_image",
+    st.x("trucks.coordinates").as("longitude"),
+    st.y("trucks.coordinates").as("latitude"))
+    .leftJoin("users", "trucks.operator_id", "users.id" )
+    .where( "trucks.id", "=", id )
     .first();
+
     // .join("truck_locations as tl", "tl.truck_id", "=", "t.id")
 };
 
@@ -54,7 +61,7 @@ const fetchAll = () => {
     "operator_id",
     st.x("coordinates").as("longitude"),
     st.y("coordinates").as("latitude"))
-    .orderBy("id", "desc")
+    .orderBy("id", "asc")
     .limit(9);
 }
 
