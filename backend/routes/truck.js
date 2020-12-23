@@ -12,6 +12,7 @@ const paginatedTruckResults = require("../middleware/paginatedResults");
 const router = express.Router();
 
 router.get("/",paginatedTruckResults(), TruckController.getTrucks);
+router.get("/top/:num", TruckController.getTopTrucks);
 router.get("/search", TruckController.search);
 router.get("/:id", [validateTruck], TruckController.getTruckById);
 router.get("/visited/:id", TruckController.addPageview);

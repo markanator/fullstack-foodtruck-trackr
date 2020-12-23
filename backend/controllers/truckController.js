@@ -36,6 +36,19 @@ const getTrucks = async (req, res) => {
     return res.status(500).json({ error: "Server is malfunctioning" });
   }
 };
+const getTopTrucks = async (req, res) => {
+  try {
+    const trucks = await Truck.fetchTop(req.params.num);
+    const user_id = req.user ? req.user.id : null;
+    await addTruckRatings(trucks, user_id);
+    // await addMenuItems(trucks);
+
+    return res.status(200).json(trucks);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Error Fetching top trucks." });
+  }
+};
 
 const getTruckById = async (req, res) => {
   console.log("🦩🦩 req.user::", req.user);
@@ -222,4 +235,5 @@ module.exports = {
   editFood,
   addPageview,
   search,
+  getTopTrucks,
 };

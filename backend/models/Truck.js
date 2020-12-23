@@ -65,6 +65,27 @@ const fetchAll = () => {
     .limit(9);
 }
 
+const fetchTop = (amount = 3) => {
+  return db("trucks as t")
+  .select(
+    "id",
+    "name",
+    "slug",
+    "hero_image",
+    "description",
+    "cuisine_type",
+    "price_range",
+    "address",
+    "views",
+    "arrival_time",
+    "departure_time",
+    "operator_id",
+    st.x("coordinates").as("longitude"),
+    st.y("coordinates").as("latitude"))
+    .orderBy("views", "desc")
+    .limit(amount);
+}
+
 const remove = (id) => {
   return db("trucks").delete().where({ id });
 };
@@ -148,4 +169,5 @@ module.exports = {
   fetchAll,
   find,
   addPagevisited,
+  fetchTop,
 }
