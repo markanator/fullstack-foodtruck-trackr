@@ -84,12 +84,12 @@ const addPagevisited = async (truckID) => {
   return true;
 }
 
-const find = async (params) => {
+const find = async ({operator_id}) => {
   const query = db("trucks as t");
 
-  if (params.operatorId) {
+  if (operator_id) {
     console.log("RUNNING");
-    query.where("t.operator_id","=", params.operatorId);
+    query.where("t.operator_id","=", operator_id);
   }
 
   return query;
