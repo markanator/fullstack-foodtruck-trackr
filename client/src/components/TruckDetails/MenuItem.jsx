@@ -1,8 +1,19 @@
 /* eslint-disable react/prop-types */
-import { Badge, Box, Heading, Image, ListItem, Text } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Heading,
+  IconButton,
+  Image,
+  ListItem,
+  Text,
+} from '@chakra-ui/react';
 import React from 'react';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { useDeleteMenuItem } from '../../RQ/mutations/useDeleteMenuItem';
 
-export default function MenuItem({ menuItem }) {
+export default function MenuItem({ menuItem, truckID, user }) {
+  const { mutate } = useDeleteMenuItem(truckID);
   return (
     <ListItem
       className="menuitem__item"
@@ -38,6 +49,15 @@ export default function MenuItem({ menuItem }) {
         <Badge fontSize="lg" variant="solid" colorScheme="gray">
           ${menuItem?.item_price}
         </Badge>
+        {user?.user_role === 'operator' ? (
+          <IconButton
+            ml="1rem"
+            colorScheme="red"
+            aria-label="Delete Menu Item"
+            icon={<FaRegTrashAlt />}
+            onClick={() => mutate(menuItem.id)}
+          />
+        ) : null}
       </Box>
     </ListItem>
   );
