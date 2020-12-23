@@ -4,7 +4,7 @@ exports.up = function (knex) {
     tbl.string("name").notNullable();
     tbl.string("slug").notNullable();
     tbl.string("cuisine_type");
-    tbl.string("description");
+    tbl.text("description");
     tbl.string("hero_image");
     tbl.string("price_range");
     tbl.datetime("arrival_time");
