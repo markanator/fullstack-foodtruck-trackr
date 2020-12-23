@@ -5,7 +5,7 @@ const {baseURL} = require('../utils/helpers');
 const paginatedTruckResults= () => {
   return async (req,res,next) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 6;
+    const limit = parseInt(req.query.limit) || 9;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     const results = {};
