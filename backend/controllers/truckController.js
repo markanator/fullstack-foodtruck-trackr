@@ -38,8 +38,9 @@ const getTrucks = async (req, res) => {
 };
 
 const getTruckById = async (req, res) => {
+  console.log("🦩🦩 req.user::", req.user);
   try {
-    const truck = await Truck.findById(req.params.id);
+    const truck = req.truck;
     truck.foodItems = await FoodItem.findAllByTruckId(truck.id);
 
     let average = await TruckRating.findByTruckId(truck.id);
@@ -50,8 +51,8 @@ const getTruckById = async (req, res) => {
         return (acc += c);
       }, 0) / average.length
     );
-
     truck.averageRating = average;
+
     return res.status(200).json(truck);
   } catch (error) {
     console.log(error);

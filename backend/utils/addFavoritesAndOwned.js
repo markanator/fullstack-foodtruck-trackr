@@ -17,7 +17,7 @@ const addFavoritesAndOwned = async (user) => {
     const returningTrucks = await Promise.all(promises);
     user.favoriteTrucks = returningTrucks;
     await addTruckRatings(user.favoriteTrucks, user.id);
-    await addMenuItems(user.favoriteTrucks);
+    // await addMenuItems(user.favoriteTrucks);
   }
   return user;
 };
