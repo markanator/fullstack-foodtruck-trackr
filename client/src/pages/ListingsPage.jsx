@@ -62,58 +62,62 @@ export default function ListingsPage() {
               w="full"
               border="1px solid rgba(0,0,0,.05)"
             >
-              {/* SORT LISTINGS */}
-              <Menu>
-                <MenuButton
-                  colorScheme="red"
-                  mr="1rem"
-                  as={Button}
-                  rightIcon={<FaChevronDown />}
-                >
-                  Sort
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>Download</MenuItem>
-                  <MenuItem>Create a Copy</MenuItem>
-                  <MenuItem>Mark as Draft</MenuItem>
-                  <MenuItem>Delete</MenuItem>
-                  <MenuItem>Attend a Workshop</MenuItem>
-                </MenuList>
-              </Menu>
-              {/* CATEGORIES */}
-              <Menu>
-                <MenuButton
-                  colorScheme="red"
-                  mr="1rem"
-                  as={Button}
-                  rightIcon={<FaChevronDown />}
-                >
-                  Categories
-                </MenuButton>
-                <MenuList
-                  maxH="200px"
-                  overflow="hidden"
-                  overflowY="scroll"
-                  p=".125rem"
-                >
-                  <MenuItem>American</MenuItem>
-                  <MenuItem>Barbeque</MenuItem>
-                  <MenuItem>Chinese</MenuItem>
-                  <MenuItem>Dessert</MenuItem>
-                  <MenuItem>Filipino</MenuItem>
-                  <MenuItem>Greek</MenuItem>
-                  <MenuItem>Italian</MenuItem>
-                  <MenuItem>Kosher</MenuItem>
-                  <MenuItem>Mexican</MenuItem>
-                  <MenuItem>Pizza</MenuItem>
-                  <MenuItem>Sea Food</MenuItem>
-                  <MenuItem>Thai</MenuItem>
-                  <MenuItem>Vegan</MenuItem>
-                  <MenuItem>Vegetarian</MenuItem>
-                  <MenuItem>Other</MenuItem>
-                </MenuList>
-              </Menu>
-
+              <Text fontSize="1.125rem" fontWeight="600" color="gray.600">
+                {info?.totalTrucks || 100} total trucks
+              </Text>
+              <Flex display="none">
+                {/* SORT LISTINGS */}
+                <Menu>
+                  <MenuButton
+                    colorScheme="red"
+                    mr="1rem"
+                    as={Button}
+                    rightIcon={<FaChevronDown />}
+                  >
+                    Sort
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>Download</MenuItem>
+                    <MenuItem>Create a Copy</MenuItem>
+                    <MenuItem>Mark as Draft</MenuItem>
+                    <MenuItem>Delete</MenuItem>
+                    <MenuItem>Attend a Workshop</MenuItem>
+                  </MenuList>
+                </Menu>
+                {/* CATEGORIES */}
+                <Menu>
+                  <MenuButton
+                    colorScheme="red"
+                    mr="1rem"
+                    as={Button}
+                    rightIcon={<FaChevronDown />}
+                  >
+                    Categories
+                  </MenuButton>
+                  <MenuList
+                    maxH="200px"
+                    overflow="hidden"
+                    overflowY="scroll"
+                    p=".125rem"
+                  >
+                    <MenuItem>American</MenuItem>
+                    <MenuItem>Barbeque</MenuItem>
+                    <MenuItem>Chinese</MenuItem>
+                    <MenuItem>Dessert</MenuItem>
+                    <MenuItem>Filipino</MenuItem>
+                    <MenuItem>Greek</MenuItem>
+                    <MenuItem>Italian</MenuItem>
+                    <MenuItem>Kosher</MenuItem>
+                    <MenuItem>Mexican</MenuItem>
+                    <MenuItem>Pizza</MenuItem>
+                    <MenuItem>Sea Food</MenuItem>
+                    <MenuItem>Thai</MenuItem>
+                    <MenuItem>Vegan</MenuItem>
+                    <MenuItem>Vegetarian</MenuItem>
+                    <MenuItem>Other</MenuItem>
+                  </MenuList>
+                </Menu>
+              </Flex>
               {/* END SEARCH SORTS */}
             </Box>
           </Flex>
@@ -164,7 +168,7 @@ export default function ListingsPage() {
         </Container>
       </Flex>
       {/* SEND EMAIL */}
-      <NewsletterSection />
+      <NewsletterSection bgcolor="#f96825" />
     </Layout>
   );
 }

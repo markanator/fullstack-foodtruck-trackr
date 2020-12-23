@@ -8,18 +8,12 @@ import {
   FormLabel,
   Heading,
   Input,
-  Link,
-  List,
-  ListItem,
 } from '@chakra-ui/react';
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { FaUtensils } from 'react-icons/fa';
-import { Link as RLink } from 'react-router-dom';
 import BgImg from '../../assets/searchBg.jpg';
 
 export default function Hero() {
-  const { errors, register } = useForm();
+  // const { errors, register } = useForm();
 
   return (
     <Flex
@@ -82,7 +76,7 @@ export default function Hero() {
                 alignItems="center"
                 w="full"
               >
-                <FormControl isInvalid={errors.Search} w="80%">
+                <FormControl isInvalid={false} w="80%">
                   <FormLabel htmlFor="Search" display="none">
                     Search bar:
                   </FormLabel>
@@ -95,10 +89,10 @@ export default function Hero() {
                     focusBorderColor="transparent"
                     fontSize="1.125rem"
                     placeholder="What are you in the mood for?"
-                    ref={register()}
+                    // ref={register()}
                   />
                   <FormErrorMessage>
-                    {errors.Search && errors.Search.message}
+                    {/* {errors.Search && errors.Search.message} */}
                   </FormErrorMessage>
                 </FormControl>
                 <Button

@@ -89,7 +89,7 @@ const Dashboard = () => {
   const trucks =
     data?.user_role === 'operator' ? data?.ownedTrucks : data?.favoriteTrucks;
 
-  console.log('usr deets:::', data);
+  // console.log('usr deets:::', data);
   return (
     <Layout>
       <Flex direction="column" pos="relative" bg="gray.100">

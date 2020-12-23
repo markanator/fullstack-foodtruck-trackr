@@ -9,10 +9,22 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { MdMailOutline } from 'react-icons/md';
+import BGIMG from '../assets/bg-new.png';
 
-export default function NewsletterSection() {
+export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
   return (
-    <Flex direction="column" py="4rem" bg="red.500">
+    <Flex
+      direction="column"
+      py="4rem"
+      // backgroundImage={`url('${BGIMG}')`}
+      pos="relative"
+      bg={bgcolor}
+      style={{
+        backgroundImage: `url('${BGIMG}')`,
+        backgroundSize: '100%',
+        backgroundPosition: 'top',
+      }}
+    >
       <Container maxW="5xl" mx="auto">
         {/* test */}
         <Flex

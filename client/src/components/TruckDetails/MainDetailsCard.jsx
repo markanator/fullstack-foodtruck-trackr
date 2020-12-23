@@ -1,17 +1,61 @@
 /* eslint-disable react/prop-types */
-import { Badge, Box, Button, Flex, Heading } from '@chakra-ui/react';
-import Axios from 'axios';
+import {
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Menu,
+  MenuButton,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  Text,
+} from '@chakra-ui/react';
 import React from 'react';
-import { FaHeart, FaMapPin, FaPhoneAlt, FaStar } from 'react-icons/fa';
+import {
+  FaChevronDown,
+  FaHeart,
+  FaMapPin,
+  FaPhoneAlt,
+  FaStar,
+} from 'react-icons/fa';
+import { useQueryClient } from 'react-query';
 import { axiosWithAuth } from '../../utils/AxiosWithAuth';
 
 export default function MainDetailsCard({ truck }) {
   const [isFavorite, setIsFavorite] = React.useState(false);
+
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData('user');
+
+  // console.log('user deets', user);
   const handleFavorite = () => {
     axiosWithAuth()
       .post(`/trucks/favorites/${truck.id}`)
-      .then(({ data }) => setIsFavorite(true));
+      .then(({ data }) => {
+        if (user) {
+          queryClient.setQueryData('user', {
+            ...user,
+            favoriteTrucks: [...user.favoriteTrucks, truck],
+          });
+        }
+        setIsFavorite((old) => !old);
+      })
+      .catch((err) => {
+        if (err?.response?.data.error.includes('already')) {
+          if (user) {
+            queryClient.setQueryData('user', {
+              ...user,
+              favoriteTrucks: [...user.favoriteTrucks, truck],
+            });
+            setIsFavorite((old) => !old);
+          }
+        }
+        console.log(err.response);
+      });
   };
+
   return (
     <Flex
       id="title__bar"
@@ -116,21 +160,80 @@ export default function MainDetailsCard({ truck }) {
           ({truck.averageRating || 0})
         </Badge>
       </Box>
-      {/* TRUCK SOCIALS */}
-      <Flex direction="row" pt=".5rem">
-        <Button
-          leftIcon={<FaHeart />}
-          colorScheme="red"
-          mr=".5rem"
-          onClick={handleFavorite}
-          disabled={isFavorite}
-        >
-          Favorite
-        </Button>
-        <Button leftIcon={<FaStar />} colorScheme="yellow">
-          Review
-        </Button>
+      {/* TRUCK INTERACTIONS */}
+      <Flex direction="row" pt=".5rem" alignItems="center">
+        {user && user.user_role === 'diner' ? (
+          <>
+            <Button
+              leftIcon={<FaHeart />}
+              colorScheme="red"
+              mr=".5rem"
+              onClick={handleFavorite}
+              disabled={isFavorite}
+            >
+              Favorite
+            </Button>
+            <RatingsMenu truckID={truck.id} />
+          </>
+        ) : (
+          <Text>Sign in or Sign Up to rate and Favorite.</Text>
+        )}
       </Flex>
     </Flex>
+  );
+}
+
+function RatingsMenu({ truckID }) {
+  const [success, setSuccess] = React.useState('');
+  const handleRating = (e) => {
+    // TODO:: more stuff
+    // console.log('button tests', e.currentTarget.value);
+    const rating = e.currentTarget.value;
+    axiosWithAuth()
+      .post(`/trucks/ratings/${truckID}`, { rating })
+      .then(({ data }) => {
+        // console.log('yay!', data);
+        setSuccess(data.message);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setSuccess('Oops, an error occured...');
+      });
+  };
+
+  return (
+    <>
+      <Menu>
+        <MenuButton
+          mr=".5rem"
+          as={Button}
+          leftIcon={<FaStar />}
+          rightIcon={<FaChevronDown />}
+          colorScheme="yellow"
+        >
+          Rating
+        </MenuButton>
+        <MenuList>
+          <MenuGroup title="Profile">
+            <MenuItem value={1} onClick={handleRating}>
+              1 ⭐
+            </MenuItem>
+            <MenuItem value={2} onClick={handleRating}>
+              2 ⭐
+            </MenuItem>
+            <MenuItem value={3} onClick={handleRating}>
+              3 ⭐
+            </MenuItem>
+            <MenuItem value={4} onClick={handleRating}>
+              4 ⭐
+            </MenuItem>
+            <MenuItem value={5} onClick={handleRating}>
+              5 ⭐
+            </MenuItem>
+          </MenuGroup>
+        </MenuList>
+      </Menu>
+      <Text fontWeight="600">{success}</Text>
+    </>
   );
 }
