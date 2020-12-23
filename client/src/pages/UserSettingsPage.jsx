@@ -20,6 +20,7 @@ import { useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import DEFIMG from '../assets/random_street.jpg';
 import Layout from '../components/Layout';
+import { useDeleteAccountMutation } from '../RQ/mutations/useDeleteAccountMutation';
 import { useGetSelfQuery } from '../RQ/query/useGetSelfQuery';
 
 export default function UserSettingsPage() {
@@ -96,21 +97,24 @@ export default function UserSettingsPage() {
 
 function DeleteModal({ userID }) {
   const router = useHistory();
-  const queryClient = useQueryClient();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { mutate } = useDeleteAccountMutation();
 
   const handleAccountDelete = () => {
     console.log('aaaaand its gone...');
-    queryClient.invalidateQueries('user');
-    window.localStorage.removeItem('token');
-    router.push('/');
-    onClose();
+    mutate(null, {
+      onSuccess: () => {
+        window.localStorage.removeItem('token');
+        router.push('/');
+        onClose();
+      },
+    });
   };
 
   return (
     <>
-      <Button onClick={onOpen} colorScheme="red">
-        Open Modal
+      <Button onClick={onOpen} colorScheme="red" variant="outline">
+        DELETE ACCOUNT
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>

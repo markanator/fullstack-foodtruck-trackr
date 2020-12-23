@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import {
@@ -22,6 +23,7 @@ import Axios from 'axios';
 import React from 'react';
 import {
   FaHamburger,
+  FaHeartBroken,
   FaMapPin,
   FaPhone,
   FaStar,
@@ -32,8 +34,15 @@ import { Link as RLink } from 'react-router-dom';
 // locals
 import FoodTruckImg from '../../assets/foodTruck.jpg';
 import { useOwnerDeleteTruck } from '../../RQ/mutations/useOwnerDeleteTruck';
+import { useRemoveFavoriteMutation } from '../../RQ/mutations/useRemoveFavoriteMutation';
 
 export default function FavListItem({ deets, user_role }) {
+  const { mutate } = useRemoveFavoriteMutation();
+  const handleRemoveFavorite = () => {
+    console.log('not in the mood');
+    // TODO more stuff
+    mutate(deets.id);
+  };
   return (
     <ListItem
       padding="1.25rem 1.875rem"
@@ -59,7 +68,7 @@ export default function FavListItem({ deets, user_role }) {
               alt={deets.name}
               objectFit="cover"
               w="100%"
-              h="150px"
+              h="200px"
               rounded=".5rem"
               boxShadow="lg"
             />
@@ -176,6 +185,18 @@ export default function FavListItem({ deets, user_role }) {
               </Button>
               <DeleteTruckModal truck={deets} />
             </>
+          ) : user_role === 'diner' ? (
+            <Button
+              colorScheme="red"
+              variant="outline"
+              size="sm"
+              w="full"
+              mb="1rem"
+              leftIcon={<FaHeartBroken />}
+              onClick={handleRemoveFavorite}
+            >
+              Remove Favorite
+            </Button>
           ) : null}
         </Flex>
       </Flex>
