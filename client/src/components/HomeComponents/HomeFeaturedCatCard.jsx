@@ -7,7 +7,7 @@ import { Link as RLink } from 'react-router-dom';
 // eslint-disable-next-line react/prop-types
 export default function HomeFeaturedCatCard({ info }) {
   return (
-    <ListItem mx="1rem">
+    <ListItem m={['.125rem', '.5rem', '1rem']} w="full">
       <Flex
         as={RLink}
         to="/"
@@ -19,7 +19,8 @@ export default function HomeFeaturedCatCard({ info }) {
         alignItems="center"
         bg="white"
         // w="full"
-        w="240px"
+        w={['full', 'full', 'full', 'full']}
+        maxW="240px"
         h="200px"
         mt="2rem"
         mx="auto"

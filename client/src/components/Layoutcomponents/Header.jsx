@@ -125,13 +125,24 @@ export default function Header() {
           <Box w="50%">
             <Link as={RLink} to="/" textDecoration="none" color="#ff0129">
               {/* <img src={logo} alt="site" height={38} width={142} /> */}
-              <Text fontSize="1.5rem" fontWeight="700" color="#ff0129">
+              <Text
+                fontSize={['1rem', '1.25rem', '1.5rem']}
+                fontWeight="700"
+                color="#ff0129"
+              >
                 Food Truck Tracker
               </Text>
             </Link>
           </Box>
           <Box w="50%" textAlign="right" zIndex={10}>
-            {RightSide}
+            <Flex
+              justifyContent="flex-end"
+              direction="row"
+              alignItems="center"
+              display={['none', 'none', 'flex']}
+            >
+              {RightSide}
+            </Flex>
           </Box>
         </Center>
       </Container>

@@ -115,7 +115,7 @@ export default function GMap({ trucks }) {
       >
         <SearchBar panTo={panTo} />
         <Locate panTo={panTo} />
-        {/* asdasda */}
+        {/* MAP MARKERS */}
         {trucks &&
           trucks.map((truck, idx) => (
             <Marker
@@ -203,6 +203,7 @@ function SearchBar({ panTo }) {
   return (
     <Container
       className="searchListings"
+      w={['75vw']}
       maxW="6xl"
       display="block"
       pos="absolute"

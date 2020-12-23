@@ -77,7 +77,7 @@ export default function UserSettingsPage() {
           {/* test */}
           <Flex>
             <Flex
-              direction="row"
+              direction={['column', 'row']}
               alignItems="center"
               w="full"
               // justifyContent="space-evenly"

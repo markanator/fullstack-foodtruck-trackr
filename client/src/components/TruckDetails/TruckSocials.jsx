@@ -23,7 +23,11 @@ export default function TruckSocials({ truck }) {
         <Button colorScheme="facebook" leftIcon={<FaFacebook />}>
           Facebook
         </Button>
-        <Button colorScheme="twitter" leftIcon={<FaTwitter />}>
+        <Button
+          colorScheme="twitter"
+          leftIcon={<FaTwitter />}
+          display={['none', 'flex']}
+        >
           Twitter
         </Button>
         <Button colorScheme="pink" leftIcon={<FaInstagram />}>
@@ -34,6 +38,7 @@ export default function TruckSocials({ truck }) {
           color="white"
           colorScheme="youtube"
           leftIcon={<FaYoutube />}
+          display={['none', 'flex']}
         >
           Youtube
         </Button>

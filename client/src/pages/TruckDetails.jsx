@@ -60,10 +60,16 @@ export default function TruckDetails() {
           as="section"
           maxW="6xl"
           display="flex"
-          flexDirection="row"
+          flexDirection={['column', 'column', 'row']}
           py="4rem"
         >
-          <Flex w={2 / 3} backgroundColor="red" direction="column" px="1rem">
+          <Flex
+            w={['full', 'full', '66%']}
+            backgroundColor="red"
+            direction="column"
+            px={['0', '0', '1rem']}
+            mb="2rem"
+          >
             {/* MAIN IMPORTANT DEETS */}
             <MainDetailsCard truck={truck} />
             {/* DESCRIPTION */}
@@ -76,7 +82,13 @@ export default function TruckDetails() {
             />
           </Flex>
           {/* RIGHT SIDE */}
-          <Flex as="aside" w={1 / 3} bg="blue" direction="column">
+          <Flex
+            as="aside"
+            px={['0', '0', '1rem']}
+            w={['full', 'full', '33%']}
+            bg="blue"
+            direction="column"
+          >
             {/* STATIC MAP */}
             <Box
               pos="relative"

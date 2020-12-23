@@ -21,8 +21,15 @@ export default function PopularCatsSection() {
               Top Truck Categories in the Nation
             </Text>
           </Box>
-          <Flex>
-            <List display="flex" direction="inherit" mx="auto">
+          <Flex w="full">
+            <List
+              display="flex"
+              flexDirection={['column', 'column', 'row', 'row']}
+              alignItems="center"
+              justifyContent="center"
+              mx="auto"
+              w="full"
+            >
               {isLoading
                 ? 'LOADING...'
                 : isError

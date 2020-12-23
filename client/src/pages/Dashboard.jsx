@@ -120,7 +120,11 @@ const Dashboard = () => {
         <Container maxW="5xl" py="4rem">
           {/* OPERATOR CARDS */}
           {data && data.user_role === 'operator' ? (
-            <Flex direction="row" flexWrap="wrap" justifyContent="space-evenly">
+            <Flex
+              direction={['column', 'row', 'row']}
+              flexWrap="wrap"
+              justifyContent="space-evenly"
+            >
               <DashStatCard
                 color="#1baf65"
                 number={trucks?.length}

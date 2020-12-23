@@ -19,7 +19,7 @@ export default function Hero() {
     <Flex
       className="home__hero"
       w="full"
-      h="660px"
+      h={['430px', '530px', '660px']}
       bgImage={`url(${BgImg})`}
       zIndex="-1"
       backgroundSize="cover"
@@ -40,7 +40,7 @@ export default function Hero() {
             <Heading
               as="h1"
               display="inline"
-              fontSize="6xl"
+              fontSize={['3xl', '4xl', '5xl', '6xl']}
               textAlign="center"
               mb="1rem"
             >
@@ -49,7 +49,7 @@ export default function Hero() {
             {/* SUB HEADER */}
             <Heading
               as="h4"
-              fontSize="xl"
+              fontSize={['base', 'lg', 'xl']}
               fontWeight="500"
               textAlign="center"
               my=".5rem"
@@ -71,7 +71,7 @@ export default function Hero() {
             >
               <Flex
                 as="form"
-                direction="row"
+                direction={['column', 'row']}
                 justifyItems="center"
                 alignItems="center"
                 w="full"
@@ -96,7 +96,7 @@ export default function Hero() {
                   </FormErrorMessage>
                 </FormControl>
                 <Button
-                  w="20%"
+                  w={['full', '20%']}
                   colorScheme="red"
                   fontSize="1.25rem"
                   fontWeight="400"

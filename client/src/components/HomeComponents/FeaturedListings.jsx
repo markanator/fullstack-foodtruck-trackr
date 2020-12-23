@@ -18,6 +18,7 @@ export default function FeaturedListings() {
         <Flex
           direction="column"
           mx="auto"
+          w="full"
           textAlign="center"
           alignItems="center"
         >
@@ -27,8 +28,14 @@ export default function FeaturedListings() {
               Find new & featured listings for you.
             </Text>
           </Box>
-          <Flex mt="2rem">
-            <List display="flex" direction="inherit" mx="auto">
+          <Flex mt="2rem" w="auto">
+            <List
+              display="flex"
+              flexDirection={['column', 'column', 'row', 'row']}
+              w="full"
+              mx="auto"
+              overflow="hidden"
+            >
               {isLoading
                 ? 'LOADING...'
                 : isError

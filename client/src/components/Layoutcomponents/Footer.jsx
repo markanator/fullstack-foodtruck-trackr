@@ -10,7 +10,7 @@ const Footer = () => (
     borderTop="1px solid rgba(246,255,255,.07)"
   >
     <Container py="2rem" maxW="3xl">
-      <Text textAlign="center">
+      <Text textAlign="center" fontFamily={['.875rem', '1rem', '1.5rem']}>
         Copyright &copy; 2020 Food Truck Trackr. Made with{' '}
         <span
           role="textbox"

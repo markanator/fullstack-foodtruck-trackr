@@ -11,7 +11,7 @@ export function TruckListingCard({ info }) {
       className="truck__listcard"
       pos="relative"
       float="left"
-      w={1 / 3}
+      w={['100%', '100%', '100%', '33%']}
       px="1rem"
     >
       <Link

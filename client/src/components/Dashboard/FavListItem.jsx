@@ -42,14 +42,24 @@ export default function FavListItem({ deets, user_role }) {
   };
   return (
     <ListItem
-      padding="1.25rem 1.875rem"
+      padding={['.5rem', '1.25rem 1.875rem']}
       borderBottom="1px solid #eaeaea"
       transition=".3s"
       pos="relative"
     >
-      <Flex py=".125rem" pos="relative">
+      <Flex
+        py=".125rem"
+        w="full"
+        pos="relative"
+        direction={['column', 'column', 'row']}
+      >
         {/* IMAGE */}
-        <Flex flex="1" maxW="250px" pos="relative">
+        <Flex
+          flex="1"
+          maxW={['full', 'full', '250px']}
+          pos="relative"
+          w={['full']}
+        >
           <Link
             as={RLink}
             to={`/truck/${deets.id}`}
@@ -65,14 +75,14 @@ export default function FavListItem({ deets, user_role }) {
               alt={deets.name}
               objectFit="cover"
               w="100%"
-              h="200px"
+              h={['full', 'full', 'full', '200px']}
               rounded=".5rem"
               boxShadow="lg"
             />
           </Link>
         </Flex>
         {/* DEETS */}
-        <Flex flex="1" pl="1.25rem">
+        <Flex flex="1" pl={['0', '0', '1.25rem']}>
           <Box
             className="deets__inner"
             pos="relative"
@@ -158,7 +168,7 @@ export default function FavListItem({ deets, user_role }) {
             </Flex>
             {/* SHORT DESCRIPTION */}
             <Text
-              mt="5px"
+              my=".5rem"
               fontSize="1rem"
               lineHeight="1.25rem"
               textColor="gray.500"
@@ -168,26 +178,36 @@ export default function FavListItem({ deets, user_role }) {
           </Box>
         </Flex>
 
-        <Flex direction="column" alignItems="center" m="auto" pl="1rem">
+        <Flex
+          direction={['row', 'row', 'column']}
+          alignItems="center"
+          justifyContent="center"
+          mt={['.5rem', '.5rem', '0']}
+          m="auto"
+        >
           {user_role === 'operator' ? (
             <>
               <Button
                 as={RLink}
                 to={`/truck/${deets.id}?addItem=true`}
                 colorScheme="teal"
+                // size={['sm', 'md', 'lg']}
                 w="full"
-                mb="1rem"
+                mr={['.125rem', '.5rem', '0']}
+                mb={['0', '0', '1rem']}
               >
-                Add Menu Items
+                Add Menu
               </Button>
               <Button
                 as={RLink}
                 to={`/edit-truck/${deets.id}`}
+                // display={['none', 'flex']}
                 colorScheme="blue"
                 w="full"
-                mb="1rem"
+                mr={['.125rem', '.5rem', '0']}
+                mb={['0', '0', '1rem']}
               >
-                Edit Truck
+                Edit
               </Button>
               <DeleteTruckModal truck={deets} />
             </>
@@ -218,7 +238,7 @@ function DeleteTruckModal({ truck }) {
   return (
     <>
       <Button onClick={onOpen} colorScheme="red" variant="outline" w="full">
-        Delete Truck
+        Delete
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>

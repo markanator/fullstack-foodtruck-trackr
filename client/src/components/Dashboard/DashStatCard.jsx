@@ -5,7 +5,7 @@ import { numberWithCommas } from '../../utils/IntWithComas';
 
 export default function DashStatCard({ color, number, text, Icon }) {
   return (
-    <Box flex="0 0 25%" px="1rem" w="full">
+    <Box flex={['1', '1', '0 0 25%']} px="1rem" w="full">
       <Box
         background="linear-gradient( to left, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.1) )"
         backgroundColor={color}

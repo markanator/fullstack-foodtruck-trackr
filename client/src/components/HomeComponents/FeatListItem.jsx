@@ -9,8 +9,9 @@ import DefImg from '../../assets/default_truck.webp';
 // eslint-disable-next-line react/prop-types
 export default function FeatListItem({ deets }) {
   return (
-    <ListItem w="350px" mx=".5rem">
+    <ListItem w="auto" m=".5rem" maxW="350px">
       <Box
+        w="full"
         mt=".5rem"
         background="#ffffff"
         pos="relative"
@@ -34,6 +35,7 @@ export default function FeatListItem({ deets }) {
             to={`/truck/${deets.id}`}
             className="featimage__overlay"
             pos="relative"
+            w="full"
             h="100%"
             display="block"
           >

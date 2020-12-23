@@ -122,7 +122,7 @@ export default function ListingsPage() {
             </Box>
           </Flex>
           {/* LISTINGS */}
-          <Box mx="-1rem" className="row" mb="2rem">
+          <Box mx="-1rem" wrap="wrap" className="row" mb="2rem">
             {isLoading ? (
               <Text>Loading...</Text>
             ) : isError ? (

@@ -16,7 +16,6 @@ export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
     <Flex
       direction="column"
       py="4rem"
-      // backgroundImage={`url('${BGIMG}')`}
       pos="relative"
       bg={bgcolor}
       style={{
@@ -26,7 +25,7 @@ export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
       }}
     >
       <Container maxW="5xl" mx="auto">
-        {/* test */}
+        {/* entire */}
         <Flex
           direction="column"
           mx="auto"
@@ -34,19 +33,18 @@ export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
           alignItems="center"
         >
           <Box color="white">
-            <Heading as="h2" mb="5px" fontSize="2.5rem">
+            <Heading as="h2" mb="5px" fontSize={['1.5rem', '2.5rem']}>
               Get the Latest News
             </Heading>
-            <Text mb="5px" fontSize="1.25rem">
+            <Text mb="5px" fontSize={['1rem', '1.125rem', '1.25rem']}>
               Stay up to date, stay connected.
             </Text>
           </Box>
           <Box maxW="66%" w="full" m="auto">
-            {/* test */}
+            {/* form */}
             <Flex
               p="0"
-              borderRadius="50px"
-              boxShadow="0px 0px 0px 9px rgba(255, 255, 255, 0.8)"
+              direction={['column', 'column', 'row']}
               pos="relative"
               my="2rem"
             >
@@ -56,7 +54,8 @@ export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
                 alignItems="center"
                 bg="white"
                 borderRadius="50px"
-                boxShadow="lg"
+                boxShadow="0px 0px 0px 9px rgba(255, 255, 255, 0.8)"
+                mb="1rem"
                 p="5px 10px"
               >
                 {/* input */}
@@ -73,7 +72,8 @@ export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
               </Flex>
               <Button
                 colorScheme="red"
-                pos="absolute"
+                pos={['relative', 'absolute']}
+                border={['2px solid white', 'none']}
                 top="5px"
                 right="5px"
                 zIndex="22"
