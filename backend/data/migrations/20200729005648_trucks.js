@@ -7,11 +7,12 @@ exports.up = function (knex) {
     tbl.text("description");
     tbl.string("hero_image");
     tbl.string("price_range");
-    tbl.datetime("arrival_time");
-    tbl.datetime("departure_time");
     tbl.datetime("created_at").notNullable().defaultTo(knex.fn.now());
     tbl.string("address");
-    tbl.integer("views").default(0);
+    tbl.string("phone");
+    tbl.integer("views").defaultTo(0);
+    tbl.datetime("arrival_time");
+    tbl.datetime("departure_time");
     //! FIRST: CREATE EXTENSION postgis;
     // geolocation storing
     tbl.specificType("coordinates", "geometry(point, 4326)");
