@@ -144,6 +144,14 @@ export default function ListingsPage() {
               >
                 Prev
               </Button>
+              {/* <Button
+                size="lg"
+                // disabled={info?.prev === null}
+                // onClick={handlePrevClick}
+                disabled
+              >
+                {}
+              </Button> */}
               <Button
                 size="lg"
                 disabled={info?.next === null}

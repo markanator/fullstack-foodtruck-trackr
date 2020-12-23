@@ -1,4 +1,11 @@
-import { Box, Container, Flex, Heading, List } from '@chakra-ui/react';
+import {
+  Box,
+  Container,
+  Flex,
+  Heading,
+  List,
+  ListItem,
+} from '@chakra-ui/react';
 import React from 'react';
 import {
   FaChartLine,
@@ -157,12 +164,23 @@ const Dashboard = () => {
                   : 'My Favorites'}
               </Heading>
               <List backgroundColor="white" borderRadius="0 0 4px 4px">
-                {trucks.map((truck, idx) => (
-                  <FavListItem
-                    key={`truck-${truck.name}-${idx}`}
-                    deets={truck}
-                  />
-                ))}
+                {trucks.length > 0 ? (
+                  trucks.map((truck, idx) => (
+                    <FavListItem
+                      key={`truck-${truck.name}-${idx}`}
+                      deets={truck}
+                    />
+                  ))
+                ) : (
+                  <ListItem
+                    padding="1.25rem 1.875rem"
+                    borderBottom="1px solid #eaeaea"
+                    transition=".3s"
+                    pos="relative"
+                  >
+                    Nothing Found...
+                  </ListItem>
+                )}
               </List>
             </Box>
           </Box>

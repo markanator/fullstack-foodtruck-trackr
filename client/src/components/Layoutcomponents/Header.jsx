@@ -43,12 +43,17 @@ import { useLoginMutation } from '../../RQ/mutations/useLoginMutation';
 
 export default function Header() {
   let RightSide;
-  const { userState } = useUserContext();
+  // const { userState } = useUserContext();
+  const queryClient = useQueryClient();
 
-  if (userState.isLoggedIn && isLoggedIn()) {
+  const queryUser = queryClient.getQueryData('user');
+
+  console.log('header user data', queryUser);
+
+  if (queryUser?.username && isLoggedIn()) {
     RightSide = (
       <>
-        {userState.user_role === 'diner' ? (
+        {queryUser?.user_role === 'diner' ? (
           <Button
             as={RLink}
             to="/search-trucks"
@@ -78,19 +83,19 @@ export default function Header() {
           <MenuList zIndex={999}>
             <MenuGroup
               textAlign="left"
-              title={`Sign in as: ${userState.userInfo.username}`}
+              title={`Sign in as: ${queryUser?.username}`}
               zIndex={999}
             >
               <MenuItem
                 as={RLink}
-                to={`/dashboard/${userState.userInfo.username}`}
+                to={`/dashboard/${queryUser?.username}`}
                 zIndex={999}
               >
                 Dashboard
               </MenuItem>
               <MenuItem
                 as={RLink}
-                to={`/dashboard/${userState.userInfo.username}/settings`}
+                to={`/dashboard/${queryUser?.username}/settings`}
                 zIndex={999}
               >
                 Settings

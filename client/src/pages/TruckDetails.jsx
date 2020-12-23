@@ -239,7 +239,7 @@ export default function TruckDetails() {
               <Flex direction="row" alignItems="center">
                 <Link as={RLink} to="/#">
                   <Image
-                    src={truck.truck_photo}
+                    src={truck.hero_image}
                     alt={truck.name}
                     w="80px"
                     h="80px"

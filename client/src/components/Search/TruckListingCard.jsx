@@ -78,7 +78,7 @@ export function TruckListingCard({ info }) {
             {info.cuisine_type}
           </Badge>
           {/* FEATURED */}
-          {info.price_range === '$$' ? (
+          {info.price_range === '$$$' ? (
             <Badge
               className="feat__tag"
               colorScheme="teal"
@@ -170,9 +170,9 @@ export function TruckListingCard({ info }) {
                   verticalAlign: 'sub',
                 }}
               />
-              {info.description.slice(0, 15)}
+              {info.address}
             </Box>
-            {/* PHONE */}
+            {/* PHONE
             <Box
               fontSize="1rem"
               m="2px 0"
@@ -193,7 +193,7 @@ export function TruckListingCard({ info }) {
                 }}
               />
               (123) 456-7890
-            </Box>
+            </Box> */}
           </Box>
         </Box>
 
@@ -246,7 +246,7 @@ export function TruckListingCard({ info }) {
                 textAlign: 'center',
               }}
             />
-            {info.id}+
+            {info.views}+
           </Box>
 
           <Flex

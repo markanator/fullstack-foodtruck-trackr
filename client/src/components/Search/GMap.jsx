@@ -96,7 +96,7 @@ export default function GMap({ trucks }) {
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(14);
+    mapRef.current.setZoom(12);
   }, []);
 
   if (loadError) return <p>Error Loading Map</p>;
@@ -111,7 +111,7 @@ export default function GMap({ trucks }) {
     <Box w="full" h="full">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={12}
+        zoom={5}
         center={center}
         options={options}
         // onClick={onMapClick}
