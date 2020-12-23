@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import { Box, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
 import React from 'react';
 import { IoFastFood } from 'react-icons/io5';
 import { Link as RLink } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
-export default function HomeFeaturedCatCard({ data }) {
+export default function HomeFeaturedCatCard({ info }) {
   return (
     <ListItem mx="1rem">
       <Flex
@@ -27,8 +28,8 @@ export default function HomeFeaturedCatCard({ data }) {
           <IoFastFood />
         </Box>
         <Box>
-          <Heading fontSize="1.125rem">Test</Heading>
-          <Text color="gray.400">Tes par</Text>
+          <Heading fontSize="1.125rem">{info.cuisine_type}</Heading>
+          <Text color="gray.400">{info.count} Trucks</Text>
         </Box>
       </Flex>
     </ListItem>

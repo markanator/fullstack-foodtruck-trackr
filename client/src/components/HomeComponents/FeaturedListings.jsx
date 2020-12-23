@@ -1,9 +1,12 @@
+/* eslint-disable no-nested-ternary */
 import { Box, Container, Flex, Heading, List, Text } from '@chakra-ui/react';
 import React from 'react';
 import BgImg from '../../assets/pattern.png';
+import { useFetchTopTrucks } from '../../RQ/query/useFetchTopTrucks';
 import FeatListItem from './FeatListItem';
 
 export default function FeaturedListings() {
+  const { data, isLoading, isError } = useFetchTopTrucks(3);
   return (
     <Flex
       direction="column"
@@ -26,9 +29,11 @@ export default function FeaturedListings() {
           </Box>
           <Flex mt="2rem">
             <List display="flex" direction="inherit" mx="auto">
-              <FeatListItem />
-              <FeatListItem />
-              <FeatListItem />
+              {isLoading
+                ? 'LOADING...'
+                : isError
+                ? 'ERROR'
+                : data && data.map((truck) => <FeatListItem deets={truck} />)}
             </List>
           </Flex>
         </Flex>

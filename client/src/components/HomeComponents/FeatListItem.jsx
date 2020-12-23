@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, Flex, Heading, Image, Link, ListItem } from '@chakra-ui/react';
 import React from 'react';
 import { IoFastFood } from 'react-icons/io5';
@@ -5,7 +6,8 @@ import { Link as RLink } from 'react-router-dom';
 // locals
 import DefImg from '../../assets/default_truck.webp';
 
-export default function FeatListItem() {
+// eslint-disable-next-line react/prop-types
+export default function FeatListItem({ deets }) {
   return (
     <ListItem w="350px" mx=".5rem">
       <Box
@@ -29,17 +31,19 @@ export default function FeatListItem() {
         >
           <Link
             as={RLink}
-            to="/"
+            to={`/truck/${deets.id}`}
             className="featimage__overlay"
             pos="relative"
             h="100%"
             display="block"
           >
             <Image
-              src={DefImg}
-              alt="test"
+              src={deets.hero_image || DefImg}
+              alt={deets.name}
               display="block"
               w="100%"
+              h="200px"
+              objectFit="cover"
               rounded="lg"
             />
           </Link>
@@ -53,8 +57,8 @@ export default function FeatListItem() {
             color="white"
           >
             <Heading fontSize="1.125rem" fontWeight="500" mb="3px">
-              <Link as={RLink} to="/">
-                Test TITLE
+              <Link as={RLink} to={`/truck/${deets.id}`}>
+                {deets.name}
               </Link>
             </Heading>
           </Box>
@@ -64,7 +68,7 @@ export default function FeatListItem() {
           <Box flex="1" float="left">
             <Link
               as={RLink}
-              to="/"
+              to={`/truck/${deets.id}`}
               color="#6d7a8a"
               fontWeight="600"
               display="inline-flex"
@@ -83,7 +87,7 @@ export default function FeatListItem() {
               >
                 <IoFastFood />
               </Flex>
-              Eat and Drink
+              {deets.cuisine_type}
             </Link>
           </Box>
         </Box>

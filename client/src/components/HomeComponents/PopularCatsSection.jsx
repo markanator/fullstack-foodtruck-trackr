@@ -1,8 +1,11 @@
+/* eslint-disable no-nested-ternary */
 import { Box, Container, Flex, Heading, List, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useFetchTopCuisines } from '../../RQ/query/useFetchTopCuisines';
 import HomeFeaturedCatCard from './HomeFeaturedCatCard';
 
 export default function PopularCatsSection() {
+  const { data, isLoading, isError } = useFetchTopCuisines(3);
   return (
     <Flex direction="column" py="6rem" bg="gray.100">
       <Container maxW="5xl" mx="auto">
@@ -20,9 +23,14 @@ export default function PopularCatsSection() {
           </Box>
           <Flex>
             <List display="flex" direction="inherit" mx="auto">
-              <HomeFeaturedCatCard />
-              <HomeFeaturedCatCard />
-              <HomeFeaturedCatCard />
+              {isLoading
+                ? 'LOADING...'
+                : isError
+                ? 'ERROR'
+                : data &&
+                  data.map((cat) => (
+                    <HomeFeaturedCatCard key={cat.cuisine_type} info={cat} />
+                  ))}
             </List>
           </Flex>
         </Flex>
