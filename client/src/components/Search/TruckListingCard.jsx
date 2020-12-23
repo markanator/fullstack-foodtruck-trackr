@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Badge, Box, Flex, Heading, Image, Link } from '@chakra-ui/react';
 import React from 'react';
-import { FaEye, FaMapPin, FaPhoneAlt, FaRegHeart, FaTag } from 'react-icons/fa';
+import { FaEye, FaMapPin, FaRegHeart, FaTag } from 'react-icons/fa';
 import { Link as RLink } from 'react-router-dom';
 import DefaultTruckImage from '../../assets/default_truck.webp';
 

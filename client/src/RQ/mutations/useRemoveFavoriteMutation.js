@@ -16,7 +16,7 @@ export const useRemoveFavoriteMutation = () => {
         }
       ),
     {
-      onSuccess: (d) => {
+      onSuccess: () => {
         queryClient.invalidateQueries('user');
       },
     }

@@ -144,7 +144,7 @@ export default function CreateTruckForm() {
             validationSchema={CreateTruckSchema}
             onSubmit={handleSubmit}
           >
-            {(props) => (
+            {() => (
               <Form
                 style={{
                   display: 'flex',

@@ -22,7 +22,6 @@ import {
   FaStar,
 } from 'react-icons/fa';
 import { useQueryClient } from 'react-query';
-import { useLocation } from 'react-router-dom';
 import { axiosWithAuth } from '../../utils/AxiosWithAuth';
 
 export default function MainDetailsCard({ truck }) {
@@ -36,7 +35,7 @@ export default function MainDetailsCard({ truck }) {
   const handleFavorite = () => {
     axiosWithAuth()
       .post(`/trucks/favorites/${truck.id}`)
-      .then(({ data }) => {
+      .then(() => {
         if (user) {
           queryClient.setQueryData('user', {
             ...user,

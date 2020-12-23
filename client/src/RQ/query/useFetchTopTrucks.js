@@ -19,6 +19,7 @@ export function useFetchTopTrucks(amount = 3) {
     },
     {
       cacheTime: 5 * 24 * 60 * 60 * 1000,
+      refetchOnWindowFocus: false,
     }
   );
 }

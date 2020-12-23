@@ -21,28 +21,23 @@ import {
   Combobox,
   ComboboxInput,
   ComboboxList,
-  ComboboxPopover,
   ComboboxOption,
+  ComboboxPopover,
 } from '@reach/combobox';
 import '@reach/combobox/styles.css';
-import { format } from 'date-fns';
-
 import { useLoadScript } from '@react-google-maps/api';
 import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams, Link as RLink } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useHistory, useParams } from 'react-router-dom';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
-
-// move user
-import { parse } from 'date-fns/esm/fp';
-import { useQueryClient } from 'react-query';
 import Layout from '../components/Layout';
 import { CreateTruckSchema } from '../Forms/Schemas/CreateTruckSchema';
-import { useFetchTruckDetails } from '../RQ/query/useFetchTruckDetails';
 import { useEditTruckMutation } from '../RQ/mutations/useEditTruckMutation';
+import { useFetchTruckDetails } from '../RQ/query/useFetchTruckDetails';
 
 const libraries = ['places'];
 
@@ -133,6 +128,7 @@ export default function EditTruck() {
   useEffect(() => {
     // set gps value to stored address
     setValue(truckDeets?.address);
+    // eslint-disable-next-line
   }, [id]);
 
   if (isLoading) {

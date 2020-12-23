@@ -1,8 +1,7 @@
 import Axios from 'axios';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 
 export function useFetchTopCuisines(amount = 3) {
-  // const queryClient = useQueryClient();
   return useQuery(
     'categories',
     async () =>
@@ -11,7 +10,7 @@ export function useFetchTopCuisines(amount = 3) {
       ).then((resp) => resp.data),
     {
       cacheTime: 5 * 24 * 60 * 60 * 1000,
-      // onSuccess()=>queryCl
+      refetchOnWindowFocus: false,
     }
   );
 }

@@ -15,7 +15,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
-import { useQueryClient } from 'react-query';
 // locals
 import { useHistory } from 'react-router-dom';
 import DEFIMG from '../assets/random_street.jpg';
@@ -95,7 +94,7 @@ export default function UserSettingsPage() {
   );
 }
 
-function DeleteModal({ userID }) {
+function DeleteModal() {
   const router = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { mutate } = useDeleteAccountMutation();

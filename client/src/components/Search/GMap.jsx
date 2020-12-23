@@ -27,15 +27,13 @@ import {
 } from '@react-google-maps/api';
 import React, { useState } from 'react';
 import { IoMdLocate } from 'react-icons/io';
+import { Link as RLink } from 'react-router-dom';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
-import { Link as RLink } from 'react-router-dom';
-// locals
-import { useTrucksQuery } from '../../RQ/query/useTrucksQuery';
-import mapStyles from './mapStyles';
 import DefaultTruckImage from '../../assets/default_truck.webp';
+import mapStyles from './mapStyles';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -101,11 +99,6 @@ export default function GMap({ trucks }) {
 
   if (loadError) return <p>Error Loading Map</p>;
   if (!isLoaded) return <p>Loading Map</p>;
-
-  // react query data renamed to truck
-  // const { trucks } = data;
-
-  // console.log('maps trucks', trucks);
 
   return (
     <Box w="full" h="full">

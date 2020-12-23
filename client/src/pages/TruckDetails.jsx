@@ -9,11 +9,11 @@ import {
   ListItem,
 } from '@chakra-ui/react';
 import Axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FaPhoneAlt, FaRegClock, FaStore } from 'react-icons/fa';
 // locals
-import { useQuery, useQueryClient } from 'react-query';
-import { Link as RLink, useParams } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import DefaultTruckImage from '../assets/default_truck.webp';
 import Layout from '../components/Layout';
 import MainDetailsCard from '../components/TruckDetails/MainDetailsCard';
@@ -21,7 +21,6 @@ import SingleTruckMap from '../components/TruckDetails/StaticTruckMap';
 import TruckHeroImage from '../components/TruckDetails/TruckHeroImage';
 import TruckMenuList from '../components/TruckDetails/TruckMenuList';
 import TruckSocials from '../components/TruckDetails/TruckSocials';
-import TruckTags from '../components/TruckDetails/TruckTags';
 import { useFetchTruckDetails } from '../RQ/query/useFetchTruckDetails';
 
 //! MAIN EXPORT PAGE
@@ -41,7 +40,7 @@ export default function TruckDetails() {
       ).then((res) => res.data);
     }
     addPageView();
-  }, []);
+  }, [truckID]);
 
   if (isLoading) {
     return <p>Loading Truck Deets...</p>;

@@ -19,15 +19,12 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import Axios from 'axios';
 import React from 'react';
 import {
   FaHamburger,
   FaHeartBroken,
   FaMapPin,
   FaPhone,
-  FaStar,
-  FaStarHalf,
   FaTrashAlt,
 } from 'react-icons/fa';
 import { Link as RLink } from 'react-router-dom';
