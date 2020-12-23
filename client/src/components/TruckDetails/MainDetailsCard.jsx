@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import {
   Badge,
@@ -21,9 +22,11 @@ import {
   FaStar,
 } from 'react-icons/fa';
 import { useQueryClient } from 'react-query';
+import { useLocation } from 'react-router-dom';
 import { axiosWithAuth } from '../../utils/AxiosWithAuth';
 
 export default function MainDetailsCard({ truck }) {
+  // const test = search;
   const [isFavorite, setIsFavorite] = React.useState(false);
 
   const queryClient = useQueryClient();
@@ -73,7 +76,8 @@ export default function MainDetailsCard({ truck }) {
         mb="5px"
         display="flex"
         alignItems="center"
-        className="needs__dash"
+        pos="relative"
+        // className="needs__dash"
       >
         {truck.name}
         <Badge
@@ -162,7 +166,7 @@ export default function MainDetailsCard({ truck }) {
       </Box>
       {/* TRUCK INTERACTIONS */}
       <Flex direction="row" pt=".5rem" alignItems="center">
-        {user && user.user_role === 'diner' ? (
+        {user && user?.user_role === 'diner' ? (
           <>
             <Button
               leftIcon={<FaHeart />}
@@ -175,6 +179,10 @@ export default function MainDetailsCard({ truck }) {
             </Button>
             <RatingsMenu truckID={truck.id} />
           </>
+        ) : user?.user_role === 'operator' ? (
+          <Text fontStyle="italic">
+            Truck Owners cannot Favorite or Rate Trucks.
+          </Text>
         ) : (
           <Text>Sign in or Sign Up to rate and Favorite.</Text>
         )}

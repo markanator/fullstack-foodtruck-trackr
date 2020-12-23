@@ -28,7 +28,8 @@ import { useFetchTruckDetails } from '../RQ/query/useFetchTruckDetails';
 export default function TruckDetails() {
   const { truckID } = useParams();
   // const [truck, setTruck] = useState({});
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData('user');
 
   // react query fetch
   const { isLoading, isError, data: truck } = useFetchTruckDetails(truckID);
@@ -69,7 +70,11 @@ export default function TruckDetails() {
             {/* DESCRIPTION */}
             <TruckSocials truck={truck} />
             {/* MENU ITEMS  */}
-            <TruckMenuList list={truck.foodItems} />
+            <TruckMenuList
+              list={truck.foodItems}
+              user={user}
+              truckID={truck.id}
+            />
           </Flex>
           {/* RIGHT SIDE */}
           <Flex as="aside" w={1 / 3} bg="blue" direction="column">

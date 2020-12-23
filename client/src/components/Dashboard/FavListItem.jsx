@@ -171,9 +171,18 @@ export default function FavListItem({ deets, user_role }) {
           </Box>
         </Flex>
 
-        <Flex direction="column" alignItems="center" m="auto">
+        <Flex direction="column" alignItems="center" m="auto" pl="1rem">
           {user_role === 'operator' ? (
             <>
+              <Button
+                as={RLink}
+                to={`/truck/${deets.id}?addItem=true`}
+                colorScheme="teal"
+                w="full"
+                mb="1rem"
+              >
+                Add Menu Items
+              </Button>
               <Button
                 as={RLink}
                 to={`/edit-truck/${deets.id}`}
@@ -181,7 +190,7 @@ export default function FavListItem({ deets, user_role }) {
                 w="full"
                 mb="1rem"
               >
-                Edit
+                Edit Truck
               </Button>
               <DeleteTruckModal truck={deets} />
             </>
@@ -211,8 +220,8 @@ function DeleteTruckModal({ truck }) {
 
   return (
     <>
-      <Button onClick={onOpen} colorScheme="red">
-        Open Modal
+      <Button onClick={onOpen} colorScheme="red" variant="outline" w="full">
+        Delete Truck
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>

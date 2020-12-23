@@ -17,7 +17,7 @@ export function useCreateTruckMutation() {
         // test
         console.log(error.response.data);
       },
-      onSettled: () => queryClient.invalidateQueries('trucks'),
+      onSettled: () => queryClient.invalidateQueries('truck'),
     }
   );
 }
