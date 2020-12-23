@@ -159,6 +159,15 @@ const SearchByQuery = (searchQ) => {
   return query;
 };
 
+const fetchTopCuisines = (amount = 3) => {
+  return db("trucks")
+  .select("cuisine_type")
+  .count('cuisine_type')
+  .groupBy("cuisine_type")
+  .orderBy("count", "desc")
+  .limit(amount);
+}
+
 
 module.exports = {
   findById,
@@ -170,4 +179,5 @@ module.exports = {
   find,
   addPagevisited,
   fetchTop,
+  fetchTopCuisines,
 }

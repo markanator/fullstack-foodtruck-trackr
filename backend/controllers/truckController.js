@@ -36,6 +36,7 @@ const getTrucks = async (req, res) => {
     return res.status(500).json({ error: "Server is malfunctioning" });
   }
 };
+
 const getTopTrucks = async (req, res) => {
   try {
     const trucks = await Truck.fetchTop(req.params.num);
@@ -44,6 +45,17 @@ const getTopTrucks = async (req, res) => {
     // await addMenuItems(trucks);
 
     return res.status(200).json(trucks);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Error Fetching top trucks." });
+  }
+};
+
+const getTopCuisines = async (req, res) => {
+  try {
+    const cuisines = await Truck.fetchTopCuisines(req.params.num);
+
+    return res.status(200).json(cuisines);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Error Fetching top trucks." });
@@ -236,4 +248,5 @@ module.exports = {
   addPageview,
   search,
   getTopTrucks,
+  getTopCuisines,
 };

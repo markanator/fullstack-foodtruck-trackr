@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.get("/",paginatedTruckResults(), TruckController.getTrucks);
 router.get("/top/:num", TruckController.getTopTrucks);
+router.get("/top-cuisine/:num", TruckController.getTopCuisines);
 router.get("/search", TruckController.search);
 router.get("/:id", [validateTruck], TruckController.getTruckById);
 router.get("/visited/:id", TruckController.addPageview);
