@@ -1,9 +1,17 @@
 /* eslint-disable react/prop-types */
 import { Badge, Box, Button, Flex, Heading } from '@chakra-ui/react';
+import Axios from 'axios';
 import React from 'react';
 import { FaHeart, FaMapPin, FaPhoneAlt, FaStar } from 'react-icons/fa';
+import { axiosWithAuth } from '../../utils/AxiosWithAuth';
 
 export default function MainDetailsCard({ truck }) {
+  const [isFavorite, setIsFavorite] = React.useState(false);
+  const handleFavorite = () => {
+    axiosWithAuth()
+      .post(`/trucks/favorites/${truck.id}`)
+      .then(({ data }) => setIsFavorite(true));
+  };
   return (
     <Flex
       id="title__bar"
@@ -86,7 +94,7 @@ export default function MainDetailsCard({ truck }) {
             verticalAlign: 'sub',
           }}
         />
-        (123) 456-7890
+        {truck.phone}
       </Box>
       {/* RATINGS */}
       <Box mb="5px">
@@ -110,10 +118,16 @@ export default function MainDetailsCard({ truck }) {
       </Box>
       {/* TRUCK SOCIALS */}
       <Flex direction="row" pt=".5rem">
-        <Button leftIcon={<FaHeart />} colorScheme="red" mr=".5rem">
+        <Button
+          leftIcon={<FaHeart />}
+          colorScheme="red"
+          mr=".5rem"
+          onClick={handleFavorite}
+          disabled={isFavorite}
+        >
           Favorite
         </Button>
-        <Button leftIcon={<FaStar />} colorScheme="red">
+        <Button leftIcon={<FaStar />} colorScheme="yellow">
           Review
         </Button>
       </Flex>

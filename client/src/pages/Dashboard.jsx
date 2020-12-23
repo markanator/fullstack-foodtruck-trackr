@@ -123,7 +123,7 @@ const Dashboard = () => {
             <Flex direction="row" flexWrap="wrap" justifyContent="space-evenly">
               <DashStatCard
                 color="#1baf65"
-                number={trucks.length}
+                number={trucks?.length}
                 text="Active Listings"
                 Icon={FaMapMarkerAlt}
               />
@@ -169,6 +169,7 @@ const Dashboard = () => {
                     <FavListItem
                       key={`truck-${truck.name}-${idx}`}
                       deets={truck}
+                      user_role={data?.user_role}
                     />
                   ))
                 ) : (

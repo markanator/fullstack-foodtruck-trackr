@@ -42,13 +42,14 @@ import { SignUpSchema } from '../../Forms/Schemas/SignUpSchema';
 import { useLoginMutation } from '../../RQ/mutations/useLoginMutation';
 
 export default function Header() {
+  const router = useHistory();
   let RightSide;
   // const { userState } = useUserContext();
   const queryClient = useQueryClient();
 
   const queryUser = queryClient.getQueryData('user');
 
-  console.log('header user data', queryUser);
+  // console.log('header user data', queryUser);
 
   if (queryUser?.username && isLoggedIn()) {
     RightSide = (
@@ -102,7 +103,17 @@ export default function Header() {
               </MenuItem>
             </MenuGroup>
             <MenuDivider />
-            <MenuItem zIndex={999}>Logout</MenuItem>
+            <MenuItem
+              zIndex={999}
+              onClick={() => {
+                console.log('LogOut...');
+                queryClient.invalidateQueries('user');
+                queryClient.window.localStorage.removeItem('token');
+                router.push('/');
+              }}
+            >
+              Logout
+            </MenuItem>
           </MenuList>
         </Menu>
       </>

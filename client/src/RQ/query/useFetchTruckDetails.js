@@ -12,6 +12,7 @@ export function useFetchTruckDetails(truckID) {
       onError: (err) => {
         console.log(err);
       },
+      cacheTime: 3 * 24 * 60 * 60 * 1000,
     }
   );
 }

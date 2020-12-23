@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
+import { numberWithCommas } from '../../utils/IntWithComas';
 
 export default function DashStatCard({ color, number, text, Icon }) {
   return (
@@ -21,7 +22,7 @@ export default function DashStatCard({ color, number, text, Icon }) {
         {/* DIGITIS */}
         <Box pos="absolute" left="2rem" top="50%" transform="translateY(-50%)">
           <Heading as="h4" fontSize="2.25rem" fontWeight="600">
-            {number}
+            {number && numberWithCommas(number)}
           </Heading>
           <Text fontSize="1.125rem" mt="4px" fontWeight="300">
             {text}

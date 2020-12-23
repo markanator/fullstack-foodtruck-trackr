@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import {
   Box,
@@ -22,6 +23,7 @@ import React from 'react';
 import {
   FaHamburger,
   FaMapPin,
+  FaPhone,
   FaStar,
   FaStarHalf,
   FaTrashAlt,
@@ -31,7 +33,7 @@ import { Link as RLink } from 'react-router-dom';
 import FoodTruckImg from '../../assets/foodTruck.jpg';
 import { useOwnerDeleteTruck } from '../../RQ/mutations/useOwnerDeleteTruck';
 
-export default function FavListItem({ deets }) {
+export default function FavListItem({ deets, user_role }) {
   return (
     <ListItem
       padding="1.25rem 1.875rem"
@@ -108,7 +110,7 @@ export default function FavListItem({ deets }) {
               <FaMapPin style={{ marginRight: '.5rem' }} />
               {deets.address}
             </Flex>
-            {/* Phone?
+            {/* Phone? */}
             <Flex
               direction="row"
               alignItems="center"
@@ -117,8 +119,8 @@ export default function FavListItem({ deets }) {
               color="#808080"
             >
               <FaPhone style={{ marginRight: '.5rem' }} />
-              Phone
-            </Flex> */}
+              {deets.phone}
+            </Flex>
             {/* REVIEWS */}
             <Flex
               direction="row"
@@ -127,22 +129,25 @@ export default function FavListItem({ deets }) {
               verticalAlign="sub"
               color="yellow.400"
             >
-              <FaStar />
+              {/* <FaStar />
               <FaStar style={{ marginLeft: '.5rem' }} />
               <FaStar style={{ marginLeft: '.5rem' }} />
               <FaStar style={{ marginLeft: '.5rem' }} />
-              <FaStarHalf style={{ marginLeft: '.5rem' }} />
+              <FaStarHalf style={{ marginLeft: '.5rem' }} /> */}
+              <Text color="gray.600" mr=".5rem">
+                Rating:{' '}
+              </Text>
               <Box
                 px="5px"
                 py="2px"
-                background="#54ba1d"
+                background={deets.averageRating > 3 ? '#54ba1d' : '#e9e9e9'}
                 rounded="md"
                 verticalAlign="middle"
                 fontSize=".875rem"
                 fontWeight="600"
                 textColor="white"
               >
-                (4.5)
+                ({deets.averageRating || 0})
               </Box>
             </Flex>
             {/* SHORT DESCRIPTION */}
@@ -152,22 +157,26 @@ export default function FavListItem({ deets }) {
               lineHeight="1.25rem"
               textColor="gray.500"
             >
-              {deets.description}
+              {deets.description.slice(0, 144)}
             </Text>
           </Box>
         </Flex>
 
         <Flex direction="column" alignItems="center" m="auto">
-          <Button
-            as={RLink}
-            to={`/edit-truck/${deets.id}`}
-            colorScheme="blue"
-            w="full"
-            mb="1rem"
-          >
-            Edit
-          </Button>
-          <DeleteTruckModal truck={deets} />
+          {user_role === 'operator' ? (
+            <>
+              <Button
+                as={RLink}
+                to={`/edit-truck/${deets.id}`}
+                colorScheme="blue"
+                w="full"
+                mb="1rem"
+              >
+                Edit
+              </Button>
+              <DeleteTruckModal truck={deets} />
+            </>
+          ) : null}
         </Flex>
       </Flex>
       {/* <Box>edit deets</Box> */}

@@ -71,6 +71,7 @@ export default function TruckDetails() {
             {/* MENU ITEMS  */}
             <TruckMenuList list={truck.foodItems} />
           </Flex>
+          {/* RIGHT SIDE */}
           <Flex as="aside" w={1 / 3} bg="blue" direction="column">
             {/* STATIC MAP */}
             <Box
@@ -237,10 +238,10 @@ export default function TruckDetails() {
                 Point of Contact
               </Heading>
               <Flex direction="row" alignItems="center">
-                <Link as={RLink} to="/#">
+                <Link href={`mailto:${truck.operator_email}`}>
                   <Image
-                    src={truck.hero_image}
-                    alt={truck.name}
+                    src={truck.operator_image}
+                    alt={truck.operator_first_name}
                     w="80px"
                     h="80px"
                     rounded="full"
@@ -248,9 +249,9 @@ export default function TruckDetails() {
                   />
                 </Link>
                 <Flex direction="column">
-                  <Link as={RLink} to="/#">
+                  <Link href={`mailto:${truck.operator_email}`}>
                     <Heading as="h4" fontSize="1.125rem">
-                      Truck Owner
+                      {`${truck.operator_first_name} ${truck.operator_last_name}`}
                     </Heading>
                   </Link>
                   <Box>Posted 3 days ago</Box>

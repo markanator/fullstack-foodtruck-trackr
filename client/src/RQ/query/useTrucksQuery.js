@@ -22,7 +22,7 @@ export function useTrucksQuery(page) {
     },
     {
       keepPreviousData: true,
-      cacheTime: 60000,
+      cacheTime: 3 * 24 * 60 * 60 * 1000,
       refetchOnWindowFocus: false,
     }
   );
