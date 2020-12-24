@@ -10,7 +10,7 @@ import './styles/index.css';
 ReactDOM.render(
   <ChakraProvider theme={theme}>
     <CSSReset />
-    <Router>
+    <Router basename={window.location.pathname || ''}>
       <App />
     </Router>
   </ChakraProvider>,
