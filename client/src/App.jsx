@@ -1,19 +1,18 @@
 /* eslint-disable no-use-before-define */
 import { Container, Heading } from '@chakra-ui/react';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Route, Switch } from 'react-router-dom';
 import Layout from './components/Layout';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
-import PrivateRoute from './utils/PrivateRoute';
 import UserProvider from './context/UserContext';
+import CreateTruckForm from './pages/CreateTruckForm';
+import Dashboard from './pages/Dashboard';
+import EditTruck from './pages/EditTruck';
+import Home from './pages/Home';
 import ListingsPage from './pages/ListingsPage';
 import TruckDetails from './pages/TruckDetails';
-import CreateTruckForm from './pages/CreateTruckForm';
 import UserSettingsPage from './pages/UserSettingsPage';
-import EditTruck from './pages/EditTruck';
+import PrivateRoute from './utils/PrivateRoute';
 
 const queryClient = new QueryClient();
 
@@ -48,7 +47,6 @@ const App = () => (
         </Switch>
       </UserProvider>
     </>
-    {/* <ReactQueryDevtools initialIsOpen={false} /> */}
   </QueryClientProvider>
 );
 
