@@ -1,4 +1,4 @@
-[![](./docs/foodTruckTracker.jpg)](https://foodtrucks.netlify.app)
+[![](./docs/foodTruckTracker.jpg)](https://food-truck-tracker.markambrocio.com/)
 
 # Fullstack Foodtruck Trackr
 
