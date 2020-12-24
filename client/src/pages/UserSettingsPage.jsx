@@ -45,7 +45,7 @@ export default function UserSettingsPage() {
     );
   }
 
-  console.log('user data on settings page::', data);
+  // console.log('user data on settings page::', data);
   return (
     <Layout>
       <Flex direction="column" pos="relative" bg="gray.100">

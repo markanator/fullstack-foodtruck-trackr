@@ -57,7 +57,7 @@ const LoginBtnModal = () => {
         id="loginModal"
         colorScheme="red"
         size="lg"
-        margin={2}
+        mr={['0', '0', '1rem']}
         onClick={onOpen}
       >
         Login

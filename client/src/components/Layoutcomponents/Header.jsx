@@ -20,6 +20,7 @@ import { useQueryClient } from 'react-query';
 import { Link as RLink, useHistory } from 'react-router-dom';
 import { isLoggedIn } from '../../utils/isLoggedIn';
 import LoginBtnModal from './LoginBtnModal';
+import DrawerExample from './MobileMenu';
 import SignUpBtnModal from './SignUpBtnModal';
 
 export default function Header() {
@@ -39,7 +40,7 @@ export default function Header() {
           <Button
             as={RLink}
             to="/search-trucks"
-            mr="1rem"
+            mr={['0', '0', '1rem']}
             colorScheme="red"
             rightIcon={<FaPizzaSlice />}
             size="lg"
@@ -50,7 +51,7 @@ export default function Header() {
           <Button
             as={RLink}
             to="/add-truck"
-            mr="1rem"
+            mr={['0', '0', '1rem']}
             colorScheme="red"
             rightIcon={<FaTruck />}
             size="lg"
@@ -106,7 +107,7 @@ export default function Header() {
           rightIcon={<FaPizzaSlice />}
           as={RLink}
           to="/search-trucks"
-          mr=".5rem"
+          mr={['0', '0', '1rem']}
           colorScheme="red"
           size="lg"
         >
@@ -135,6 +136,14 @@ export default function Header() {
             </Link>
           </Box>
           <Box w="50%" textAlign="right" zIndex={10}>
+            <Flex
+              justifyContent="flex-end"
+              direction="row"
+              alignItems="center"
+              display={['flex', 'flex', 'none']}
+            >
+              <DrawerExample>{RightSide}</DrawerExample>
+            </Flex>
             <Flex
               justifyContent="flex-end"
               direction="row"

@@ -59,7 +59,7 @@ export default function AddItem({ truckID }) {
       item_photo: menuImage,
     };
 
-    console.log('final menuItem...', menuItem);
+    // console.log('final menuItem...', menuItem);
     mutate(menuItem, {
       onSuccess: () => onClose(),
     });

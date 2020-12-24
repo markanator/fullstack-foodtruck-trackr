@@ -36,7 +36,7 @@ export default function ListingsPage() {
   const handlePrevClick = useCallback(() => {
     setPage((old) => old - 1);
   }, []);
-  console.log('render');
+  // console.log('render');
   return (
     <Layout>
       <Flex direction="column">
