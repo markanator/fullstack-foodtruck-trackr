@@ -37,10 +37,14 @@ export default function FeaturedListings() {
               overflow="hidden"
             >
               {isLoading
-                ? 'LOADING...'
+                ? 'Dusting off Server. One second...'
                 : isError
                 ? 'ERROR'
-                : data && data.map((truck) => <FeatListItem deets={truck} />)}
+                : data && !isLoading
+                ? data.map((truck) => (
+                    <FeatListItem key={truck.id} deets={truck} />
+                  ))
+                : null}
             </List>
           </Flex>
         </Flex>

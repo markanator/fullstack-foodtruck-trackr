@@ -6,6 +6,15 @@ import HomeFeaturedCatCard from './HomeFeaturedCatCard';
 
 export default function PopularCatsSection() {
   const { data, isLoading, isError } = useFetchTopCuisines(3);
+
+  if (isLoading) {
+    return (
+      <Flex direction="column" py="6rem" bg="gray.100">
+        <Text>Loading...</Text>
+      </Flex>
+    );
+  }
+
   return (
     <Flex direction="column" py="6rem" bg="gray.100">
       <Container maxW="5xl" mx="auto">
@@ -34,10 +43,11 @@ export default function PopularCatsSection() {
                 ? 'LOADING...'
                 : isError
                 ? 'ERROR'
-                : data &&
-                  data.map((cat) => (
+                : data && !isLoading
+                ? data.map((cat) => (
                     <HomeFeaturedCatCard key={cat.cuisine_type} info={cat} />
-                  ))}
+                  ))
+                : null}
             </List>
           </Flex>
         </Flex>
