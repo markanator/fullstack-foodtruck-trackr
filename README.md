@@ -8,7 +8,7 @@ A portfolio remake of a past project. I primarily remodeled the frontend. It is 
 
 ## Find Me
 
-### Twitter: [@\_mark_ambro](https://twitter.com/_mark_ambro)
+### LinkedIn: [Mark Ambrocio](https://www.linkedin.com/in/mark-ambrocio/)
 
 ### **Description**
 
