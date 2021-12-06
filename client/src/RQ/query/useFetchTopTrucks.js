@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from '../../axios';
 import { useQuery, useQueryClient } from 'react-query';
 
 export function useFetchTopTrucks(amount = 3) {
@@ -8,7 +8,7 @@ export function useFetchTopTrucks(amount = 3) {
     'topTrucks',
     async () => {
       const trucks = await Axios.get(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/top/${amount}`
+        `/trucks/top/${amount}`
       ).then((resp) => resp.data);
 
       trucks.forEach((truck) => {

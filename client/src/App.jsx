@@ -2,7 +2,7 @@
 import { Container, Heading } from '@chakra-ui/react';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Layout from './components/Layout';
 import UserProvider from './context/UserContext';
 import CreateTruckForm from './pages/CreateTruckForm';
@@ -13,41 +13,52 @@ import ListingsPage from './pages/ListingsPage';
 import TruckDetails from './pages/TruckDetails';
 import UserSettingsPage from './pages/UserSettingsPage';
 import PrivateRoute from './utils/PrivateRoute';
+import {ChakraProvider, extendTheme, CSSReset} from "@chakra-ui/react"
 
 const queryClient = new QueryClient();
 
+const config = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
+};
+
+const theme = extendTheme({ config });
+
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <>
-      <UserProvider>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <PrivateRoute exact path="/dashboard/:username">
-            <Dashboard />
-          </PrivateRoute>
-          <PrivateRoute exact path="/dashboard/:username/settings">
-            <UserSettingsPage />
-          </PrivateRoute>
-          <PrivateRoute path="/add-truck">
-            <CreateTruckForm />
-          </PrivateRoute>
-          <PrivateRoute path="/edit-truck/:id">
-            <EditTruck />
-          </PrivateRoute>
-          <Route path="/search-trucks">
-            <ListingsPage />
-          </Route>
-          <Route path="/truck/:truckID">
-            <TruckDetails />
-          </Route>
-          <Route path="/403" component={Page403} />
-          <Route component={Page404} />
-        </Switch>
-      </UserProvider>
-    </>
-  </QueryClientProvider>
+  <ChakraProvider theme={theme}>
+    <CSSReset />
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <PrivateRoute exact path="/dashboard/:username">
+                <Dashboard />
+              </PrivateRoute>
+              <PrivateRoute exact path="/dashboard/:username/settings">
+                <UserSettingsPage />
+              </PrivateRoute>
+              <PrivateRoute path="/add-truck">
+                <CreateTruckForm />
+              </PrivateRoute>
+              <PrivateRoute path="/edit-truck/:id">
+                <EditTruck />
+              </PrivateRoute>
+              <Route path="/search-trucks">
+                <ListingsPage />
+              </Route>
+              <Route path="/truck/:truckID">
+                <TruckDetails />
+              </Route>
+              <Route path="/403" component={Page403} />
+              <Route component={Page404} />
+            </Switch>
+          </Router>
+        </UserProvider>
+      </QueryClientProvider>
+  </ChakraProvider>
 );
 
 const Page404 = () => (

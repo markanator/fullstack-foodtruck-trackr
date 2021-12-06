@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
-import Axios from 'axios';
+import Axios from '../../axios';
 
 export function useEditTruckMutation(id) {
   const token = localStorage.getItem('token');
@@ -8,7 +8,7 @@ export function useEditTruckMutation(id) {
   return useMutation(
     (values) =>
       Axios.put(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/${id}`,
+        `/trucks/${id}`,
         values,
         {
           headers: {

@@ -1,1 +1,1 @@
-export const prodCheck = () => process.env.NODE_ENV !== 'production';
+export const prodCheck = () => import.meta.env.NODE_ENV !== 'production';

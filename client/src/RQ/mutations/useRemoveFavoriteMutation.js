@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from '../../axios';
 import { useMutation, useQueryClient } from 'react-query';
 
 export const useRemoveFavoriteMutation = () => {
@@ -8,7 +8,7 @@ export const useRemoveFavoriteMutation = () => {
   return useMutation(
     async (id) =>
       Axios.delete(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/favorites/${id}`,
+        `/trucks/favorites/${id}`,
         {
           headers: {
             Authorization: token,

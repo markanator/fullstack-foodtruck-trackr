@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from '../../axios';
 import { useQuery, useQueryClient } from 'react-query';
 
 export function useTrucksQuery(page) {
@@ -7,7 +7,7 @@ export function useTrucksQuery(page) {
     ['page', page],
     async () => {
       const res = await Axios.get(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks?page=${page}`
+        `/trucks?page=${page}`
       ).then((resp) => resp.data);
 
       queryClient.setQueryData('pageInfo', res.info);

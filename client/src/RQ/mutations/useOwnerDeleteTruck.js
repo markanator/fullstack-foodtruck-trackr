@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from '../../axios';
 import { useMutation, useQueryClient } from 'react-query';
 
 export const useOwnerDeleteTruck = () => {
@@ -8,7 +8,7 @@ export const useOwnerDeleteTruck = () => {
   return useMutation(
     async (truckID) =>
       Axios.delete(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/${truckID}`,
+        `/trucks/${truckID}`,
         {
           headers: {
             Authorization: token,

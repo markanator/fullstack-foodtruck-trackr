@@ -14,9 +14,10 @@
   "[javascriptreact]": {
     "editor.formatOnSave": false
   },
+  // show eslint icon at bottom toolbar
+  "eslint.alwaysShowStatus": true,
   // tell the ESLint plugin to run on save
   "editor.codeActionsOnSave": {
     "source.fixAll": true
-  },
-  "prettier.disableLanguages": ["javascript", "javascriptreact"]
+  }
 }

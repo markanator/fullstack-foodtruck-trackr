@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from '../../axios';
 import { useQuery, useQueryClient } from 'react-query';
 
 export function useGetSelfQuery() {
@@ -8,7 +8,7 @@ export function useGetSelfQuery() {
     'user',
     async () => {
       const res = await Axios.get(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/user`,
+        `/user`,
         {
           headers: {
             Authorization: token,

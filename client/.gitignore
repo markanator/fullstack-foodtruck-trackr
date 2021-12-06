@@ -127,3 +127,8 @@ yarn-debug.log*
 yarn-error.log*
 bash.*
 /ref
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local

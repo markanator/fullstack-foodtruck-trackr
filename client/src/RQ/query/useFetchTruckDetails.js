@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from '../../axios';
 import { useQuery } from 'react-query';
 
 export function useFetchTruckDetails(truckID) {
@@ -6,7 +6,7 @@ export function useFetchTruckDetails(truckID) {
     ['truck', parseInt(truckID)],
     async () =>
       Axios.get(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/${truckID}`
+        `/trucks/${truckID}`
       ).then((res) => res.data),
     {
       onError: (err) => {

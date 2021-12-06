@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from 'react-query';
-import Axios from 'axios';
+import Axios from '../../axios';
 
 export function useAddMenuItem(id) {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token') || "";
   const queryClient = useQueryClient();
 
   return useMutation(
     (values) =>
       Axios.post(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/${id}/food/`,
+        `trucks/${id}/food/`,
         values,
         {
           headers: {

@@ -47,7 +47,7 @@ const libraries = ['places'];
 export default function CreateTruckForm() {
   const queryClient = useQueryClient();
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
     libraries,
   });
 

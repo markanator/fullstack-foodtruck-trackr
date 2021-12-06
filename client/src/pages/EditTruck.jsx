@@ -47,7 +47,7 @@ export default function EditTruck() {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData('user');
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
     libraries,
   });
   const {

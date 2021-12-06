@@ -18,7 +18,7 @@ import {
   Stack,
   useDisclosure,
 } from '@chakra-ui/react';
-import Axios from 'axios';
+import Axios from '../../axios';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -31,7 +31,7 @@ const SignUpBtnModal = () => {
   const { setUserState } = useUserContext();
 
   const onSubmit = (values) => {
-    Axios.post(`${process.env.REACT_APP_HOSTED_BACKEND}/user`, {
+    Axios.post("/user", {
       ...values,
     })
       .then(({ data }) => {

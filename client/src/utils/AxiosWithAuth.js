@@ -5,7 +5,7 @@ export const axiosWithAuth = () => {
   const token = localStorage.getItem('token');
 
   return axios.create({
-    baseURL: `${process.env.REACT_APP_HOSTED_BACKEND}`,
+    baseURL: `${import.meta.env.VITE_HOSTED_BACKEND}`,
     headers: {
       Authorization: token,
     },

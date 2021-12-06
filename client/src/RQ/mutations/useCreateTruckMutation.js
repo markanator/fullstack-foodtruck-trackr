@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
-import Axios from 'axios';
+import Axios from '../../axios';
 
 export function useCreateTruckMutation() {
   const token = localStorage.getItem('token');
@@ -7,7 +7,7 @@ export function useCreateTruckMutation() {
 
   return useMutation(
     (values) =>
-      Axios.post(`${process.env.REACT_APP_HOSTED_BACKEND}/trucks`, values, {
+      Axios.post('/trucks', values, {
         headers: {
           Authorization: token,
         },

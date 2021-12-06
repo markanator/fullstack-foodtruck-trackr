@@ -3,8 +3,8 @@
 ### ENV variables needed
 
 ```js
-REACT_APP_HOSTED_BACKEND=
-REACT_APP_GOOGLE_MAPS_KEY=
+VITE_HOSTED_BACKEND=
+VITE_GOOGLE_MAPS_KEY=
 ```
 
 ## Run Client

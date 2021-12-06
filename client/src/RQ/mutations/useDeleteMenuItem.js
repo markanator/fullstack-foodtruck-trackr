@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
-import Axios from 'axios';
+import Axios from '../../axios';
 
 export function useDeleteMenuItem(truckID) {
   const token = localStorage.getItem('token');
@@ -8,7 +8,7 @@ export function useDeleteMenuItem(truckID) {
   return useMutation(
     (value) =>
       Axios.delete(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/food/${value}`,
+        `/trucks/food/${value}`,
         {
           headers: {
             Authorization: token,

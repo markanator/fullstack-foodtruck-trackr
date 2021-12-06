@@ -78,7 +78,7 @@ export function Locate({ panTo }) {
 //! MAIN FUNCTION
 export default function GMap({ trucks }) {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
     libraries,
   });
   const [selected, setSelected] = useState(null);

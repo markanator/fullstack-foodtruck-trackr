@@ -8,7 +8,7 @@ import {
   List,
   ListItem,
 } from '@chakra-ui/react';
-import Axios from 'axios';
+import Axios from '../axios';
 import React, { useEffect } from 'react';
 import { FaPhoneAlt, FaRegClock, FaStore } from 'react-icons/fa';
 // locals
@@ -36,7 +36,7 @@ export default function TruckDetails() {
   useEffect(() => {
     async function addPageView() {
       Axios.get(
-        `${process.env.REACT_APP_HOSTED_BACKEND}/trucks/visited/${truckID}`
+        `/trucks/visited/${truckID}`
       ).then((res) => res.data);
     }
     addPageView();
@@ -65,7 +65,7 @@ export default function TruckDetails() {
         >
           <Flex
             w={['full', 'full', '66%']}
-            backgroundColor="red"
+            // backgroundColor="red"
             direction="column"
             px={['0', '0', '1rem']}
             mb="2rem"
@@ -86,7 +86,7 @@ export default function TruckDetails() {
             as="aside"
             px={['0', '0', '1rem']}
             w={['full', 'full', '33%']}
-            bg="blue"
+            // bg="blue"
             direction="column"
           >
             {/* STATIC MAP */}

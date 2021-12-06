@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from '../../axios';
 import { useMutation, useQueryClient } from 'react-query';
 
 export const useDeleteAccountMutation = () => {
@@ -7,7 +7,7 @@ export const useDeleteAccountMutation = () => {
 
   return useMutation(
     async () =>
-      Axios.delete(`${process.env.REACT_APP_HOSTED_BACKEND}/user`, {
+      Axios.delete('/user', {
         headers: {
           Authorization: token,
         },
