@@ -1,9 +1,9 @@
 const faker = require('faker');
 
 const createRatings = () => ({
-  rating: faker.random.float({min:1, max: 5}),
-  truck_id: parseInt(faker.random.number({min: 1, max: 99})),
-  user_id: parseInt(faker.random.number({min: 1, max: 20})),
+  rating: faker.datatype.float({min:1, max: 5}),
+  truck_id: parseInt(faker.datatype.number({min: 1, max: 99})),
+  user_id: parseInt(faker.datatype.number({min: 1, max: 20})),
 })
 
 exports.seed = async function(knex) {

@@ -3,12 +3,7 @@ require("dotenv").config();
 module.exports = {
   development: {
     client: "pg",
-    connection: {
-      port: 5433,
-      database: "foodtruckv1",
-      user: "postgres",
-      password: process.env.LOCAL_DB_PASS,
-    },
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: "./data/migrations",
     },

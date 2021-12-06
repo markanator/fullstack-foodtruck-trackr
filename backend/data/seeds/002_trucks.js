@@ -42,15 +42,15 @@ const createTrucks = (LONG, LATI) => ({
   slug: slugify(faker.company.companyName()),
   hero_image: faker.image.food(1200,600),
   description: faker.lorem.paragraphs(2),
-  cuisine_type: cuisineTypes[faker.random.number(cuisineTypes.length - 1)],
-  price_range: priceRanges[faker.random.number(priceRanges.length - 1)],
+  cuisine_type: cuisineTypes[faker.datatype.number(cuisineTypes.length - 1)],
+  price_range: priceRanges[faker.datatype.number(priceRanges.length - 1)],
   address: faker.address.streetAddress(),
   phone: faker.phone.phoneNumberFormat(),
-  views: faker.random.number({min: 0,max:999}),
+  views: faker.datatype.number({min: 0,max:999}),
   coordinates:  `SRID=4326;POINT(${LONG} ${LATI})`,
   arrival_time: faker.date.past(),
   departure_time: faker.date.future(),
-  operator_id: userRanges[faker.random.number(userRanges.length - 1)],
+  operator_id: userRanges[faker.datatype.number(userRanges.length - 1)],
 })
 
 
