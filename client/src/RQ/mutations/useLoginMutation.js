@@ -1,10 +1,4 @@
-import Axios from '../../axios';
-import { useMutation } from 'react-query';
+import Axios from "../../axios";
+import { useMutation } from "react-query";
 
-export const useLoginMutation = () =>
-  useMutation(async (values) =>
-    Axios.post(
-      '/user/auth/login',
-      values
-    )
-  );
+export const useLoginMutation = () => useMutation(async (values) => Axios.post("/users/auth/login", values));

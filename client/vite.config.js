@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 /**
  * @type { import('vite').UserConfigExport }
@@ -7,6 +7,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   esbuild: {
-    jsx: 'preserve'
+    jsx: "preserve",
   },
-})
+  server: {
+    port: 3000,
+  },
+});

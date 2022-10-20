@@ -3,8 +3,8 @@
 ### ENV variables needed
 
 ```js
-VITE_HOSTED_BACKEND=
-VITE_GOOGLE_MAPS_KEY=
+VITE_HOSTED_BACKEND = "http://localhost:5000";
+VITE_GOOGLE_MAPS_KEY = "asdasdasdasd";
 ```
 
 ## Run Client
