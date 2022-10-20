@@ -4,16 +4,17 @@ const User = require("../models/User");
 const validateToken = (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    jwt.verify(authorization, process.env.SECRET_JWT, async function (
-      err,
-      decoded
-    ) {
+    const tokenFromClient = authorization?.split("Bearer ")[1];
+    if (!authorization || !tokenFromClient) {
+      return res.status(403).json({ error: "Not Authorized - No token" });
+    }
+    jwt.verify(tokenFromClient, process.env.SECRET_JWT, async function (err, decoded) {
       if (err) {
         return res.status(403).json({ error: "Not Authorized - No token" });
       }
-      const user = await User.findById(decoded.id);
-      if (!user)
-        return res.status(400).json({ error: "User no longer exists" });
+      console.log({ decoded });
+      const user = await User.findById(decoded.sub);
+      if (!user) return res.status(400).json({ error: "User no longer exists" });
       req.user = user;
       next();
     });

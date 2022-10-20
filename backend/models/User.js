@@ -1,6 +1,7 @@
 const db = require("../data/config");
 
 const findById = (id) => {
+  console.log({ id });
   return db("users").where({ id }).first();
 };
 
@@ -13,9 +14,9 @@ const findByUsername = (username) => {
 
 const insert = async (user) => {
   try {
-    const [res] = await db("users").insert(user).returning("id");
-    console.log("RESSS", res);
-    return findById(res);
+    const [{ id }] = await db("users").insert(user).returning("id");
+    console.log("RESSS", id);
+    return findById(id);
   } catch (error) {
     console.log(error);
   }

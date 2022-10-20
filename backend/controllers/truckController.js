@@ -7,12 +7,10 @@ const FoodItem = require("../models/FoodItem");
 
 const addTruck = async (req, res) => {
   try {
-    const truck = await Truck.insert(req.truckData,
-      {
-        lng: req.body.lng,
-        lat: req.body.lat,
-      }
-  );
+    const truck = await Truck.insert(req.truckData, {
+      lng: req.body.lng,
+      lat: req.body.lat,
+    });
     // const user_id = req.user ? req.user.id : null;
     // await addTruckRatings([truck], user_id);
     // await addMenuItems([truck]);
@@ -85,34 +83,27 @@ const getTruckById = async (req, res) => {
   }
 };
 
-const addPageview = async (req,res) => {
+const addPageview = async (req, res) => {
   try {
     await Truck.addPagevisited(req.params.id);
 
     return res.status(200).json({
       message: "Success",
     });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
-  catch(err){
-    return res.status(500).json({error: err.message});
-  }
-}
+};
 
 const editTruck = async (req, res) => {
   try {
-    if (req.user.id !== req.truck.operator_id){
-      return res
-      .status(403)
-      .json({ error: "Can not edit a truck not owned by you" });
+    if (req.user.id !== req.truck.operator_id) {
+      return res.status(403).json({ error: "Can not edit a truck not owned by you" });
     }
-    const updatedTruck = await Truck.update(
-      req.truck.id,
-      req.truckData,
-      {
-        lng: req.body.lng,
-        lat: req.body.lat,
-      },
-    );
+    const updatedTruck = await Truck.update(req.truck.id, req.truckData, {
+      lng: req.body.lng,
+      lat: req.body.lat,
+    });
     await addTruckRatings([updatedTruck], req.user.id);
     await addMenuItems([updatedTruck]);
     return res.status(200).json(updatedTruck);
@@ -125,9 +116,7 @@ const editTruck = async (req, res) => {
 const deleteTruck = async (req, res) => {
   try {
     if (req.user.id !== req.truck.operator_id)
-      return res
-        .status(403)
-        .json({ error: "Can not delete a truck not owned by you" });
+      return res.status(403).json({ error: "Can not delete a truck not owned by you" });
     await Truck.remove(req.truck.id);
     return res.status(200).json({ message: "Truck deleted" });
   } catch (error) {
@@ -167,13 +156,11 @@ const deleteFood = async (req, res) => {
     await FoodItem.remove(req.food.id);
 
     return res.status(200).json({ message: "Menu Item Deleted!" });
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Error removing menu item mafunctioning" });
   }
 };
-
 
 const addToFavorites = async (req, res) => {
   const favorite = await UserFavoriteTruck.find(req.truck.id, req.user.id);
@@ -182,32 +169,29 @@ const addToFavorites = async (req, res) => {
   }
   await UserFavoriteTruck.insert(req.truck.id, req.user.id);
 
-  return res.status(201).json({message: "Added to favorites"});
+  return res.status(201).json({ message: "Added to favorites" });
 };
 
 const removeFromFavorites = async (req, res) => {
   const favorite = await UserFavoriteTruck.find(req.truck.id, req.user.id);
-  if (!favorite)
-    return res.status(400).json({ error: "Truck not in favorites" });
+  if (!favorite) return res.status(400).json({ error: "Truck not in favorites" });
   await UserFavoriteTruck.remove(req.truck.id, req.user.id);
   return res.status(200).json({ message: "Removed from favorites" });
 };
 
 const rateTruck = async (req, res) => {
   try {
-    if (!req.body.rating)
-      return res.status(400).json({ error: "Rating field required" });
+    if (!req.body.rating) return res.status(400).json({ error: "Rating field required" });
     const alreadyFavorited = await TruckRating.find(req.user.id, req.truck.id);
 
     if (alreadyFavorited) {
       await TruckRating.update(req.user.id, req.truck.id, req.body.rating);
-    }
-    else {
+    } else {
       await TruckRating.insert(req.user.id, req.truck.id, req.body.rating);
     }
 
     return res.status(200).json({
-      message: "Rating Added!"
+      message: "Rating Added!",
     });
   } catch (error) {
     console.log(error);
@@ -215,7 +199,7 @@ const rateTruck = async (req, res) => {
   }
 };
 
-const search = async (req,res) => {
+const search = async (req, res) => {
   try {
     // search using queries
     const trucks = await Truck.SearchByQuery(req.query);
@@ -225,13 +209,10 @@ const search = async (req,res) => {
     await addMenuItems(trucks);
     // return search results
     return res.status(200).json(trucks);
-  }
-  catch(err) {
+  } catch (err) {
     console.log(err);
   }
-
-
-}
+};
 
 module.exports = {
   addTruck,

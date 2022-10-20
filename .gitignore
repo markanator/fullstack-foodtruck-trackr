@@ -130,3 +130,6 @@ yarn-debug.log*
 yarn-error.log*
 bash.*
 **/*/ref
+
+
+**/*.sqlite3
