@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const knexPostgis = require("knex-postgis");
-const faker = require("faker");
+const faker = require("@faker-js/faker");
 const db = require("../config");
 
 const slugify = require("slugify");
@@ -55,7 +55,10 @@ exports.seed = async function (KNEX) {
   const right = -66.9513812; // # east long
 
   for (let i = 0; i < desired; i++) {
-    const truck = createTrucks(faker.address.longitude(right, left), faker.address.latitude(bottom, top));
+    const truck = createTrucks(
+      faker.address.longitude(right, left),
+      faker.address.latitude(bottom, top)
+    );
 
     fakeTrucks.push(truck);
   }
