@@ -1,0 +1,34 @@
+name: 🚀 Deploy
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  deploy:
+    name: 🚀 Deploy
+    runs-on: ubuntu-latest
+    # only build/deploy main branch on pushes
+    if:
+      ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') &&
+      github.event_name == 'push' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build and deploy to CapRover
+        uses: adamghill/build-docker-and-deploy-to-caprover@v1
+        with:
+          caprover-app-name: YOUR-APP-NAME
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          caprover-server-url: ${{ secrets.CAPROVER_HOST }}
+          caprover-app-token: ${{ secrets.CAPROVER_APP_TOKEN }}
