@@ -25,10 +25,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Build and deploy to CapRover
-        uses: adamghill/build-docker-and-deploy-to-caprover@v1
+      - name: Deploy to Caprover
+        uses: ariaieboy/caprover-deploy@1.2.2
         with:
-          caprover-app-name: food-truck-tracker
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          caprover-server-url: ${{ secrets.CAPROVER_HOST }}
-          caprover-app-token: ${{ secrets.CAPROVER_APP_TOKEN }}
+          token: ${{secrets.GITHUB_TOKEN}}
+          server: ${{ secrets.CAPROVER_HOST }}
+          password: ${{secrets.CAPROVER_PASSWORD}}
+          app: "food-truck-tracker"
