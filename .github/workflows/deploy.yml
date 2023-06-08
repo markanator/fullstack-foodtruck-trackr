@@ -31,7 +31,7 @@ jobs:
           export IMAGE_NAME_WITH_REGISTRY=$DOCKER_REGISTRY/$IMAGE_NAME
           echo "FULL_IMAGE_NAME=$IMAGE_NAME_WITH_REGISTRY:$GITHUB_SHA-gitsha" >> $GITHUB_ENV
       - name: Log in to the Container registry
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        uses: docker/login-action@v2
         with:
           registry: ${{ env.DOCKER_REGISTRY }}
           username: ${{ github.actor }}
@@ -40,7 +40,7 @@ jobs:
         shell: bash
         run: ./build_and_push.sh
       - name: Deploy to CapRover
-        uses: caprover/deploy-from-github@d76580d79952f6841c453bb3ed37ef452b19752c
+        uses: caprover/deploy-from-github@v1.1.2
         with:
           server: ${{ secrets.CAPROVER_HOST }}
           app: ${{ env.CAPROVER_APP }}
