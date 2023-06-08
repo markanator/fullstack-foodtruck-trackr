@@ -32,4 +32,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           caprover-server-url: ${{ secrets.CAPROVER_HOST }}
           caprover-app-token: ${{ secrets.CAPROVER_APP_TOKEN }}
-          docker-registry: ${{ secrets.CAP_DOCKER_REGISTRY }}
