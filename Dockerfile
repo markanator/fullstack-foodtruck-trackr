@@ -11,7 +11,7 @@ FROM base as production
 WORKDIR /app
 COPY --from=clientBuilder dist ./dist
 COPY backend ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 ENV NODE_ENV=production
 ENV PORT=80
 EXPOSE 80
