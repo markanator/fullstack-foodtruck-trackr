@@ -28,7 +28,7 @@ jobs:
       - name: Build and deploy to CapRover
         uses: adamghill/build-docker-and-deploy-to-caprover@v1
         with:
-          caprover-app-name: YOUR-APP-NAME
+          caprover-app-name: food-truck-tracker
           github-token: ${{ secrets.GITHUB_TOKEN }}
           caprover-server-url: ${{ secrets.CAPROVER_HOST }}
           caprover-app-token: ${{ secrets.CAPROVER_APP_TOKEN }}
