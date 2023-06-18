@@ -15,7 +15,7 @@ permissions:
   contents: read
 env:
   CONTEXT_DIR: './'
-  IMAGE_NAME: foodTruckTracker
+  IMAGE_NAME: foodtrucktracker
   DOCKERFILE: Dockerfile
   CAPROVER_APP: food-truck-tracker
   DOCKER_REGISTRY: ghcr.io
