@@ -39,7 +39,7 @@ jobs:
               password: ${{ secrets.GITHUB_TOKEN }}
   
       - name: Preset Image Name
-        run: echo "IMAGE_URL=$(echo ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest)" >> $GITHUB_ENV
+        run: echo "IMAGE_URL=$(echo ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }})" >> $GITHUB_ENV
   
       - name: Build and push Docker Image
         uses: docker/build-push-action@v4.1.1
@@ -47,7 +47,7 @@ jobs:
           context: .
           file: ${{ env.DOCKERFILE }}
           push: true
-          tags: ${{ env.IMAGE_URL }}
+          tags: ${{ env.IMAGE_URL }}:latest
   
       - name: Deploy Image to CapRrover
         uses: caprover/deploy-from-github@v1.1.2
