@@ -5,7 +5,7 @@ const prisma = require("../data/db.server");
  * @param {string} id 
  * @returns {Promise<import(".prisma/client").User>} user
  */
-const findById = (id) => {
+const findById = (id: string) => {
   return prisma.user.findUnique({ where: { id } });
 };
 
@@ -14,7 +14,7 @@ const findById = (id) => {
  * @param {string} email 
  * @returns {Promise<import(".prisma/client").User>} user
  */
-const findByEmail = (email) => {
+const findByEmail = (email: string) => {
   console.log(prisma)
   return prisma.user.findUnique({ where: { email } });
 };
@@ -23,15 +23,18 @@ const findByEmail = (email) => {
  * @param {string} username 
  * @returns {Promise<import(".prisma/client").User>} user
  */
-const findByUsername = (username) => {
+const findByUsername = (username: string) => {
   return prisma.user.findUnique({ where: { username } });
 };
-/**
- * Creates a new user
- * @param {import('.prisma/client').Prisma.UserCreateArgs['data']} userData 
- * @returns {Promise<import('.prisma/client').User>}
- */
-const insert = async ({ email, password, username, firstName, lastName, role }) => {
+interface INewUser {
+  email: string;
+  password: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+}
+const insert = async ({ email, password, username, firstName, lastName, role }: INewUser) => {
   try {
     return prisma.user.create({
       data: {
@@ -51,27 +54,26 @@ const insert = async ({ email, password, username, firstName, lastName, role }) 
         },
       }
     })
-    return findById(id);
   } catch (error) {
     console.log(error);
     return null
   }
 };
 
-const update = async (user, id) => {
+const update = async (user: Omit<INewUser, 'password'|'role'>, id: string) => {
   return prisma.user.update({
     where: { id },
     data: user
   });
 };
 
-const remove = (id) => {
+const remove = (id: string) => {
   return prisma.user.delete({
     where: { id }
   });
 };
 
-module.exports = {
+export {
   findById,
   findByEmail,
   findByUsername,

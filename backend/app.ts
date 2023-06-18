@@ -1,12 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const UserRouter = require("./routes/user");
-const TruckRouter = require("./routes/truck");
-const morgan = require("morgan");
-const helmet = require("helmet");
-const path = require("path");
+import cors from "cors";
+import express, { type Express } from "express";
+import helmet from "helmet";
+import morgan from "morgan";
+import path from "path";
+import UserRouter from './routes/user'
+import TruckRouter from './routes/truck'
 
-const server = express();
+const server: Express = express();
 const __prod__ = process.env.NODE_ENV === "production";
 
 server.use(express.json());
@@ -20,14 +20,14 @@ if (__prod__) {
 
 server.use("/api/users", UserRouter);
 server.use("/api/trucks", TruckRouter);
-server.get("/api/__health", (req, res) => {
+server.get("/api/__health", (_, res) => {
   res.status(200).json({ message: "Server up." });
 });
 
 if (__prod__) {
-  server.get("*", (req, res) => {
+  server.get("*", (_, res) => {
     res.sendFile(path.resolve(__dirname, "dist", "index.html"));
   });
 }
 
-module.exports = server;
+export default server;

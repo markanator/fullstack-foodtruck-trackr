@@ -1,17 +1,14 @@
+import { Prisma } from "@prisma/client";
+
 const prisma = require("../data/db.server");
 
-/**
- * 
- * @param {import(".prisma/client").Prisma.TruckCreateArgs['data']} truckData 
- * @returns {Promise<import(".prisma/client").Truck>}
- */
-const insert = async (truckData) => {
+const insert = async (truckData: Prisma.TruckCreateArgs['data']) => {
   return prisma.truck.create({
     data: truckData
   })
 };
 
-const findById = (id) => {
+const findById = (id: string) => {
   return prisma.truck.findUnique({
     where: { id },
     include: {
@@ -79,18 +76,18 @@ const fetchTop = (amount = 3) => {
   });
 }
 
-const remove = (id) => {
+const remove = (id: string) => {
   return prisma.truck.delete({ where: { id } });
 };
 
-const update = async (id, truckData) => {
+const update = async (id: string, truckData: Prisma.TruckUpdateArgs['data']) => {
   return prisma.truck.update({
     where: { id },
     data: truckData,
   })
 };
 
-const addPageVisited = async (truckID) => {
+const addPageVisited = async (truckID: string) => {
   const { id } = await findById(truckID);
   if (!id) return false;
   prisma.truck.update({
@@ -105,7 +102,7 @@ const addPageVisited = async (truckID) => {
   return true;
 }
 
-const find = async ({ operator_id }) => {
+const find = async ({ operator_id }: { operator_id: string }) => {
   return prisma.truck.findMany({
     where: {
       ownerId: operator_id
@@ -164,7 +161,7 @@ const fetchTopCuisines = (amount = 3) => {
 }
 
 
-module.exports = {
+export {
   findById,
   SearchByQuery,
   update,

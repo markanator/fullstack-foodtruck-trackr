@@ -55,4 +55,4 @@ router.delete("/food/:foodID", [validateFood], TruckController.deleteFood);
 
 
 
-module.exports = router;
+export default router;

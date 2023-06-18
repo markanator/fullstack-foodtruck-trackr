@@ -1,6 +1,10 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
-let prisma;
+let prisma: PrismaClient;
+
+declare global {
+  var __prisma__: PrismaClient;
+}
 
 // this is needed because in development we don't want to restart
 // the server with every change, but we want to make sure we don't
@@ -16,4 +20,4 @@ if (process.env.NODE_ENV === "production") {
   prisma.$connect();
 }
 
-module.exports = prisma;
+export default prisma;

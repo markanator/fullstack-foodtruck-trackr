@@ -1,13 +1,12 @@
-// const { PrismaClient } = require("@prisma/client");
-// const prisma = new PrismaClient();
-const prisma = require("../data/db.server");
+import prisma from "~/data/db.server";
 
-const find = (truck_id, user_id) => {
+
+const find = (truck_id: string, user_id: string) => {
   return prisma.favorite.findFirst({
     where: { truckId: truck_id, userId: user_id }
   })
 };
-const findAllByUserId = (user_id) => {
+const findAllByUserId = (user_id: string) => {
   return prisma.favorite.findMany({
     where: { userId: user_id },
     include: {
@@ -15,7 +14,7 @@ const findAllByUserId = (user_id) => {
     },
   });
 };
-const insert = async (truck_id, user_id) => {
+const insert = async (truck_id: string, user_id: string) => {
   return prisma.favorite.create({
     data: {
       truckId: truck_id,
@@ -24,16 +23,19 @@ const insert = async (truck_id, user_id) => {
   });
 };
 
-const remove = async (truck_id, user_id) => {
+const remove = async (truck_id: string, user_id: string) => {
   const fav = await prisma.favorite.findFirst({
     where: { truckId: truck_id, userId: user_id }
   });
+  if (!fav) {
+    throw new Error("Favorite not found");
+  }
   return prisma.favorite.delete({
     where: { id: fav.id }
   })
 };
 
-module.exports = {
+export {
   insert,
   findAllByUserId,
   find,

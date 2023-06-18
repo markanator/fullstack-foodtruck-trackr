@@ -1,14 +1,14 @@
-const User = require("../models/User");
-const addFavoritesAndOwned = require("../utils/addFavoritesAndOwned");
-const addTotalTruckReviews = require("../utils/addTotalTruckReviews");
-const addTotalTruckViews = require("../utils/addTotalViews");
-const createToken = require("../utils/createToken");
-// const addTruckRatings = require("../utils/addTruckRatings");
-// const addMenuItems = require("../utils/addMenuItems");
+import type { Response } from "express";
+import * as  User from "../models/User";
+import createToken from "~/utils/createToken";
+import addFavoritesAndOwned from "~/utils/addFavoritesAndOwned";
+import addTotalTruckViews from "~/utils/addTotalViews";
+import addTotalTruckReviews from "~/utils/addTotalTruckReviews";
+import { ReqWithUser } from "~/types";
 
-const registerUser = async (req, res) => {
+const registerUser = async (req: ReqWithUser, res: Response) => {
   try {
-    const { email, username, first_name: firstName, last_name: lastName, password, user_role: role } = req.body;
+    const { email, username, first_name: firstName, last_name: lastName, password, user_role: role } = req.body as any;
     const user = await User.insert({ email, username, firstName, lastName, password, role });
     const token = await createToken(user);
     delete user.password;
@@ -20,10 +20,10 @@ const registerUser = async (req, res) => {
   }
 };
 
-const loginUser = async (req, res) => {
+const loginUser = async (req: ReqWithUser, res: Response) => {
   try {
     const token = await createToken(req.user);
-    delete req.user.password;
+    // delete req.user.password;
     await addFavoritesAndOwned(req.user);
     return res.status(200).json({ user: req.user, token });
   } catch (error) {
@@ -32,24 +32,31 @@ const loginUser = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
-  delete req.user.password;
+const getUser = async (req: ReqWithUser, res: Response) => {
+  // delete req.user.password;
   await addTotalTruckViews(req.user);
   await addTotalTruckReviews(req.user);
   await addFavoritesAndOwned(req.user);
   return res.status(200).json(req.user);
 };
 
-const editUser = async (req, res) => {
+const editUser = async (req: ReqWithUser, res: Response) => {
   try {
+    if (!req?.body || !Object.keys(req?.body ?? {}).length) return res.status(400).json({ error: "No body provided" });
+    const {
+      username,
+      email,
+      first_name,
+      last_name,
+    } = req.body as any;
     const edit = {
-      username: req.body.username || req.user.username,
-      email: req.body.email || req.user.email,
-      firstName: req.body.first_name || req.user.first_name,
-      lastName: req.body.last_name || req.user.last_name,
+      username: username || req?.user?.username,
+      email: email || req?.user?.email,
+      firstName: first_name || req?.user?.firstName,
+      lastName: last_name || req?.user?.lastName,
       // avatarId: req.body.avatar_url || req.user.avatar_url,
     };
-    const user = await User.update(edit, req.user.id);
+    const user = await User.update(edit, req.user!.id);
     delete user.password;
     await addFavoritesAndOwned(user);
     return res.status(200).json(user);
@@ -58,9 +65,9 @@ const editUser = async (req, res) => {
     return res.status(500).json({ error: "Server is malfunctioning" });
   }
 };
-const deleteUser = async (req, res) => {
+const deleteUser = async (req: ReqWithUser, res: Response) => {
   try {
-    await User.remove(req.user.id);
+    await User.remove(req.user!.id);
     return res.status(200).json({ message: "User deleted" });
   } catch (error) {
     console.log(error);
@@ -68,7 +75,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   registerUser,
   loginUser,
   getUser,
