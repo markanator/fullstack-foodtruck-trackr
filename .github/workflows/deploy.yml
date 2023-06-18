@@ -13,18 +13,37 @@ concurrency:
 permissions:
   actions: write
   contents: read
+env:
+  CONTEXT_DIR: './'
+  IMAGE_NAME: ${{ github.repository }}
+  DOCKERFILE: Dockerfile
+  CAPROVER_APP: food-truck-tracker
+  DOCKER_REGISTRY: ghcr.io
 
 jobs:
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
-      - name: Build and Deploy
-        uses: adamghill/build-docker-and-deploy-to-caprover@v1
+      - run: |
+            echo "IMAGE_NAME_WITH_REGISTRY=$DOCKER_REGISTRY/$IMAGE_NAME" >> $GITHUB_ENV
+            export IMAGE_NAME_WITH_REGISTRY=$DOCKER_REGISTRY/$IMAGE_NAME
+            echo "FULL_IMAGE_NAME=$IMAGE_NAME_WITH_REGISTRY:$GITHUB_SHA-gitsha" >> $GITHUB_ENV
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2.2.0
         with:
-          caprover-app-name: food-truck-tracker
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          caprover-server-url: ${{ secrets.CAPROVER_HOST }}
-          caprover-app-token: ${{ secrets.CAPROVER_APP_TOKEN }}
+            registry: ${{ env.DOCKER_REGISTRY }}
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Release to DockerHub
+        shell: bash
+        run: ./build_and_push.sh
+      - name: Deploy to CapRover
+        uses: caprover/deploy-from-github@v1.1.2
+        with:
+            server: ${{ secrets.CAPROVER_HOST }}
+            app: ${{ env.CAPROVER_APP }}
+            token: '${{ secrets.CAPROVER_APP_TOKEN }}'
+            image: '${{ env.FULL_IMAGE_NAME }}'
