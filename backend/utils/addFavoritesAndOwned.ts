@@ -5,9 +5,9 @@ import addMenuItems from "./addMenuItems";
 import addTruckRatings from "./addTruckRatings";
 
 const addFavoritesAndOwned = async (
-  user: User & { role: { name: string } }
+  user: User & { roles: { name: string }[] }
 ) => {
-  if (user.role?.name === "operator") {
+  if (user.roles.some((r) => r.name === "operator")) {
     console.log("OPERATOR ASKING FOR SELF ITEMS");
     // @ts-ignore
     user.ownedTrucks = await Truck.find({ operator_id: user.id });
@@ -16,7 +16,7 @@ const addFavoritesAndOwned = async (
     await addMenuItems(user.ownedTrucks);
   }
 
-  if (user.role?.name === "user") {
+  if (user.roles.some((r) => r.name === "user")) {
     const favorites = await UserFavoriteTruck.findAllByUserId(user.id);
     const promises = favorites.map((x) => Truck.findById(x.truckId));
     const returningTrucks = await Promise.all(promises);

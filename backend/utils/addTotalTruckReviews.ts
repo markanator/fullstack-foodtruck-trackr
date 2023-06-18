@@ -2,9 +2,9 @@ import { User } from "@prisma/client";
 import { findRatingsByUserID } from "../models/TruckRating";
 
 const addTotalTruckReviews = async (
-  user: User & { role: { name: string } }
+  user: User & { roles: { name: string }[] }
 ) => {
-  if (user.role.name === "operator") {
+  if (user.roles.some((r) => r.name === "operator")) {
     const trucks = await findRatingsByUserID(user.id);
     // @ts-ignore
     user.totalTruckReviews = trucks.length;

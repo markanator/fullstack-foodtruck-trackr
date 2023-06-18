@@ -15,7 +15,6 @@ const findById = (id: string) => {
  * @returns {Promise<import(".prisma/client").User>} user
  */
 const findByEmail = (email: string) => {
-  console.log(prisma);
   return prisma.user.findUnique({ where: { email } });
 };
 /**
