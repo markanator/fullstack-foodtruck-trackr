@@ -21,10 +21,14 @@ export const register = async (req: ReqWithUser, res: Response) => {
         username,
         firstName,
         lastName,
-        password,
+        password: {
+          create: {
+            hash: password,
+          },
+        },
         roles: {
           connect: {
-            name: user_role,
+            name: user_role || "user",
           },
         },
       },
