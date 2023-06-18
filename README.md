@@ -1,50 +1,28 @@
-[![](./docs/foodTruckTracker.jpg)](https://food-truck-tracker.markambrocio.com/)
+# Create T3 App
 
-# Fullstack Foodtruck Trackr
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-## About and tools used.
+## What's next? How do I make an app with this?
 
-A portfolio remake of a past project. I primarily remodeled the frontend. It is styled with Chakra-UI, using React-Query for cache and state managment. I also updated the backend to support Geo-Locations for Trucks.
+We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-## Find Me
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-### LinkedIn: [Mark Ambrocio](https://www.linkedin.com/in/mark-ambrocio/)
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
-### **Description**
+## Learn More
 
-FoodTruck TrackR was designed to make finding and eating at a food truck fast, easy and fun. Quickly see all of our Operator partners' nearby food trucks, view their current real-time GPS location, know the scheduled arrival and departure times and much more, all in our easy to use app. Try FoodTruck TrackR today, and enjoy the best food YOUR city has to offer.
+To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-### **MVP**
+- [Documentation](https://create.t3.gg/)
+- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-1. `User` can create an account as either a `operator` or `diner` by providing at minimum a unique `username`, a valid `email` and a `password`.
+You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-2. `User` can log in as an `operator` or `diner` using the `username` and `password` provided on sign-up / account creation.
+## How do I deploy this?
 
-3. An authenticated `operator` can create, view, update and delete a `truck` object.
-   1. A `truck` will have a `menu` comprised of `menuItems`.
-   2. A `truck` will have a `currentLocation`.
-4. An authenticated `user` can `favorite` and `rate` trucks.
-   1. View `trucks` nearest to them.
-
-## .ENV variables needed to run
-
-```js
-// front end
-REACT_APP_HOSTED_BACKEND=
-REACT_APP_GOOGLE_MAPS_KEY=
-
-// backend
-LOCAL_DB_PASS=
-SECRET_JWT=
-
-```
-
-## _References_
-
-### Original Team Front-end Repo I helped with.
-
-[Food Truck Trackr Front End](https://github.com/foodtrucktrackr-bw/foodtrucktrackr-frontend)
-
-Icons used in image came from [Fontawesome](https://fontawesome.com/license) and [DevIcon](https://devicon.dev/)
-
-Description / MVP / Stretch - text from [@lambaschool](https://github.com/LambdaSchool)
+Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
