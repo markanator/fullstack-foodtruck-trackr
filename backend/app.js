@@ -18,10 +18,9 @@ if (__prod__) {
   server.use(express.static(path.resolve(__dirname, "dist")));
 }
 
-server.use("/users", UserRouter);
-server.use("/trucks", TruckRouter);
-
-server.get("/__health", (req, res) => {
+server.use("/api/users", UserRouter);
+server.use("/api/trucks", TruckRouter);
+server.get("/api/__health", (req, res) => {
   res.status(200).json({ message: "Server up." });
 });
 

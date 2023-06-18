@@ -1,24 +1,44 @@
-const db = require("../data/config");
+const prisma = require("../data/db.server");
 
 const findById = (id) => {
-  return db("menu_item").where({ id }).first();
+  return prisma.menuItem.findUnique({
+    where: { id },
+    include: {
+      photo: { select: { fileId: true, contentType: true } },
+    },
+  });
 };
 
 const findAllByTruckId = (truck_id) => {
-  return db("menu_item").where({ truck_id });
+  return prisma.menuItem.findMany({
+    where: { truckId: truck_id },
+    include: {
+      photo: { select: { fileId: true, contentType: true } },
+    },
+  });
 };
 
+/**
+ * 
+ * @param {import('.prisma/client').Prisma.MenuItemCreateArgs['data']} food 
+ * @returns 
+ */
 const insert = async (food) => {
-  const [id] = await db("menu_item").insert(food).returning("id");
-  return findById(id);
+  return prisma.menuItem.create({
+    data: food,
+  });
 };
 const update = async (food, id) => {
-  await db("menu_item").update(food).where({ id });
-  return findById(id);
+  return prisma.menuItem.update({
+    where: { id },
+    data: food,
+  });
 };
 
 const remove = (id) => {
-  return db("menu_item").delete().where({ id });
+  return prisma.menuItem.delete({
+    where: { id },
+  });
 };
 
 module.exports = {

@@ -6,15 +6,15 @@ const validateToken = (req, res, next) => {
     const { authorization } = req.headers;
     const tokenFromClient = authorization?.split("Bearer ")[1];
     if (!authorization || !tokenFromClient) {
-      return res.status(403).json({ error: "Not Authorized - No token" });
+      return res.status(401).json({ error: "Not Authorized - No token" });
     }
-    jwt.verify(tokenFromClient, process.env.SECRET_JWT, async function (err, decoded) {
+    jwt.verify(tokenFromClient, process.env.SECRET_JWT, undefined, async function (err, decoded) {
       if (err) {
-        return res.status(403).json({ error: "Not Authorized - No token" });
+        return res.status(401).json({ error: "Not Authorized - No token" });
       }
       console.log({ decoded });
       const user = await User.findById(decoded.sub);
-      if (!user) return res.status(400).json({ error: "User no longer exists" });
+      if (!user) return res.status(404).json({ error: "User no longer exists" });
       req.user = user;
       next();
     });

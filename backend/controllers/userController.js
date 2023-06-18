@@ -8,7 +8,8 @@ const createToken = require("../utils/createToken");
 
 const registerUser = async (req, res) => {
   try {
-    const user = await User.insert(req.body);
+    const { email, username, first_name: firstName, last_name: lastName, password, user_role: role } = req.body;
+    const user = await User.insert({ email, username, firstName, lastName, password, role });
     const token = await createToken(user);
     delete user.password;
     await addFavoritesAndOwned(user);
@@ -44,9 +45,9 @@ const editUser = async (req, res) => {
     const edit = {
       username: req.body.username || req.user.username,
       email: req.body.email || req.user.email,
-      first_name: req.body.first_name || req.user.first_name,
-      last_name: req.body.last_name || req.user.last_name,
-      avatar_url: req.body.avatar_url || req.user.avatar_url,
+      firstName: req.body.first_name || req.user.first_name,
+      lastName: req.body.last_name || req.user.last_name,
+      // avatarId: req.body.avatar_url || req.user.avatar_url,
     };
     const user = await User.update(edit, req.user.id);
     delete user.password;

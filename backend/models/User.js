@@ -1,34 +1,74 @@
-const db = require("../data/config");
+const prisma = require("../data/db.server");
 
+/**
+ * finds a user by id
+ * @param {string} id 
+ * @returns {Promise<import(".prisma/client").User>} user
+ */
 const findById = (id) => {
-  console.log({ id });
-  return db("users").where({ id }).first();
+  return prisma.user.findUnique({ where: { id } });
 };
 
+/**
+ * finds a user by email
+ * @param {string} email 
+ * @returns {Promise<import(".prisma/client").User>} user
+ */
 const findByEmail = (email) => {
-  return db("users").where({ email }).first();
+  console.log(prisma)
+  return prisma.user.findUnique({ where: { email } });
 };
+/**
+ * finds a user by username
+ * @param {string} username 
+ * @returns {Promise<import(".prisma/client").User>} user
+ */
 const findByUsername = (username) => {
-  return db("users").where({ username }).first();
+  return prisma.user.findUnique({ where: { username } });
 };
-
-const insert = async (user) => {
+/**
+ * Creates a new user
+ * @param {import('.prisma/client').Prisma.UserCreateArgs['data']} userData 
+ * @returns {Promise<import('.prisma/client').User>}
+ */
+const insert = async ({ email, password, username, firstName, lastName, role }) => {
   try {
-    const [{ id }] = await db("users").insert(user).returning("id");
-    console.log("RESSS", id);
+    return prisma.user.create({
+      data: {
+        username,
+        email,
+        firstName,
+        lastName,
+        roles: {
+          connect: {
+            name: role
+          }
+        },
+        password: {
+          create: {
+            hash: password
+          }
+        },
+      }
+    })
     return findById(id);
   } catch (error) {
     console.log(error);
+    return null
   }
 };
 
 const update = async (user, id) => {
-  await db("users").update(user).where({ id }).select("*");
-  return findById(id);
+  return prisma.user.update({
+    where: { id },
+    data: user
+  });
 };
 
 const remove = (id) => {
-  return db("users").delete().where({ id });
+  return prisma.user.delete({
+    where: { id }
+  });
 };
 
 module.exports = {
