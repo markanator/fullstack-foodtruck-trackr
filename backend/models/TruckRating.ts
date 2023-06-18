@@ -1,8 +1,8 @@
-import prisma from "~/data/db.server";
+import prisma from "../data/db.server";
 
 const find = (user_id: string, truck_id: string) => {
   return prisma.review.findFirst({
-    where: { truckId: truck_id, userId: user_id }
+    where: { truckId: truck_id, userId: user_id },
   });
 };
 
@@ -16,9 +16,17 @@ const findRatingsByUserID = (user_id: string) => {
   return prisma.review.findMany({
     where: { userId: user_id },
   });
-}
+};
 
-const insert = ({ rating, truckId, userId }: {truckId: string, userId: string, rating: number}) => {
+const insert = ({
+  rating,
+  truckId,
+  userId,
+}: {
+  truckId: string;
+  userId: string;
+  rating: number;
+}) => {
   return prisma.review.create({
     data: {
       truckId,
@@ -37,10 +45,4 @@ const update = async (id: string, rating: number) => {
   });
 };
 
-export {
-  find,
-  findByTruckId,
-  insert,
-  update,
-  findRatingsByUserID,
-};
+export { find, findByTruckId, insert, update, findRatingsByUserID };

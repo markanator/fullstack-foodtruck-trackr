@@ -1,10 +1,15 @@
-const User = require("../models/User");
-const bcrypt = require("bcrypt");
+import { NextFunction, Request, Response } from "express";
+import bcrypt from "bcrypt";
+import { findByEmail, findByUsername } from "../models/User";
 
-const createUserRequirements = async (req, res, next) => {
+const createUserRequirements = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const required = ["username", "password", "email", "user_role"];
-    for (requiredField of required) {
+    for (const requiredField of required) {
       if (!req.body[requiredField]) {
         return res
           .status(400)
@@ -18,8 +23,8 @@ const createUserRequirements = async (req, res, next) => {
         .status(400)
         .json({ error: "User role must be operator or user" });
     }
-    const emailUser = await User.findByEmail(req.body.email);
-    const usernameUser = await User.findByUsername(req.body.username);
+    const emailUser = await findByEmail(req.body.email);
+    const usernameUser = await findByUsername(req.body.username);
     if (emailUser) {
       return res
         .status(400)
@@ -33,10 +38,10 @@ const createUserRequirements = async (req, res, next) => {
     const hash = bcrypt.hashSync(req.body.password, 12);
     req.body.password = hash;
     next();
-  } catch (error) {
+  } catch (error: any) {
     console.log(error?.message);
     return res.status(500).json({ error: "Server is malfunctioning" });
   }
 };
 
-module.exports = createUserRequirements;
+export default createUserRequirements;

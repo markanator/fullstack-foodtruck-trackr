@@ -1,6 +1,6 @@
-const TruckRating = require("../models/TruckRating");
+import * as TruckRating from "../models/TruckRating";
 
-const addTruckRatings = async (trucks, userId) => {
+const addTruckRatings = async (trucks: any[], userId: string) => {
   // if (trucks.length < 0 || trucks === undefined){
   //   return;
   // }
@@ -14,10 +14,10 @@ const addTruckRatings = async (trucks, userId) => {
     const average = Math.round(
       truckReviews.reduce((acc, c) => {
         return (acc += c);
-      }, 0) / average.length
+      }, 0) / truckReviews.length
     );
 
     trucks[i].averageRating = average;
   }
 };
-module.exports = addTruckRatings;
+export default addTruckRatings;

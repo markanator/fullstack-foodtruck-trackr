@@ -1,9 +1,9 @@
 import { Router } from "express";
-import createUserRequirements from "~/middleware/createUserRequirements";
-import loginRequirements from "~/middleware/loginRequirements";
-import * as UserController from "~/controllers/userController"
-import validateToken from "~/middleware/validateToken";
-import editUserRequirements from "~/middleware/editUserRequirements";
+import * as UserController from "../controllers/userController";
+import createUserRequirements from "../middleware/createUserRequirements";
+import loginRequirements from "../middleware/loginRequirements";
+import validateToken from "../middleware/validateToken";
+import editUserRequirements from "../middleware/editUserRequirements";
 
 const router = Router();
 

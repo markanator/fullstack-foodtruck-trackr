@@ -1,6 +1,13 @@
-const slugify = require('slugify');
+import { NextFunction, Response } from "express";
+import { ReqWithUser } from "../types";
 
-const createTruckRequirements = async (req, res, next) => {
+const slugify = require("slugify");
+
+const createTruckRequirements = async (
+  req: ReqWithUser,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const required = [
       "name",
@@ -13,19 +20,19 @@ const createTruckRequirements = async (req, res, next) => {
       "lng",
       "lat",
     ];
-    for (requiredField of required) {
+    for (const requiredField of required) {
       if (!req.body[requiredField]) {
         return res
           .status(400)
           .json({ error: `${requiredField} is a requiredField` });
       }
     }
-    if (req.user.user_role !== "operator") {
+    if (req.user!.role.name !== "operator") {
       return res.status(400).json({ error: "User must be an operator" });
     }
     const truckName = req.body.name.toLowerCase();
     const slug = slugify(truckName);
-
+    // @ts-ignore
     req.truckData = {
       name: truckName,
       slug,
@@ -36,7 +43,7 @@ const createTruckRequirements = async (req, res, next) => {
       departure_time: req.body.departure_time,
       arrival_time: req.body.arrival_time,
       address: req.body.address,
-      operator_id: req.user.id,
+      operator_id: req.user!.id,
     };
     next();
   } catch (error) {
@@ -45,4 +52,4 @@ const createTruckRequirements = async (req, res, next) => {
   }
 };
 
-module.exports = createTruckRequirements;
+export default createTruckRequirements;

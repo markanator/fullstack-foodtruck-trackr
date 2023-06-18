@@ -1,6 +1,7 @@
-const prisma = require("../data/db.server");
+import type { Prisma } from "@prisma/client";
+import prisma from "../data/db.server";
 
-const findById = (id) => {
+export const findById = (id: string) => {
   return prisma.menuItem.findUnique({
     where: { id },
     include: {
@@ -9,7 +10,7 @@ const findById = (id) => {
   });
 };
 
-const findAllByTruckId = (truck_id) => {
+export const findAllByTruckId = (truck_id: string) => {
   return prisma.menuItem.findMany({
     where: { truckId: truck_id },
     include: {
@@ -18,33 +19,23 @@ const findAllByTruckId = (truck_id) => {
   });
 };
 
-/**
- * 
- * @param {import('.prisma/client').Prisma.MenuItemCreateArgs['data']} food 
- * @returns 
- */
-const insert = async (food) => {
+export const insert = async (food: Prisma.MenuItemCreateArgs["data"]) => {
   return prisma.menuItem.create({
     data: food,
   });
 };
-const update = async (food, id) => {
+export const update = async (
+  food: Prisma.MenuItemUpdateArgs["data"],
+  id: string
+) => {
   return prisma.menuItem.update({
     where: { id },
     data: food,
   });
 };
 
-const remove = (id) => {
+export const remove = (id: string) => {
   return prisma.menuItem.delete({
     where: { id },
   });
-};
-
-module.exports = {
-  findById,
-  findAllByTruckId,
-  insert,
-  update,
-  remove,
 };
