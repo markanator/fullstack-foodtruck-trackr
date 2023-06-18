@@ -15,7 +15,7 @@ permissions:
   contents: read
 env:
   CONTEXT_DIR: './'
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: foodTruckTracker
   DOCKERFILE: Dockerfile
   CAPROVER_APP: food-truck-tracker
   DOCKER_REGISTRY: ghcr.io
@@ -39,7 +39,7 @@ jobs:
               password: ${{ secrets.GITHUB_TOKEN }}
   
       - name: Preset Image Name
-        run: echo "IMAGE_URL=$(echo ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }})" >> $GITHUB_ENV
+        run: echo "IMAGE_URL=$(echo ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }})" >> $GITHUB_ENV
   
       - name: Build and push Docker Image
         uses: docker/build-push-action@v4.1.1
