@@ -2,3 +2,7 @@ node_modules
 Dockerfile
 .gitignore
 .dockerignore
+npm-debug.log
+README.md
+.next
+.git

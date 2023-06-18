@@ -1,18 +1,30 @@
-FROM node:18.16.0-alpine as base
-# build environment
-FROM base as clientBuilder
-COPY ./client .
+FROM node:18-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
+COPY package*.json ./
 RUN npm ci
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 RUN npm run build
 
-# production environment
-FROM base as production
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
-COPY --from=clientBuilder dist ./dist
-COPY backend ./
-RUN npm ci --omit=dev
-ENV NODE_ENV=production
-ENV PORT=80
-EXPOSE 80
-CMD ["npm", "run", "start"]
+ENV NODE_ENV production
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+COPY --from=builder /app/public ./public
+# Automatically leverage output traces to reduce image size
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+USER nextjs
+EXPOSE 8080
+ENV PORT 8080
+CMD ["node", "server.js"]
