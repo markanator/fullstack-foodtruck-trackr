@@ -1,9 +1,9 @@
 import Axios from '../../axios';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export function useFetchTopCuisines(amount = 3) {
   return useQuery(
-    'categories',
+    ['categories', amount],
     async () =>
       Axios.get(
         `/trucks/top-cuisine/${amount}`

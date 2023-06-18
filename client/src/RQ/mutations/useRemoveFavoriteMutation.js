@@ -1,5 +1,5 @@
 import Axios from '../../axios';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useRemoveFavoriteMutation = () => {
   const queryClient = useQueryClient();

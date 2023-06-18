@@ -12,24 +12,24 @@ import {
   MenuItem,
   MenuList,
   Text,
-} from '@chakra-ui/react';
-import React from 'react';
+} from "@chakra-ui/react";
+import React from "react";
 import {
   FaChevronDown,
   FaHeart,
   FaMapPin,
   FaPhoneAlt,
   FaStar,
-} from 'react-icons/fa';
-import { useQueryClient } from 'react-query';
-import { axiosWithAuth } from '../../utils/AxiosWithAuth';
+} from "react-icons/fa";
+import { useQueryClient } from "@tanstack/react-query";
+import { axiosWithAuth } from "../../utils/AxiosWithAuth";
 
 export default function MainDetailsCard({ truck }) {
   // const test = search;
   const [isFavorite, setIsFavorite] = React.useState(false);
 
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData('user');
+  const user = queryClient.getQueryData("user");
 
   // console.log('user deets', user);
   const handleFavorite = () => {
@@ -37,7 +37,7 @@ export default function MainDetailsCard({ truck }) {
       .post(`/trucks/favorites/${truck.id}`)
       .then(() => {
         if (user) {
-          queryClient.setQueryData('user', {
+          queryClient.setQueryData("user", {
             ...user,
             favoriteTrucks: [...user.favoriteTrucks, truck],
           });
@@ -45,9 +45,9 @@ export default function MainDetailsCard({ truck }) {
         setIsFavorite((old) => !old);
       })
       .catch((err) => {
-        if (err?.response?.data.error.includes('already')) {
+        if (err?.response?.data.error.includes("already")) {
           if (user) {
-            queryClient.setQueryData('user', {
+            queryClient.setQueryData("user", {
               ...user,
               favoriteTrucks: [...user.favoriteTrucks, truck],
             });
@@ -108,17 +108,17 @@ export default function MainDetailsCard({ truck }) {
       >
         <FaMapPin
           style={{
-            display: 'inline-block',
-            fontSize: '1rem',
-            color: 'red',
-            marginRight: '.5rem',
-            width: '18px',
-            fontWeight: '600',
-            textAlign: 'center',
-            verticalAlign: 'sub',
+            display: "inline-block",
+            fontSize: "1rem",
+            color: "red",
+            marginRight: ".5rem",
+            width: "18px",
+            fontWeight: "600",
+            textAlign: "center",
+            verticalAlign: "sub",
           }}
         />
-        {truck.address || 'No Address Listed.'}
+        {truck.address || "No Address Listed."}
       </Box>
       {/* PHONE */}
       <Box
@@ -131,14 +131,14 @@ export default function MainDetailsCard({ truck }) {
       >
         <FaPhoneAlt
           style={{
-            display: 'inline-block',
-            fontSize: '1rem',
-            color: 'red',
-            marginRight: '.5rem',
-            width: '18px',
-            fontWeight: '600',
-            textAlign: 'center',
-            verticalAlign: 'sub',
+            display: "inline-block",
+            fontSize: "1rem",
+            color: "red",
+            marginRight: ".5rem",
+            width: "18px",
+            fontWeight: "600",
+            textAlign: "center",
+            verticalAlign: "sub",
           }}
         />
         {truck.phone}
@@ -154,7 +154,7 @@ export default function MainDetailsCard({ truck }) {
           display="inline-block"
           fontSize=".875rem"
           ml="6px"
-          background={truck.averageRating >= 3 ? '#54ba1d' : '#e9e9e9'}
+          background={truck.averageRating >= 3 ? "#54ba1d" : "#e9e9e9"}
           fontWeight="600"
           lineHeight="1.25rem"
           rounded="4px"
@@ -165,7 +165,7 @@ export default function MainDetailsCard({ truck }) {
       </Box>
       {/* TRUCK INTERACTIONS */}
       <Flex direction="row" pt=".5rem" alignItems="center">
-        {user && user?.user_role === 'diner' ? (
+        {user && user?.user_role === "diner" ? (
           <>
             <Button
               leftIcon={<FaHeart />}
@@ -178,7 +178,7 @@ export default function MainDetailsCard({ truck }) {
             </Button>
             <RatingsMenu truckID={truck.id} />
           </>
-        ) : user?.user_role === 'operator' ? (
+        ) : user?.user_role === "operator" ? (
           <Text fontStyle="italic">
             Truck Owners cannot Favorite or Rate Trucks.
           </Text>
@@ -191,7 +191,7 @@ export default function MainDetailsCard({ truck }) {
 }
 
 function RatingsMenu({ truckID }) {
-  const [success, setSuccess] = React.useState('');
+  const [success, setSuccess] = React.useState("");
   const handleRating = (e) => {
     // TODO:: more stuff
     // console.log('button tests', e.currentTarget.value);
@@ -204,7 +204,7 @@ function RatingsMenu({ truckID }) {
       })
       .catch((err) => {
         console.log(err.response);
-        setSuccess('Oops, an error occured...');
+        setSuccess("Oops, an error occured...");
       });
   };
 

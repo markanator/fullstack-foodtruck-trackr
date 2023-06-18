@@ -1,11 +1,11 @@
 import Axios from "../../axios";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useGetSelfQuery() {
   const token = localStorage.getItem("token");
   const queryClient = useQueryClient();
   return useQuery(
-    "user",
+    ["user"],
     async () => {
       const res = await Axios.get(`/users`, {
         headers: {
