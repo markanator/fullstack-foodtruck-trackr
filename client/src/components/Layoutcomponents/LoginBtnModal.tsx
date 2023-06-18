@@ -13,42 +13,28 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-} from '@chakra-ui/react';
-import { Field, Form, Formik } from 'formik';
-import React from 'react';
-import { useQueryClient } from 'react-query';
-import { useHistory } from 'react-router-dom';
-import { useUserContext } from '../../context/UserContext';
-import { LoginSchema } from '../../Forms/Schemas/LoginSchema';
-import { useLoginMutation } from '../../RQ/mutations/useLoginMutation';
+} from "@chakra-ui/react";
+import { Field, Form, Formik } from "formik";
+import React from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useUserContext } from "../../providers/UserContext";
+import { useLoginMutation } from "../../RQ/mutations/useLoginMutation";
+import { LoginSchema } from "../../Forms/Schemas/LoginSchema";
+import { useLogin } from "~/lib/auth";
 
 const LoginBtnModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useHistory();
-  const { setUserState } = useUserContext();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { mutateAsync: login } = useLogin();
 
-  const { mutate } = useLoginMutation();
-
-  function onSubmit(values) {
-    mutate(values, {
-      onError: (error) => {
-        console.log(error.response);
-      },
-      onSuccess: ({ data }) => {
-        window.localStorage.setItem('token', data.token);
-        setUserState({
-          isLoggedIn: true,
-          userInfo: {
-            ...data.user,
-          },
-          token: data.token,
-        });
-        queryClient.setQueryData('user', data.user);
-        // push them
-        router.push(`/dashboard/${data.user.username}`);
-      },
-    });
+  async function onSubmit(values: any) {
+    try {
+      const res = await login(values);
+      navigate(`/dashboard/${res?.username}`);
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 
   return (
@@ -57,7 +43,7 @@ const LoginBtnModal = () => {
         id="loginModal"
         colorScheme="red"
         size="lg"
-        mr={['0', '0', '1rem']}
+        mr={["0", "0", "1rem"]}
         onClick={onOpen}
       >
         Login
@@ -69,8 +55,8 @@ const LoginBtnModal = () => {
           <ModalCloseButton />
           <Formik
             initialValues={{
-              email: '',
-              password: '',
+              email: "",
+              password: "",
             }}
             validationSchema={LoginSchema}
             onSubmit={onSubmit}
@@ -80,7 +66,7 @@ const LoginBtnModal = () => {
                 <ModalBody>
                   {/* EMAIL */}
                   <Field name="email">
-                    {({ field, form }) => (
+                    {({ field, form }: any) => (
                       <FormControl
                         isInvalid={form.errors.email && form.touched.email}
                       >
@@ -97,7 +83,7 @@ const LoginBtnModal = () => {
                   </Field>
                   {/* PASSWORD */}
                   <Field name="password">
-                    {({ field, form }) => (
+                    {({ field, form }: any) => (
                       <FormControl
                         isInvalid={
                           form.errors.password && form.touched.password

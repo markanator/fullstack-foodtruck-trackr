@@ -13,14 +13,14 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
-} from '@chakra-ui/react';
-import React from 'react';
+} from "@chakra-ui/react";
+import React from "react";
 // locals
-import { useHistory } from 'react-router-dom';
-import DEFIMG from '../assets/random_street.jpg';
-import Layout from '../components/Layout';
-import { useDeleteAccountMutation } from '../RQ/mutations/useDeleteAccountMutation';
-import { useGetSelfQuery } from '../RQ/query/useGetSelfQuery';
+import { useNavigate } from "react-router-dom";
+import DEFIMG from "../assets/random_street.jpg";
+import Layout from "../components/Layout";
+import { useDeleteAccountMutation } from "../RQ/mutations/useDeleteAccountMutation";
+import { useGetSelfQuery } from "../RQ/query/useGetSelfQuery";
 
 export default function UserSettingsPage() {
   const { data, isLoading, isError, error } = useGetSelfQuery();
@@ -77,7 +77,7 @@ export default function UserSettingsPage() {
           {/* test */}
           <Flex>
             <Flex
-              direction={['column', 'row']}
+              direction={["column", "row"]}
               alignItems="center"
               w="full"
               // justifyContent="space-evenly"
@@ -85,7 +85,7 @@ export default function UserSettingsPage() {
               <Heading as="h4" fontSize="1.25rem" mr="1rem">
                 Delete Account:
               </Heading>
-              <DeleteModal userID={data.id} />
+              <DeleteModal userId={data.id} />
             </Flex>
           </Flex>
         </Container>
@@ -94,17 +94,17 @@ export default function UserSettingsPage() {
   );
 }
 
-function DeleteModal() {
-  const router = useHistory();
+function DeleteModal({ userId }: { userId: string }) {
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { mutate } = useDeleteAccountMutation();
 
   const handleAccountDelete = () => {
-    console.log('aaaaand its gone...');
-    mutate(null, {
+    console.log("aaaaand its gone...");
+    mutate(undefined, {
       onSuccess: () => {
-        window.localStorage.removeItem('token');
-        router.push('/');
+        window.localStorage.removeItem("token");
+        navigate("/");
         onClose();
       },
     });

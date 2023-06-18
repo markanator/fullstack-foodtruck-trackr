@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import {
   Box,
   Button,
@@ -13,34 +12,33 @@ import {
   MenuItem,
   MenuList,
   Text,
-} from '@chakra-ui/react';
-import React from 'react';
-import { FaPizzaSlice, FaTruck } from 'react-icons/fa';
-import { useQueryClient } from 'react-query';
-import { Link as RLink, useHistory } from 'react-router-dom';
-import { isLoggedIn } from '../../utils/isLoggedIn';
-import LoginBtnModal from './LoginBtnModal';
-import DrawerExample from './MobileMenu';
-import SignUpBtnModal from './SignUpBtnModal';
+} from "@chakra-ui/react";
+import React from "react";
+import { FaPizzaSlice, FaTruck } from "react-icons/fa";
+import { useQueryClient } from "@tanstack/react-query";
+import { Link as RLink, useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../../utils/isLoggedIn";
+import LoginBtnModal from "./LoginBtnModal";
+import DrawerExample from "./MobileMenu";
+import SignUpBtnModal from "./SignUpBtnModal";
+import { useLogout, useUser } from "~/lib/auth";
 
 export default function Header() {
-  const router = useHistory();
+  const navigate = useNavigate();
   let RightSide;
-  // const { userState } = useUserContext();
-  const queryClient = useQueryClient();
-
-  const queryUser = queryClient.getQueryData('user');
+  const user = useUser();
+  const { mutateAsync: logout } = useLogout();
 
   // console.log('header user data', queryUser);
 
-  if (queryUser?.username && isLoggedIn()) {
+  if (user.data?.username) {
     RightSide = (
       <>
-        {queryUser?.user_role === 'diner' ? (
+        {user?.data?.role?.name === "user" ? (
           <Button
             as={RLink}
-            to="/search-trucks"
-            mr={['0', '0', '1rem']}
+            to="/trucks"
+            mr={["0", "0", "1rem"]}
             colorScheme="red"
             rightIcon={<FaPizzaSlice />}
             size="lg"
@@ -50,8 +48,8 @@ export default function Header() {
         ) : (
           <Button
             as={RLink}
-            to="/add-truck"
-            mr={['0', '0', '1rem']}
+            to="/trucks/new"
+            mr={["0", "0", "1rem"]}
             colorScheme="red"
             rightIcon={<FaTruck />}
             size="lg"
@@ -59,26 +57,26 @@ export default function Header() {
             Add Listing
           </Button>
         )}
-        <Menu zIndex={999}>
+        <Menu>
           <MenuButton as={Button} colorScheme="red" size="lg">
             Dashboard
           </MenuButton>
           <MenuList zIndex={999}>
             <MenuGroup
               textAlign="left"
-              title={`Sign in as: ${queryUser?.username}`}
+              title={`Sign in as: ${user.data?.username}`}
               zIndex={999}
             >
               <MenuItem
                 as={RLink}
-                to={`/dashboard/${queryUser?.username}`}
+                to={`/dashboard/${user.data?.username}`}
                 zIndex={999}
               >
                 Dashboard
               </MenuItem>
               <MenuItem
                 as={RLink}
-                to={`/dashboard/${queryUser?.username}/settings`}
+                to={`/dashboard/${user.data?.username}/settings`}
                 zIndex={999}
               >
                 Settings
@@ -87,11 +85,9 @@ export default function Header() {
             <MenuDivider />
             <MenuItem
               zIndex={999}
-              onClick={() => {
-                console.log('LogOut...');
-                queryClient.invalidateQueries('user');
-                window.localStorage.removeItem('token');
-                router.push('/');
+              onClick={async () => {
+                await logout({});
+                navigate("/");
               }}
             >
               Logout
@@ -106,8 +102,8 @@ export default function Header() {
         <Button
           rightIcon={<FaPizzaSlice />}
           as={RLink}
-          to="/search-trucks"
-          mr={['0', '0', '1rem']}
+          to="/trucks"
+          mr={["0", "0", "1rem"]}
           colorScheme="red"
           size="lg"
         >
@@ -122,12 +118,12 @@ export default function Header() {
   return (
     <Flex as="header" w="full" py=".5rem" boxShadow="md" zIndex={10}>
       <Container m="auto" w="full" maxW="7xl">
-        <Center direction="row" w="full">
+        <Center flexDirection="row" w="full">
           <Box w="50%">
             <Link as={RLink} to="/" textDecoration="none" color="#ff0129">
               {/* <img src={logo} alt="site" height={38} width={142} /> */}
               <Text
-                fontSize={['1rem', '1.25rem', '1.5rem']}
+                fontSize={["1rem", "1.25rem", "1.5rem"]}
                 fontWeight="700"
                 color="#ff0129"
               >
@@ -140,7 +136,7 @@ export default function Header() {
               justifyContent="flex-end"
               direction="row"
               alignItems="center"
-              display={['flex', 'flex', 'none']}
+              display={["flex", "flex", "none"]}
             >
               <DrawerExample>{RightSide}</DrawerExample>
             </Flex>
@@ -148,7 +144,7 @@ export default function Header() {
               justifyContent="flex-end"
               direction="row"
               alignItems="center"
-              display={['none', 'none', 'flex']}
+              display={["none", "none", "flex"]}
             >
               {RightSide}
             </Flex>

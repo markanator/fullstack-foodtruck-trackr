@@ -1,9 +1,9 @@
 import Axios from '../../axios';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export function useFetchTruckDetails(truckID) {
   return useQuery(
-    ['truck', parseInt(truckID)],
+    ['truck', truckID],
     async () =>
       Axios.get(
         `/trucks/${truckID}`

@@ -1,11 +1,11 @@
 import Axios from '../../axios';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export function useFetchTopTrucks(amount = 3) {
   const queryClient = useQueryClient();
 
   return useQuery(
-    'topTrucks',
+    ['topTrucks', amount],
     async () => {
       const trucks = await Axios.get(
         `/trucks/top/${amount}`

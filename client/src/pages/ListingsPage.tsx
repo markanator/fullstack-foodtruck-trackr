@@ -11,16 +11,16 @@ import {
   MenuItem,
   MenuList,
   Text,
-} from '@chakra-ui/react';
-import React, { useCallback, useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
-import { useQueryClient } from 'react-query';
+} from "@chakra-ui/react";
+import React, { useCallback, useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
+import { useQueryClient } from "@tanstack/react-query";
 // locals
-import Layout from '../components/Layout';
-import GMap from '../components/Search/GMap';
-import { TruckListingCard } from '../components/Search/TruckListingCard';
-import { useTrucksQuery } from '../RQ/query/useTrucksQuery';
-import NewsletterSection from '../components/NewsletterSection';
+import Layout from "../components/Layout";
+import GMap from "../components/Search/GMap";
+import { TruckListingCard } from "../components/Search/TruckListingCard";
+import { useTrucksQuery } from "../RQ/query/useTrucksQuery";
+import NewsletterSection from "../components/NewsletterSection";
 
 export default function ListingsPage() {
   const queryClient = useQueryClient();
@@ -28,7 +28,7 @@ export default function ListingsPage() {
   // fetch trucks
   const { data: trucks, isLoading, isError } = useTrucksQuery(page);
   // fetch cached pageInfo that was set above
-  const info = queryClient.getQueryData('pageInfo');
+  const info = queryClient.getQueryData(["pageInfo"]) as any;
 
   const handleNextClick = useCallback(() => {
     setPage((old) => old + 1);
@@ -38,7 +38,7 @@ export default function ListingsPage() {
   }, []);
   // console.log('render');
   return (
-    <Layout>
+    <>
       <Flex direction="column">
         <Flex
           w="full"
@@ -49,7 +49,7 @@ export default function ListingsPage() {
         >
           {/* MAP & SEARCH */}
           <GMap trucks={trucks} />
-        </Flex>{' '}
+        </Flex>{" "}
         <Container maxW="6xl">
           {/* FILTERING */}
           <Flex direction="column">
@@ -122,13 +122,13 @@ export default function ListingsPage() {
             </Box>
           </Flex>
           {/* LISTINGS */}
-          <Box mx="-1rem" wrap="wrap" className="row" mb="2rem">
+          <Box mx="-1rem" flexWrap="wrap" className="row" mb="2rem">
             {isLoading ? (
               <Text>Loading...</Text>
             ) : isError ? (
               <Text>Oops, an error occured try again later...</Text>
             ) : trucks ? (
-              trucks.map((truck, idx) => (
+              trucks.map((truck: any, idx: number) => (
                 <TruckListingCard key={`${idx}-${truck.slug}`} info={truck} />
               ))
             ) : null}
@@ -169,6 +169,6 @@ export default function ListingsPage() {
       </Flex>
       {/* SEND EMAIL */}
       <NewsletterSection bgcolor="#f96825" />
-    </Layout>
+    </>
   );
 }

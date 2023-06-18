@@ -1,7 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable camelcase */
-/* eslint-disable no-multi-str */
-/* eslint-disable react/jsx-props-no-spreading */
 import {
   Box,
   Button,
@@ -18,36 +14,38 @@ import {
   Select,
   Text,
   Textarea,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   Combobox,
   ComboboxInput,
   ComboboxList,
   ComboboxOption,
   ComboboxPopover,
-} from '@reach/combobox';
-import '@reach/combobox/styles.css';
-import { useLoadScript } from '@react-google-maps/api';
-import { Field, Form, Formik } from 'formik';
-import React, { useState } from 'react';
-import { useQueryClient } from 'react-query';
-import { Link as RLink } from 'react-router-dom';
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
+import { useLoadScript } from "@react-google-maps/api";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Link as RLink } from "react-router-dom";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
-} from 'use-places-autocomplete';
+} from "use-places-autocomplete";
 // locals
-import Layout from '../components/Layout';
-import { CreateTruckSchema } from '../Forms/Schemas/CreateTruckSchema';
-import { useCreateTruckMutation } from '../RQ/mutations/useCreateTruckMutation';
+import Layout from "../components/Layout";
+import { CreateTruckSchema } from "../Forms/Schemas/CreateTruckSchema";
+import { useCreateTruckMutation } from "../RQ/mutations/useCreateTruckMutation";
 
-const libraries = ['places'];
+const libraries = ["places"];
 
 // ! MAIN EXPORT
 export default function CreateTruckForm() {
   const queryClient = useQueryClient();
   const { isLoaded } = useLoadScript({
+    // @ts-ignore
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
+    // @ts-ignore
     libraries,
   });
 
@@ -60,45 +58,45 @@ export default function CreateTruckForm() {
   } = usePlacesAutocomplete();
 
   const [latLng, setLatLng] = useState({ lat: 43.0, lng: -87.0 });
-  const [heroImg, setHeroImg] = useState('');
+  const [heroImg, setHeroImg] = useState("");
   const [truckDeets, setTruckDeets] = useState({ id: null });
 
   const cuisineTypes = [
-    'American',
-    'Mexican',
-    'Greek',
-    'SeaFood',
-    'Vegan',
-    'Vegetarian',
-    'Chinese',
-    'Thai',
-    'Dessert',
-    'Italian',
-    'Filipino',
-    'Kosher',
+    "American",
+    "Mexican",
+    "Greek",
+    "SeaFood",
+    "Vegan",
+    "Vegetarian",
+    "Chinese",
+    "Thai",
+    "Dessert",
+    "Italian",
+    "Filipino",
+    "Kosher",
   ];
 
-  const handleLatLngChange = (e) => {
+  const handleLatLngChange = (e: any) => {
     setLatLng({ ...latLng, [e.target.name]: e.target.value });
   };
 
-  const uploadFile = async (e) => {
-    console.log('uploading...');
+  const uploadFile = async (e: any) => {
+    console.log("uploading...");
     const { files } = e.target;
     if (files[0].size > 1048576) {
-      alert('Image size larger than 1MB.');
-      console.log('file too big, not uploaded');
+      alert("Image size larger than 1MB.");
+      console.log("file too big, not uploaded");
       return;
     }
 
     const imgData = new FormData();
-    imgData.append('file', files[0]);
-    imgData.append('upload_preset', 'foodtrucks');
+    imgData.append("file", files[0]);
+    imgData.append("upload_preset", "foodtrucks");
 
     const res = await fetch(
-      'https://api.cloudinary.com/v1_1/dmh43eiaf/image/upload',
+      "https://api.cloudinary.com/v1_1/dmh43eiaf/image/upload",
       {
-        method: 'POST',
+        method: "POST",
         body: imgData,
       }
     );
@@ -109,7 +107,7 @@ export default function CreateTruckForm() {
 
   const { mutate, isSuccess, isLoading, isIdle } = useCreateTruckMutation();
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: any) => {
     const truck = {
       ...values,
       address: value,
@@ -123,23 +121,23 @@ export default function CreateTruckForm() {
         setTruckDeets({
           ...deets.data,
         });
-        queryClient.setQueryData(['truck', deets?.data.id], deets?.data);
+        queryClient.setQueryData(["truck", deets?.data.id], deets?.data);
       },
     });
   };
 
   return (
-    <Layout>
+    <>
       <Box background="#f7f9fc">
         <Container maxW="5xl" py="4rem">
           <Formik
             initialValues={{
-              name: '',
-              cuisine_type: '',
-              price_range: '',
-              description: '',
-              arrival_time: '',
-              departure_time: '',
+              name: "",
+              cuisine_type: "",
+              price_range: "",
+              description: "",
+              arrival_time: "",
+              departure_time: "",
             }}
             validationSchema={CreateTruckSchema}
             onSubmit={handleSubmit}
@@ -147,11 +145,11 @@ export default function CreateTruckForm() {
             {() => (
               <Form
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 {/* FIRST SECTION = TRUCK DETAILS */}
@@ -175,7 +173,7 @@ export default function CreateTruckForm() {
                   <Box w="100%" padding="1rem 1.25rem 1.25rem">
                     {/* Name */}
                     <Field name="name">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl
                           isInvalid={form.errors.name && form.touched.name}
                           mb="1rem"
@@ -197,7 +195,7 @@ export default function CreateTruckForm() {
                     </Field>
                     {/* CUISINE TYPE */}
                     <Field name="cuisine_type">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl
                           isInvalid={
                             form.errors.cuisine_type &&
@@ -231,7 +229,7 @@ export default function CreateTruckForm() {
                     </Field>
                     {/* PRICE RANGE */}
                     <Field name="price_range">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl
                           isInvalid={
                             form.errors.price_range && form.touched.price_range
@@ -260,7 +258,7 @@ export default function CreateTruckForm() {
                     </Field>
                     {/* Description */}
                     <Field name="description">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl
                           isInvalid={
                             form.errors.description && form.touched.description
@@ -308,7 +306,7 @@ export default function CreateTruckForm() {
                   <Box w="100%" padding="1rem 1.25rem 1.25rem">
                     {/* Image */}
                     <Field name="hero_image">
-                      {({ field, form }) => (
+                      {({ field, form }: any) => (
                         <FormControl
                           isInvalid={
                             form.errors.hero_image && form.touched.hero_image
@@ -377,9 +375,11 @@ export default function CreateTruckForm() {
                     w="100%"
                     padding="1rem 1.25rem 0"
                     onSelect={async (location) => {
+                      // @ts-ignore
                       setValue(location, false);
                       clearSuggestions();
                       try {
+                        // @ts-ignore
                         const results = await getGeocode({ address: location });
                         const { lat, lng } = await getLatLng(results[0]);
                         setLatLng({ lat, lng });
@@ -398,9 +398,9 @@ export default function CreateTruckForm() {
                       disabled={!isLoaded && !ready}
                       mb="1rem"
                     />
-                    <ComboboxPopover style={{ borderRadius: '5px' }}>
+                    <ComboboxPopover style={{ borderRadius: "5px" }}>
                       <List as={ComboboxList} borderRadius="5px" boxShadow="lg">
-                        {status === 'OK' &&
+                        {status === "OK" &&
                           data.map(({ description }) => (
                             <ListItem
                               as={ComboboxOption}
@@ -411,8 +411,8 @@ export default function CreateTruckForm() {
                               px=".875rem"
                               fontSize="1rem"
                               _hover={{
-                                background: '#e2e2e2',
-                                cursor: 'pointer',
+                                background: "#e2e2e2",
+                                cursor: "pointer",
                               }}
                             />
                           ))}
@@ -422,7 +422,7 @@ export default function CreateTruckForm() {
                   {/* LAT LNG */}
                   <Box
                     display="flex"
-                    direction="row"
+                    flexDir="row"
                     w="100%"
                     padding="0 1.25rem 1.25rem"
                     mb=".5rem"
@@ -473,14 +473,14 @@ export default function CreateTruckForm() {
                   </Flex>
                   <Box
                     display="flex"
-                    direction="row"
+                    flexDir="row"
                     w="100%"
                     padding="1rem 1.25rem 1.25rem"
                   >
                     {/* ARRIVAL TIME */}
                     <Flex w={1 / 2} mr=".5rem">
                       <Field name="arrival_time">
-                        {({ field, form }) => (
+                        {({ field, form }: any) => (
                           <FormControl
                             isInvalid={
                               form.errors.arrival_time &&
@@ -508,7 +508,7 @@ export default function CreateTruckForm() {
                     </Flex>
                     <Flex w={1 / 2} ml=".5rem">
                       <Field name="departure_time">
-                        {({ field, form }) => (
+                        {({ field, form }: any) => (
                           <FormControl
                             isInvalid={
                               form.errors.departure_time &&
@@ -554,11 +554,11 @@ export default function CreateTruckForm() {
                     disabled={isSuccess}
                   >
                     {isLoading
-                      ? 'Submitting...'
+                      ? "Submitting..."
                       : isSuccess
-                      ? 'Truck Created!'
+                      ? "Truck Created!"
                       : isIdle
-                      ? 'Submit'
+                      ? "Submit"
                       : null}
                   </Button>
                   {isSuccess ? (
@@ -580,6 +580,6 @@ export default function CreateTruckForm() {
           </Formik>
         </Container>
       </Box>
-    </Layout>
+    </>
   );
 }

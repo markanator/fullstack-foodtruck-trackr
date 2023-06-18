@@ -7,37 +7,35 @@ import {
   Link,
   List,
   ListItem,
-} from '@chakra-ui/react';
-import Axios from '../axios';
-import React, { useEffect } from 'react';
-import { FaPhoneAlt, FaRegClock, FaStore } from 'react-icons/fa';
+} from "@chakra-ui/react";
+import Axios from "../axios";
+import React, { useEffect } from "react";
+import { FaPhoneAlt, FaRegClock, FaStore } from "react-icons/fa";
 // locals
-import { useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
-import DefaultTruckImage from '../assets/default_truck.webp';
-import Layout from '../components/Layout';
-import MainDetailsCard from '../components/TruckDetails/MainDetailsCard';
-import SingleTruckMap from '../components/TruckDetails/StaticTruckMap';
-import TruckHeroImage from '../components/TruckDetails/TruckHeroImage';
-import TruckMenuList from '../components/TruckDetails/TruckMenuList';
-import TruckSocials from '../components/TruckDetails/TruckSocials';
-import { useFetchTruckDetails } from '../RQ/query/useFetchTruckDetails';
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import DefaultTruckImage from "../assets/default_truck.webp";
+import Layout from "../components/Layout";
+import MainDetailsCard from "../components/TruckDetails/MainDetailsCard";
+import SingleTruckMap from "../components/TruckDetails/StaticTruckMap";
+import TruckHeroImage from "../components/TruckDetails/TruckHeroImage";
+import TruckMenuList from "../components/TruckDetails/TruckMenuList";
+import TruckSocials from "../components/TruckDetails/TruckSocials";
+import { useFetchTruckDetails } from "../RQ/query/useFetchTruckDetails";
 
 //! MAIN EXPORT PAGE
 export default function TruckDetails() {
   const { truckID } = useParams();
   // const [truck, setTruck] = useState({});
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData('user');
+  const user = queryClient.getQueryData(["user"]);
 
   // react query fetch
   const { isLoading, isError, data: truck } = useFetchTruckDetails(truckID);
 
   useEffect(() => {
     async function addPageView() {
-      Axios.get(
-        `/trucks/visited/${truckID}`
-      ).then((res) => res.data);
+      Axios.get(`/trucks/visited/${truckID}`).then((res) => res.data);
     }
     addPageView();
   }, [truckID]);
@@ -50,24 +48,24 @@ export default function TruckDetails() {
   }
 
   return (
-    <Layout>
+    <>
       <Flex direction="column" as="main">
         <TruckHeroImage
           src={truck.hero_image || DefaultTruckImage}
-          alt={truck.name}
+          name={truck.name}
         />
         <Container
           as="section"
           maxW="6xl"
           display="flex"
-          flexDirection={['column', 'column', 'row']}
+          flexDirection={["column", "column", "row"]}
           py="4rem"
         >
           <Flex
-            w={['full', 'full', '66%']}
+            w={["full", "full", "66%"]}
             // backgroundColor="red"
             direction="column"
-            px={['0', '0', '1rem']}
+            px={["0", "0", "1rem"]}
             mb="2rem"
           >
             {/* MAIN IMPORTANT DEETS */}
@@ -84,8 +82,8 @@ export default function TruckDetails() {
           {/* RIGHT SIDE */}
           <Flex
             as="aside"
-            px={['0', '0', '1rem']}
-            w={['full', 'full', '33%']}
+            px={["0", "0", "1rem"]}
+            w={["full", "full", "33%"]}
             // bg="blue"
             direction="column"
           >
@@ -115,13 +113,13 @@ export default function TruckDetails() {
               >
                 <FaStore
                   style={{
-                    marginRight: '1rem',
-                    color: 'white',
-                    width: '40px',
-                    height: '40px',
-                    background: '#ff0122',
-                    padding: '10px',
-                    borderRadius: '50%',
+                    marginRight: "1rem",
+                    color: "white",
+                    width: "40px",
+                    height: "40px",
+                    background: "#ff0122",
+                    padding: "10px",
+                    borderRadius: "50%",
                   }}
                 />
                 Location
@@ -154,13 +152,13 @@ export default function TruckDetails() {
               >
                 <FaRegClock
                   style={{
-                    marginRight: '1rem',
-                    color: 'white',
-                    width: '40px',
-                    height: '40px',
-                    background: '#ff0122',
-                    padding: '10px',
-                    borderRadius: '50%',
+                    marginRight: "1rem",
+                    color: "white",
+                    width: "40px",
+                    height: "40px",
+                    background: "#ff0122",
+                    padding: "10px",
+                    borderRadius: "50%",
                   }}
                 />
                 Business Hours
@@ -179,7 +177,7 @@ export default function TruckDetails() {
                   transition="color .2s"
                   cursor="default"
                   _hover={{
-                    color: '#ff0122',
+                    color: "#ff0122",
                   }}
                 >
                   Arrive
@@ -204,7 +202,7 @@ export default function TruckDetails() {
                   transition="color .2s"
                   cursor="default"
                   _hover={{
-                    color: '#ff0122',
+                    color: "#ff0122",
                   }}
                 >
                   Depart
@@ -242,13 +240,13 @@ export default function TruckDetails() {
               >
                 <FaPhoneAlt
                   style={{
-                    marginRight: '1rem',
-                    color: 'white',
-                    width: '40px',
-                    height: '40px',
-                    background: '#ff0122',
-                    padding: '10px',
-                    borderRadius: '50%',
+                    marginRight: "1rem",
+                    color: "white",
+                    width: "40px",
+                    height: "40px",
+                    background: "#ff0122",
+                    padding: "10px",
+                    borderRadius: "50%",
                   }}
                 />
                 Point of Contact
@@ -277,6 +275,6 @@ export default function TruckDetails() {
           </Flex>
         </Container>
       </Flex>
-    </Layout>
+    </>
   );
 }
