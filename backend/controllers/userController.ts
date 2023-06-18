@@ -1,6 +1,5 @@
 import type { Response } from "express";
 import * as User from "../models/User";
-import createToken from "../utils/createToken";
 import addFavoritesAndOwned from "../utils/addFavoritesAndOwned";
 import addTotalTruckViews from "../utils/addTotalViews";
 import addTotalTruckReviews from "../utils/addTotalTruckReviews";

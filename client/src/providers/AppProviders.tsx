@@ -4,7 +4,14 @@ import { HelmetProvider } from "react-helmet-async";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Button, ChakraProvider, Spinner } from "@chakra-ui/react";
+import {
+  Button,
+  ChakraProvider,
+  Container,
+  Flex,
+  Heading,
+  Spinner,
+} from "@chakra-ui/react";
 // import { AuthLoader } from "~/lib/auth";
 import UserProvider from "./UserContext";
 import { queryClient } from "~/lib/react-query";
@@ -13,9 +20,12 @@ import { AuthLoader } from "~/lib/auth";
 
 const ErrorFallback = () => {
   return (
-    <div
-      className="text-red-500 w-screen h-screen flex flex-col justify-center items-center"
-      role="alert"
+    <Flex
+      w="100vw"
+      h="100vh"
+      alignItems="center"
+      justifyContent="center"
+      flexDir="column"
     >
       <h2 className="text-lg font-semibold">Ooops, something went wrong :( </h2>
       <Button
@@ -24,7 +34,7 @@ const ErrorFallback = () => {
       >
         Refresh
       </Button>
-    </div>
+    </Flex>
   );
 };
 
@@ -34,19 +44,29 @@ type AppProviderProps = {
 
 const Loader = () => {
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <Flex w="100vw" h="100vh" alignItems="center" justifyContent="center">
       <Spinner size="xl" />
-    </div>
+    </Flex>
   );
 };
+const Page403 = () => (
+  <>
+    <Container maxW="5xl" py="4rem">
+      <Heading as="h1">Error 403!</Heading>
+      <Heading as="h3" fontSize="xl">
+        Thou shalt not pass!
+      </Heading>
+    </Container>
+  </>
+);
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <React.Suspense
       fallback={
-        <div className="flex items-center justify-center w-screen h-screen">
+        <Flex w="100vw" h="100vh" alignItems="center" justifyContent="center">
           <Spinner size="xl" />
-        </div>
+        </Flex>
       }
     >
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -55,7 +75,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             <QueryClientProvider client={queryClient}>
               <ReactQueryDevtools />
               {/* <Notifications /> */}
-              <AuthLoader renderLoading={Loader}>
+              <AuthLoader
+                renderLoading={Loader}
+                renderUnauthenticated={Page403}
+              >
                 <Router>
                   <UserProvider>{children}</UserProvider>
                 </Router>
