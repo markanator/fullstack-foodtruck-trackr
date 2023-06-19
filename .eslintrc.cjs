@@ -18,8 +18,17 @@ const config = {
   parserOptions: {
     project: path.join(__dirname, "tsconfig.json"),
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "tailwindcss"],
   extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn"],
+      "config": "tailwind.config.js"
+    },
+    // "next": {
+    //   "rootDir": true
+    // }
+  },
   rules: {
     "@typescript-eslint/consistent-type-imports": [
       "warn",
@@ -29,6 +38,10 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "@next/next/no-html-link-for-pages": "off",
+    "react/jsx-key": "off",
+    "tailwindcss/no-custom-classname": "off",
+    "tailwindcss/classnames-order": "error"
   },
 };
 

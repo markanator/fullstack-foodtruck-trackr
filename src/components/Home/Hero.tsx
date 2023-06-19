@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import React from "react";
 
 function Hero() {
@@ -9,7 +10,7 @@ function Hero() {
           backgroundImage: "url('/img/bg-header-9.png')",
           backgroundSize: "100% 100%",
         }}
-        className="sticky-header-first-content dark:bg-foreground"
+        className="sticky-header-first-content h-full max-h-[768px] dark:bg-foreground"
       >
         {/* HERO CONTENT */}
         <div className="container mx-auto grid grid-cols-12 items-center py-[50px]">
@@ -57,7 +58,13 @@ function Hero() {
             </div>
           </div>
           <div className="relative hidden lg:col-span-5 lg:block">
-            <img className="w-full" src="/img/restaurant-foods.png" alt="" />
+            <Image
+              className="w-full"
+              src="/img/restaurant-foods.png"
+              alt=""
+              width={557}
+              height={686}
+            />
           </div>
         </div>
       </header>

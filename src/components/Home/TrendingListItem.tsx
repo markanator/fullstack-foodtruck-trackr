@@ -58,9 +58,9 @@ function TrendingListItem({ title }: Props) {
                 className="mr-1 h-3 w-3 text-green-500"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
               <span className="text-xs font-medium">Featured</span>
@@ -112,8 +112,8 @@ function TrendingListItem({ title }: Props) {
                 <path
                   d="M7 10L8.64645 11.6464C8.84171 11.8417 9.15829 11.8417 9.35355 11.6464L13 8"
                   stroke="white"
-                  stroke-width="1.2"
-                  stroke-linecap="round"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
                 />
               </svg>
             </div>
@@ -202,9 +202,9 @@ function TrendingListItem({ title }: Props) {
                 className="h-6 w-6 flex-shrink-0"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </button>
