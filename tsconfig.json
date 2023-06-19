@@ -34,11 +34,11 @@
   },
   "include": [
     ".eslintrc.cjs",
-    "next-env.d.ts",
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./src/**/*.cjs",
-    "./src/**/*.mjs",
+    "src/types/next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.cjs",
+    "src/**/*.mjs",
     ".next/types/**/*.ts"
   ],
   "exclude": [
