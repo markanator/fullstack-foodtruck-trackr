@@ -6,7 +6,7 @@ await import("./src/env.mjs");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  output: 'standalone',
+  output: "standalone",
   reactStrictMode: true,
   images: {
     domains: ["avatars.githubusercontent.com"],

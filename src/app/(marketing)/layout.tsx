@@ -29,7 +29,7 @@ function layout({ children }: Props) {
           </nav>
         </div>
       </header>
-      <main className="flex-1">{children}</main>
+      <main className="h-full w-full">{children}</main>
       <Footer />
     </div>
   );
