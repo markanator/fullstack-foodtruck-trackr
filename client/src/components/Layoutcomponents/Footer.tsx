@@ -1,5 +1,5 @@
-import { Container, Flex, Link, Text } from "@chakra-ui/react";
-import React from "react";
+import { Container, Flex, Link, Text } from '@chakra-ui/react';
+import React from 'react';
 
 const Footer = () => (
   <Flex
@@ -10,23 +10,22 @@ const Footer = () => (
     borderTop="1px solid rgba(246,255,255,.07)"
   >
     <Container py="2rem" maxW="3xl">
-      <Text textAlign="center" fontFamily={[".875rem", "1rem", "1.5rem"]}>
-        Copyright &copy; 2020 - {new Date().getFullYear()} Food Truck Trackr.
-        Made with{" "}
+      <Text textAlign="center" fontFamily={['.875rem', '1rem', '1.5rem']}>
+        Copyright &copy; 2020 - {new Date().getFullYear()} Food Truck Trackr. Made with{' '}
         <span
           role="textbox"
-          alt="love"
+          // alt="love"
           style={{
-            color: "white",
+            color: 'white',
           }}
         >
           💪
         </span>
-        by:{" "}
+        by:{' '}
         <Link href="https://markambrocio.com" isExternal>
-          {" "}
+          {' '}
           Mark Ambrocio
-        </Link>{" "}
+        </Link>{' '}
         - All Rights Reserved.
       </Text>
     </Container>

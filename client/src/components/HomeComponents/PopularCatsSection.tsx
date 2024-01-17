@@ -18,12 +18,7 @@ export default function PopularCatsSection() {
   return (
     <Flex direction="column" py="6rem" bg="gray.100">
       <Container maxW="5xl" mx="auto">
-        <Flex
-          direction="column"
-          mx="auto"
-          textAlign="center"
-          alignItems="center"
-        >
+        <Flex direction="column" mx="auto" textAlign="center" alignItems="center">
           <Box>
             <Heading mb="5px">Featured Categories</Heading>
             <Text color="gray.500" mb="5px" fontSize="1.25rem">
@@ -44,9 +39,7 @@ export default function PopularCatsSection() {
                 : isError
                 ? 'ERROR'
                 : data && !isLoading
-                ? data?.map((cat) => (
-                    <HomeFeaturedCatCard key={cat.cuisine_type} info={cat} />
-                  ))
+                ? data?.map((cat) => <HomeFeaturedCatCard key={cat.cuisineType} info={cat} />)
                 : null}
             </List>
           </Flex>

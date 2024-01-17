@@ -1,10 +1,11 @@
-/* eslint-disable react/prop-types */
+import { Utensils } from 'lucide-react';
 import { Box, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Link as RLink } from 'react-router-dom';
+import { TopCuisines } from '~/RQ/query/useFetchTopCuisines';
 
 // eslint-disable-next-line react/prop-types
-export default function HomeFeaturedCatCard({ info }) {
+export default function HomeFeaturedCatCard({ info }: { info: TopCuisines }) {
   return (
     <ListItem m={['.125rem', '.5rem', '1rem']} w="full">
       <Flex
@@ -25,11 +26,11 @@ export default function HomeFeaturedCatCard({ info }) {
         mx="auto"
       >
         <Box fontSize="2rem" color="red.500" mb="1rem">
-          <IoFastFood />
+          <Utensils />
         </Box>
         <Box>
-          <Heading fontSize="1.125rem">{info.cuisine_type}</Heading>
-          <Text color="gray.400">{info.count} Trucks</Text>
+          <Heading fontSize="1.125rem">{info.cuisineType}</Heading>
+          <Text color="gray.400">{info._count.cuisineType} Trucks</Text>
         </Box>
       </Flex>
     </ListItem>
