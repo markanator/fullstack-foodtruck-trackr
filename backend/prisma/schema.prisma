@@ -7,28 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model File {
-  id        String   @id @unique @default(cuid())
-  blob      Bytes
-  createdAt DateTime
-  updatedAt DateTime
-  Image     Image?
-}
-
-model Image {
-  file   File   @relation(fields: [fileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  fileId String @unique
-
-  contentType String
-  altText     String?
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user      User?
-  truck     Truck?
-  menuItem  MenuItem?
-}
-
 model Role {
   id   String @id @unique @default(cuid())
   name String @unique
@@ -40,23 +18,21 @@ model Role {
 }
 
 model User {
-  id             String     @id @unique @default(cuid())
-  email          String     @unique
-  username       String     @unique
-  firstName      String?
-  lastName       String?
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  id           String     @id @unique @default(cuid())
+  username     String     @unique
+  firstName    String?
+  lastName     String?
+  avatar       String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   // relations
-  avatar         Image?     @relation(fields: [avatarId], references: [fileId])
-  avatarId       String?    @unique
-  roles          Role[]
-  ownedTrucks    Truck[]
-  truckReviews   Review[]
-  truckFavorites Favorite[]
+  roles        Role[]
+  reviews      Review[]
+  favorites    Favorite[]
+  ownedTrucks  Truck[]
   // AUTH
-  auth_session   Session[]
-  key            Key[]
+  auth_session Session[]
+  key          Key[]
 }
 
 model Session {
@@ -88,23 +64,22 @@ model Truck {
   address     String?
   phone       String?
   views       BigInt?     @default(0)
+  avatar      String?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   // relations
-  photo       Image?      @relation(fields: [photoId], references: [fileId])
-  photoId     String?     @unique
   owner       User        @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownerId     String
-  stops       TruckStop[]
-  reviews     Review[]
-  favorites   Favorite[]
   menuItems   MenuItem[]
+  reviews     Review[]
+  stops       TruckStop[]
+  favorites   Favorite[]
 }
 
 model Location {
-  id         String     @id @unique @default(cuid())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id         String      @id @unique @default(cuid())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
   address    String
   city       String
   state      String
@@ -115,18 +90,18 @@ model Location {
   departAt   DateTime?
   duration   Int?
   // relations
-  truckStops TruckStop?
+  truckStops TruckStop[]
 }
 
 model TruckStop {
-  id         String    @id @unique @default(cuid())
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id         String   @id @unique @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   // relations
-  truck      Truck     @relation(fields: [truckId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  truck      Truck    @relation(fields: [truckId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   truckId    String
-  location   Location? @relation(fields: [locationId], references: [id])
-  locationId String?   @unique
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId String   @unique
 }
 
 model Review {
@@ -134,7 +109,7 @@ model Review {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   rating    Int
-  content   String?
+  body      String?
   // relations
   truck     Truck    @relation(fields: [truckId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   truckId   String
@@ -155,14 +130,13 @@ model Favorite {
 
 model MenuItem {
   id          String   @id @unique @default(cuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  photo       String?
   name        String
   description String?
   price       Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   // relations
   truck       Truck    @relation(fields: [truckId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   truckId     String
-  photo       Image?   @relation(fields: [photoId], references: [fileId], onDelete: SetNull, onUpdate: Cascade)
-  photoId     String?  @unique
 }

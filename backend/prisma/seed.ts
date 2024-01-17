@@ -1,5 +1,6 @@
-const { PrismaClient } = require("@prisma/client");
-const { faker } = require('@faker-js/faker')
+import { PrismaClient } from '@prisma/client'
+// import {faker} from '@faker-js/faker'
+
 const prisma = new PrismaClient
 
 async function seed() {
@@ -7,7 +8,6 @@ async function seed() {
   await prisma.truckStop.deleteMany();
   await prisma.truck.deleteMany();
   await prisma.favorite.deleteMany();
-  await prisma.file.deleteMany();
   await prisma.location.deleteMany();
   await prisma.key.deleteMany();
   await prisma.session.deleteMany();
