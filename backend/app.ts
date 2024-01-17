@@ -15,8 +15,8 @@ server.use(cors());
 server.use(helmet());
 server.use(compression());
 server.use(morgan("dev"));
-server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
+server.use(express.json({ limit: "3MB"}));
+server.use(express.urlencoded({ extended: true, limit: "3MB" }));
 
 if (__prod__) {
   server.use(express.static(path.resolve(__dirname, "dist")));

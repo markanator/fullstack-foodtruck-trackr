@@ -1,33 +1,32 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import type { ReqWithUser } from "../types.js";
 import addFavoritesAndOwned from "../utils/addFavoritesAndOwned.js";
 import jwt from "jsonwebtoken";
 import { auth } from "../lib/lucia.js";
 import { LuciaError } from "lucia";
 
+const PROVIDER_KEY = "email";
+
 export const register = async (req: ReqWithUser, res: Response) => {
   try {
     const {
       email,
       username,
-      first_name: firstName,
-      last_name: lastName,
       password,
-      user_role,
     } = req.body as any;
     const user = await auth.createUser({
 			key: {
-				providerId: "email", // auth method
+				providerId: PROVIDER_KEY, // auth method
 				providerUserId: email, // unique id when using "username" auth method
 				password // hashed by Lucia
 			},
 			attributes: {
 				username,
-        firstName,
-        lastName,
+        email,
+        email_verified: false,
         roles: {
           connect: {
-            name: user_role || "user",
+            name: "user",
           },
         },
 			}
@@ -39,27 +38,43 @@ export const register = async (req: ReqWithUser, res: Response) => {
 		const authRequest = auth.handleRequest(req, res);
 		authRequest.setSession(session);
 		// redirect to profile page
-		return res.status(201).json({ success: true, message: "User created" });
+		return res.status(201).json({ success: true, data: user.userId });
   } catch (error: any) {
     console.log(error);
     if (
 			error instanceof LuciaError && error?.message === "AUTH_DUPLICATE_KEY_ID"
 		) {
-			return res.status(400).send("Username and/or email already taken");
+			return res.status(400).json({success: false, message:"Username and/or email already taken"});
 		}
-    return res.status(500).json({ error: "Server is malfunctioning" });
+    return res.status(500).json({ success: false, message: "Server is malfunctioning" });
   }
 };
 
-export const loginUser = async (req: ReqWithUser, res: Response) => {
+export const loginUser = async (req: Request, res: Response) => {
   try {
-    // const token = await createToken(req.user!);
-    // delete req.user.password;
-    await addFavoritesAndOwned(req.user as any);
-    return res.status(200).json({ user: req.user, token: "TOKEN" });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: "Server is malfunctioning" });
+    console.log(req.body)
+    const {email, password} = req.body;
+		const key = await auth.useKey(PROVIDER_KEY, email, password);
+    console.log({key})
+		const session = await auth.createSession({
+			userId: key.userId,
+			attributes: {}
+		});
+    console.log({session})
+		const authRequest = auth.handleRequest(req, res);
+		authRequest.setSession(session);
+    return res.status(200).json({ success: true, data: session?.user });
+  } catch (e: any) {
+    console.log(e);
+    // check for unique constraint error in user table
+		if (
+			e instanceof LuciaError &&
+			(e.message === "AUTH_INVALID_KEY_ID" ||
+				e.message === "AUTH_INVALID_PASSWORD")
+		) {
+			return res.status(400).json({success: false, message: "Incorrect email or password"});
+		}
+    return res.status(500).json({ success: false, message: "Server is malfunctioning" });
   }
 };
 
