@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import * as Truck from "../models/Truck";
+import * as Truck from "../models/Truck.js";
 
 const addTotalTruckViews = async (
   user: User & { roles: { name: string }[] }

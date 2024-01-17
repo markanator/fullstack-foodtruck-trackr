@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import prisma from "../data/db.server";
+import prisma from "../data/db.server.js";
 
 export const insert = async (truckData: Prisma.TruckCreateArgs["data"]) => {
   return prisma.truck.create({

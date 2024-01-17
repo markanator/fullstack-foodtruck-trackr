@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-
-const slugify = require("slugify");
+import slugify from "slugify";
 
 const editTruckRequirements = (
   req: Request & { truck?: any },
@@ -20,7 +19,7 @@ const editTruckRequirements = (
     // departure_time,
     // arrival_time,
   } = req.body as any;
-  const slug = slugify(name || req.truck.name);
+  const slug = slugify.default(name || req.truck.name);
   // @ts-ignore
   req.truckData = {
     name: name || req.truck.name,

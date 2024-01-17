@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { findRatingsByUserID } from "../models/TruckRating";
+import { findRatingsByUserID } from "../models/TruckRating.js";
 
 const addTotalTruckReviews = async (
   user: User & { roles: { name: string }[] }

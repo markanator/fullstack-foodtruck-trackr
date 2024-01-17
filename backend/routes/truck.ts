@@ -1,13 +1,13 @@
 import express from "express";
-import * as TruckController from "../controllers/truckController";
-import validateTruck from "../middleware/validateTruck";
-import validateToken from "../middleware/validateToken";
-import createTruckRequirements from "../middleware/createTruckRequirements";
-import editTruckRequirements from "../middleware/editTruckRequirements";
-import createMenuItemRequirements from "../middleware/createMenuItemRequirements";
-import validateFood from "../middleware/validateFood";
-import editFoodItemRequirements from "../middleware/editFoodItemRequirements";
-import paginatedTruckResults from "../middleware/paginatedResults";
+import * as TruckController from "../controllers/truckController.js";
+import validateTruck from "../middleware/validateTruck.js";
+import validateToken from "../middleware/validateToken.js";
+import createTruckRequirements from "../middleware/createTruckRequirements.js";
+import editTruckRequirements from "../middleware/editTruckRequirements.js";
+import createMenuItemRequirements from "../middleware/createMenuItemRequirements.js";
+import validateFood from "../middleware/validateFood.js";
+import editFoodItemRequirements from "../middleware/editFoodItemRequirements.js";
+import paginatedTruckResults from "../middleware/paginatedResults.js";
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-import prisma from "../data/db.server";
+import prisma from "../data/db.server.js";
 
 /**
  * finds a user by id

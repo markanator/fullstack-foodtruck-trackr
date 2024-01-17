@@ -1,7 +1,6 @@
 import { NextFunction, Response } from "express";
-import { ReqWithUser } from "../types";
-
-const slugify = require("slugify");
+import { ReqWithUser } from "../types.js";
+import slugify from "slugify";
 
 const createTruckRequirements = async (
   req: ReqWithUser,
@@ -27,11 +26,11 @@ const createTruckRequirements = async (
           .json({ error: `${requiredField} is a requiredField` });
       }
     }
-    if (req.user!.role.name !== "operator") {
+    if (req.user!.roles?.some(s => s.name !== "operator")) {
       return res.status(400).json({ error: "User must be an operator" });
     }
     const truckName = req.body.name.toLowerCase();
-    const slug = slugify(truckName);
+    const slug = slugify.default(truckName);
     // @ts-ignore
     req.truckData = {
       name: truckName,

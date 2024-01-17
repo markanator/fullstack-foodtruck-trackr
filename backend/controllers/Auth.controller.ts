@@ -1,8 +1,8 @@
 import { Response } from "express";
-import { ReqWithUser } from "../types";
-import prisma from "../data/db.server";
-import addFavoritesAndOwned from "../utils/addFavoritesAndOwned";
-import createToken from "../utils/createToken";
+import type { ReqWithUser } from "../types.js";
+import prisma from "../data/db.server.js";
+import addFavoritesAndOwned from "../utils/addFavoritesAndOwned.js";
+import createToken from "../utils/createToken.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req: ReqWithUser, res: Response) => {

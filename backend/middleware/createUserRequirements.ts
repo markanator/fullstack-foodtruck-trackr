@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { findByEmail, findByUsername } from "../models/User";
+import { findByEmail, findByUsername } from "../models/User.js";
 
 const createUserRequirements = async (
   req: Request,

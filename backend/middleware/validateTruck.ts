@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-
-const Truck = require("../models/Truck");
+import * as Truck from "../models/Truck.js";
 
 const validateTruck = async (
   req: Request,

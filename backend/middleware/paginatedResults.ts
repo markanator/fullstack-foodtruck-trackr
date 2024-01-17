@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import prisma from "../data/db.server";
-import { baseURL } from "../utils/helpers";
-import * as Truck from "../models/Truck";
+import prisma from "../data/db.server.js";
+import { baseURL } from "../utils/helpers.js";
+import * as Truck from "../models/Truck.js";
 
 const paginatedTruckResults = () => {
   return async (req: Request, res: Response, next: NextFunction) => {

@@ -1,9 +1,9 @@
 import type { Response } from "express";
-import * as User from "../models/User";
-import addFavoritesAndOwned from "../utils/addFavoritesAndOwned";
-import addTotalTruckViews from "../utils/addTotalViews";
-import addTotalTruckReviews from "../utils/addTotalTruckReviews";
-import { ReqWithUser } from "../types";
+import * as User from "../models/User.js";
+import addFavoritesAndOwned from "../utils/addFavoritesAndOwned.js";
+import addTotalTruckViews from "../utils/addTotalViews.js";
+import addTotalTruckReviews from "../utils/addTotalTruckReviews.js";
+import { ReqWithUser } from "../types.js";
 
 export const getUser = async (req: ReqWithUser, res: Response) => {
   await addTotalTruckViews(req.user!);

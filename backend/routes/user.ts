@@ -1,7 +1,7 @@
 import { Router } from "express";
-import * as UserController from "../controllers/userController";
-import validateToken from "../middleware/validateToken";
-import editUserRequirements from "../middleware/editUserRequirements";
+import * as UserController from "../controllers/userController.js";
+import validateToken from "../middleware/validateToken.js";
+import editUserRequirements from "../middleware/editUserRequirements.js";
 
 const router = Router();
 

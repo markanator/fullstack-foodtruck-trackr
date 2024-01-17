@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import * as Truck from "../models/Truck";
-import * as FoodItem from "../models/FoodItem";
+import * as Truck from "../models/Truck.js";
+import * as FoodItem from "../models/FoodItem.js";
 
 const validateFood = async (
   req: Request,

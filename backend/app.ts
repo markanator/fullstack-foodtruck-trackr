@@ -4,9 +4,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 import compression from "compression";
 import path from "path";
-import AuthRoutes from "./routes/auth";
-import UserRouter from "./routes/user";
-import TruckRouter from "./routes/truck";
+import AuthRoutes from "./routes/auth.js";
+import UserRouter from "./routes/user.js";
+import TruckRouter from "./routes/truck.js";
 
 const server: Express = express();
 const __prod__ = process.env.NODE_ENV === "production";

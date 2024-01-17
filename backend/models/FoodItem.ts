@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import prisma from "../data/db.server";
+import prisma from "../data/db.server.js";
 
 export const findById = (id: string) => {
   return prisma.menuItem.findUnique({

@@ -1,8 +1,8 @@
 import type { User } from "@prisma/client";
-import * as Truck from "../models/Truck";
-import * as UserFavoriteTruck from "../models/UserFavoriteTruck";
-import addMenuItems from "./addMenuItems";
-import addTruckRatings from "./addTruckRatings";
+import * as Truck from "../models/Truck.js";
+import * as UserFavoriteTruck from "../models/UserFavoriteTruck.js";
+import addMenuItems from "./addMenuItems.js";
+import addTruckRatings from "./addTruckRatings.js";
 
 const addFavoritesAndOwned = async (
   user: User & { roles: { name: string }[] }

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
-import prisma from "../data/db.server";
+import prisma from "../data/db.server.js";
 
 const loginRequirements = async (
   req: Request,

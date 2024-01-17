@@ -1,4 +1,4 @@
-import * as TruckRating from "../models/TruckRating";
+import * as TruckRating from "../models/TruckRating.js";
 
 const addTruckRatings = async (trucks: any[], userId: string) => {
   // if (trucks.length < 0 || trucks === undefined){

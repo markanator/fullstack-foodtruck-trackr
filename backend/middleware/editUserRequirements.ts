@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
-import { ReqWithUser } from "../types";
-import { findByEmail, findByUsername } from "../models/User";
+import { ReqWithUser } from "../types.js";
+import { findByEmail, findByUsername } from "../models/User.js";
 
 const editUserRequirements = async (
   req: ReqWithUser,

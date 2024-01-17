@@ -1,4 +1,4 @@
-import * as FoodItem from "../models/FoodItem";
+import * as FoodItem from "../models/FoodItem.js";
 
 const addMenuItems = async (trucks: { id: string }[]) => {
   for (let i = 0; i < trucks.length; i++) {

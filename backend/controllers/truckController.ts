@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
 import type { MenuItem } from "@prisma/client";
-import type { ReqWithUser } from "../types";
-import * as Truck from "../models/Truck";
-import * as FoodItem from "../models/FoodItem";
-import * as TruckRating from "../models/TruckRating";
-import * as UserFavoriteTruck from "../models/UserFavoriteTruck";
-import addTruckRatings from "../utils/addTruckRatings";
-import addMenuItems from "../utils/addMenuItems";
+import type { ReqWithUser } from "../types.js";
+import * as Truck from "../models/Truck.js";
+import * as FoodItem from "../models/FoodItem.js";
+import * as TruckRating from "../models/TruckRating.js";
+import * as UserFavoriteTruck from "../models/UserFavoriteTruck.js";
+import addTruckRatings from "../utils/addTruckRatings.js";
+import addMenuItems from "../utils/addMenuItems.js";
 
 export const addTruck = async (req: Request, res: Response) => {
   try {
