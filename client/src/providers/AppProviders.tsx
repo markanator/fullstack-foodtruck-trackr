@@ -12,11 +12,9 @@ import {
   Heading,
   Spinner,
 } from "@chakra-ui/react";
-// import { AuthLoader } from "~/lib/auth";
 import UserProvider from "./UserContext";
 import { queryClient } from "~/lib/react-query";
 import { AuthLoader } from "~/lib/auth";
-// import { Notifications } from '~/components/Notifications/Notifications';
 
 const ErrorFallback = () => {
   return (
@@ -75,14 +73,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             <QueryClientProvider client={queryClient}>
               <ReactQueryDevtools />
               {/* <Notifications /> */}
-              <AuthLoader
-                renderLoading={Loader}
-                renderUnauthenticated={Page403}
-              >
                 <Router>
                   <UserProvider>{children}</UserProvider>
                 </Router>
-              </AuthLoader>
             </QueryClientProvider>
           </ChakraProvider>
         </HelmetProvider>

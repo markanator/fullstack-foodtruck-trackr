@@ -1,14 +1,11 @@
 import React from "react";
 import { Container, Heading } from "@chakra-ui/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Route,
-  BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
 import Layout from "./components/Layout";
-import UserProvider from "./providers/UserContext";
 import CreateTruckForm from "./pages/CreateTruckForm";
 import Dashboard from "./pages/Dashboard";
 import EditTruck from "./pages/EditTruck";
@@ -16,18 +13,12 @@ import Home from "./pages/Home";
 import ListingsPage from "./pages/ListingsPage";
 import TruckDetails from "./pages/TruckDetails";
 import UserSettingsPage from "./pages/UserSettingsPage";
-import PrivateRoute from "./utils/PrivateRoute";
-import { ChakraProvider, extendTheme, CSSReset } from "@chakra-ui/react";
 import { AppProvider } from "./providers/AppProviders";
-
-const queryClient = new QueryClient();
 
 const config = {
   initialColorMode: "light",
   useSystemColorMode: false,
 };
-
-const theme = extendTheme({ config });
 
 const App = () => (
   <AppProvider>
@@ -41,7 +32,6 @@ const App = () => (
         }
       >
         <Route index element={<Home />} />
-        {/* TODO: private route */}
         <Route path="/dashboard">
           <Route path=":username" element={<Dashboard />} />
           <Route path=":username/settings" element={<UserSettingsPage />} />

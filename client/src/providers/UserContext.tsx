@@ -10,7 +10,7 @@ interface LoggedUserContext {
     email: string;
     first_name?: string;
     last_name?: string;
-    role: { name: string };
+    roles: { name: string }[];
     avatar_url?: string;
     favoriteTrucks: never[];
   };
@@ -31,11 +31,12 @@ const initialUserState = {
     id: 2,
     username: "",
     email: "",
-    first_name: null,
-    last_name: null,
+    first_name: undefined,
+    last_name: undefined,
     user_role: "diner",
-    avatar_url: null,
+    avatar_url: undefined,
     favoriteTrucks: [],
+    roles: [{ name: "diner"}],
   },
   token: "",
 };
@@ -49,7 +50,7 @@ export default function UserProvider({ children }: any) {
   };
 
   return (
-    <LoggedUserContext.Provider value={UserExports as any}>
+    <LoggedUserContext.Provider value={UserExports}>
       {children}
     </LoggedUserContext.Provider>
   );

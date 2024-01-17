@@ -44,7 +44,7 @@ export default function PopularCatsSection() {
                 : isError
                 ? 'ERROR'
                 : data && !isLoading
-                ? data.map((cat) => (
+                ? data?.map((cat) => (
                     <HomeFeaturedCatCard key={cat.cuisine_type} info={cat} />
                   ))
                 : null}
