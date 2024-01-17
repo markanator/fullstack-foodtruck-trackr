@@ -62,15 +62,15 @@ export const fetchTop = (amount = 3) => {
     },
     include: {
       // photo: { select: { fileId: true, contentType: true } },
-      reviews: {
-        select: { rating: true },
-      },
-      _count: {
-        select: {
-          favorites: true,
-          reviews: true,
-        },
-      },
+      // reviews: {
+      //   select: { rating: true },
+      // },
+      // _count: {
+      //   select: {
+      //     favorites: true,
+      //     reviews: true,
+      //   },
+      // },
     },
   });
 };

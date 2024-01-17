@@ -4,9 +4,11 @@ import React from 'react';
 import { Link as RLink } from 'react-router-dom';
 // locals
 import DefImg from '../../assets/default_truck.webp';
+import { Utensils } from 'lucide-react';
+import { Truck } from '~/RQ/query/useFetchTopTrucks';
 
 // eslint-disable-next-line react/prop-types
-export default function FeatListItem({ deets }) {
+export default function FeatListItem({ deets }: { deets: Truck }) {
   return (
     <ListItem w="auto" m=".5rem" maxW="350px">
       <Box
@@ -31,7 +33,7 @@ export default function FeatListItem({ deets }) {
         >
           <Link
             as={RLink}
-            to={`/truck/${deets.id}`}
+            to={`/trucks/${deets.id}`}
             className="featimage__overlay"
             pos="relative"
             w="full"
@@ -39,7 +41,7 @@ export default function FeatListItem({ deets }) {
             display="block"
           >
             <Image
-              src={deets.hero_image || DefImg}
+              src={deets.avatar || DefImg}
               alt={deets.name}
               display="block"
               w="100%"
@@ -51,7 +53,7 @@ export default function FeatListItem({ deets }) {
           {/* DEETS */}
           <Box display="block" m="0" pos="absolute" left="2rem" bottom="2rem" color="white">
             <Heading fontSize="1.125rem" fontWeight="500" mb="3px">
-              <Link as={RLink} to={`/truck/${deets.id}`}>
+              <Link as={RLink} to={`/trucks/${deets.id}`}>
                 {deets.name}
               </Link>
             </Heading>
@@ -62,7 +64,7 @@ export default function FeatListItem({ deets }) {
           <Box flex="1" float="left">
             <Link
               as={RLink}
-              to={`/truck/${deets.id}`}
+              to={`/trucks/${deets.id}`}
               color="#6d7a8a"
               fontWeight="600"
               display="inline-flex"
@@ -79,9 +81,9 @@ export default function FeatListItem({ deets }) {
                 alignItems="center"
                 color="white"
               >
-                <IoFastFood />
+                <Utensils />
               </Flex>
-              {deets.cuisine_type}
+              {deets.cuisineType}
             </Link>
           </Box>
         </Box>
