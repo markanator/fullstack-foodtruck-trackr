@@ -6,7 +6,7 @@ export function useFetchTruckDetails(truckID) {
     ['truck', truckID],
     async () =>
       Axios.get(
-        `/trucks/${truckID}`
+        `/api/trucks/${truckID}`
       ).then((res) => res.data),
     {
       onError: (err) => {

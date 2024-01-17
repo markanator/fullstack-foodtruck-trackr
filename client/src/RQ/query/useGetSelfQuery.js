@@ -7,7 +7,7 @@ export function useGetSelfQuery() {
   return useQuery(
     ["user"],
     async () => {
-      const res = await Axios.get(`/users`, {
+      const res = await Axios.get(`/api/users`, {
         headers: {
           authorization: `Bearer ${token}`,
         },

@@ -8,7 +8,7 @@ export function useFetchTopTrucks(amount = 3) {
     queryKey: ['topTrucks', amount],
     queryFn: async () => {
       const trucks = await Axios.get(
-        `/trucks/top/${amount}`
+        `/api/trucks/top/${amount}`
       ).then((resp) => resp.data);
   
       trucks.forEach((truck) => {

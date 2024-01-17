@@ -41,7 +41,7 @@ export default function FeaturedListings() {
                 : isError
                 ? 'ERROR'
                 : data && !isLoading
-                ? data.map((truck) => (
+                ? data?.map((truck) => (
                     <FeatListItem key={truck.id} deets={truck} />
                   ))
                 : null}

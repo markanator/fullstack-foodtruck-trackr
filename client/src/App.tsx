@@ -1,23 +1,35 @@
-import React from "react";
-import { Container, Heading } from "@chakra-ui/react";
-import {
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
-import Layout from "./components/Layout";
-import CreateTruckForm from "./pages/CreateTruckForm";
-import Dashboard from "./pages/Dashboard";
-import EditTruck from "./pages/EditTruck";
-import Home from "./pages/Home";
-import ListingsPage from "./pages/ListingsPage";
-import TruckDetails from "./pages/TruckDetails";
-import UserSettingsPage from "./pages/UserSettingsPage";
-import { AppProvider } from "./providers/AppProviders";
+import React from 'react';
+import { Container, Heading } from '@chakra-ui/react';
+import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
+import Layout from './components/Layout';
+import CreateTruckForm from './pages/CreateTruckForm';
+import Dashboard from './pages/Dashboard';
+import EditTruck from './pages/EditTruck';
+import Home from './pages/Home';
+import ListingsPage from './pages/ListingsPage';
+import TruckDetails from './pages/TruckDetails';
+import UserSettingsPage from './pages/UserSettingsPage';
+import { AppProvider } from './providers/AppProviders';
+import { SignIn, SignUp, useAuth } from '@clerk/clerk-react';
 
 const config = {
-  initialColorMode: "light",
+  initialColorMode: 'light',
   useSystemColorMode: false,
+};
+
+const ProtectedPages = () => {
+  const { userId, isLoaded } = useAuth();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!userId) {
+      navigate('/sign-in');
+    }
+  }, []);
+
+  if (!isLoaded) return 'Loading...';
+
+  return <Outlet />;
 };
 
 const App = () => (
@@ -32,15 +44,21 @@ const App = () => (
         }
       >
         <Route index element={<Home />} />
-        <Route path="/dashboard">
+        <Route path="/auth" element={<Outlet />}>
+          <Route path="sign-in" element={<SignIn />} />
+          <Route path="sign-up" element={<SignUp />} />
+        </Route>
+        <Route path="/dashboard" element={<ProtectedPages />}>
           <Route path=":username" element={<Dashboard />} />
           <Route path=":username/settings" element={<UserSettingsPage />} />
+          <Route path="trucks" element={<ProtectedPages />}>
+            <Route path="new" element={<CreateTruckForm />} />
+            <Route path=":id/edit" element={<EditTruck />} />
+          </Route>
         </Route>
         <Route path="/trucks" element={<Outlet />}>
           <Route index element={<ListingsPage />} />
-          <Route path="new" element={<CreateTruckForm />} />
           <Route path=":id" element={<TruckDetails />} />
-          <Route path=":id/edit" element={<EditTruck />} />
         </Route>
         <Route path="/403" element={<Page403 />} />
         <Route path="*" element={<Page404 />} />
