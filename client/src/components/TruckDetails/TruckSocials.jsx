@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import React from 'react';
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 
 export default function TruckSocials({ truck }) {
   return (
@@ -23,11 +22,7 @@ export default function TruckSocials({ truck }) {
         <Button colorScheme="facebook" leftIcon={<FaFacebook />}>
           Facebook
         </Button>
-        <Button
-          colorScheme="twitter"
-          leftIcon={<FaTwitter />}
-          display={['none', 'flex']}
-        >
+        <Button colorScheme="twitter" leftIcon={<FaTwitter />} display={['none', 'flex']}>
           Twitter
         </Button>
         <Button colorScheme="pink" leftIcon={<FaInstagram />}>

@@ -1,18 +1,6 @@
-import {
-  Box,
-  Container,
-  Flex,
-  Heading,
-  List,
-  ListItem,
-} from '@chakra-ui/react';
+import { MapPin, LineChart, Star, List as IconList } from 'lucide-react';
+import { Box, Container, Flex, Heading, List, ListItem } from '@chakra-ui/react';
 import React from 'react';
-import {
-  FaChartLine,
-  FaListUl,
-  FaMapMarkerAlt,
-  FaRegUser,
-} from 'react-icons/fa';
 import DEFIMG from '../assets/random_street.jpg';
 import DashStatCard from '../components/Dashboard/DashStatCard';
 // locals
@@ -25,7 +13,7 @@ const Dashboard = () => {
 
   if (isLoading) {
     return (
-      <Layout>
+      <>
         <Flex direction="column" pos="relative" bg="gray.100">
           <Flex
             className="page__title"
@@ -51,12 +39,12 @@ const Dashboard = () => {
             </Container>
           </Flex>
         </Flex>
-      </Layout>
+      </>
     );
   }
   if (isError) {
     return (
-      <Layout>
+      <>
         <Flex direction="column" pos="relative" bg="gray.100">
           <Flex
             className="page__title"
@@ -82,16 +70,15 @@ const Dashboard = () => {
             </Container>
           </Flex>
         </Flex>
-      </Layout>
+      </>
     );
   }
 
-  const trucks =
-    data?.user_role === 'operator' ? data?.ownedTrucks : data?.favoriteTrucks;
+  const trucks = data?.user_role === 'operator' ? data?.ownedTrucks : data?.favoriteTrucks;
 
   // console.log('usr deets:::', data);
   return (
-    <Layout>
+    <>
       <Flex direction="column" pos="relative" bg="gray.100">
         {/* PAGE TITLE */}
         <Flex
@@ -129,19 +116,19 @@ const Dashboard = () => {
                 color="#1baf65"
                 number={trucks?.length}
                 text="Active Listings"
-                Icon={FaMapMarkerAlt}
+                Icon={MapPin}
               />
               <DashStatCard
                 color="#f39f00"
                 number={data.totalTruckViews}
                 text="Total Views"
-                Icon={FaChartLine}
+                Icon={LineChart}
               />
               <DashStatCard
                 color="#002758"
                 number={data.totalTruckReviews}
                 text="Total Reviews"
-                Icon={FaRegUser}
+                Icon={Star}
               />
             </Flex>
           ) : null}
@@ -162,14 +149,12 @@ const Dashboard = () => {
                 w="full"
                 alignItems="center"
               >
-                <FaListUl style={{ marginRight: '.5rem' }} />
-                {data && data.user_role === 'operator'
-                  ? 'My Listings'
-                  : 'My Favorites'}
+                <IconList style={{ marginRight: '.5rem' }} />
+                {data && data.user_role === 'operator' ? 'My Listings' : 'My Favorites'}
               </Heading>
               <List backgroundColor="white" borderRadius="0 0 4px 4px">
                 {trucks.length > 0 ? (
-                  trucks.map((truck, idx) => (
+                  trucks?.map((truck, idx) => (
                     <FavListItem
                       key={`truck-${truck.name}-${idx}`}
                       deets={truck}
@@ -191,7 +176,7 @@ const Dashboard = () => {
           </Box>
         </Container>
       </Flex>
-    </Layout>
+    </>
   );
 };
 

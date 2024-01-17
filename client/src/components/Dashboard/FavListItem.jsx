@@ -20,13 +20,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
-import {
-  FaHamburger,
-  FaHeartBroken,
-  FaMapPin,
-  FaPhone,
-  FaTrashAlt,
-} from 'react-icons/fa';
 import { Link as RLink } from 'react-router-dom';
 // locals
 import FoodTruckImg from '../../assets/foodTruck.jpg';
@@ -47,19 +40,9 @@ export default function FavListItem({ deets, user_role }) {
       transition=".3s"
       pos="relative"
     >
-      <Flex
-        py=".125rem"
-        w="full"
-        pos="relative"
-        direction={['column', 'column', 'row']}
-      >
+      <Flex py=".125rem" w="full" pos="relative" direction={['column', 'column', 'row']}>
         {/* IMAGE */}
-        <Flex
-          flex="1"
-          maxW={['full', 'full', '250px']}
-          pos="relative"
-          w={['full']}
-        >
+        <Flex flex="1" maxW={['full', 'full', '250px']} pos="relative" w={['full']}>
           <Link
             as={RLink}
             to={`/truck/${deets.id}`}
@@ -83,12 +66,7 @@ export default function FavListItem({ deets, user_role }) {
         </Flex>
         {/* DEETS */}
         <Flex flex="1" pl={['0', '0', '1.25rem']}>
-          <Box
-            className="deets__inner"
-            pos="relative"
-            top=".5rem"
-            verticalAlign="top"
-          >
+          <Box className="deets__inner" pos="relative" top=".5rem" verticalAlign="top">
             <Link as={RLink} to={`/truck/${deets.id}`} display="inline-flex">
               <Heading
                 as="h3"
@@ -167,12 +145,7 @@ export default function FavListItem({ deets, user_role }) {
               </Box>
             </Flex>
             {/* SHORT DESCRIPTION */}
-            <Text
-              my=".5rem"
-              fontSize="1rem"
-              lineHeight="1.25rem"
-              textColor="gray.500"
-            >
+            <Text my=".5rem" fontSize="1rem" lineHeight="1.25rem" textColor="gray.500">
               {deets.description.slice(0, 144)}
             </Text>
           </Box>

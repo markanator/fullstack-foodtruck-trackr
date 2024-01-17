@@ -8,24 +8,18 @@ import EditTruck from './pages/EditTruck';
 import Home from './pages/Home';
 import ListingsPage from './pages/ListingsPage';
 import TruckDetails from './pages/TruckDetails';
-import UserSettingsPage from './pages/UserSettingsPage';
 import { AppProvider } from './providers/AppProviders';
-import { SignIn, SignUp, useAuth } from '@clerk/clerk-react';
-
-const config = {
-  initialColorMode: 'light',
-  useSystemColorMode: false,
-};
+import { SignIn, SignUp, UserProfile, useAuth } from '@clerk/clerk-react';
 
 const ProtectedPages = () => {
   const { userId, isLoaded } = useAuth();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (!userId) {
+    if (isLoaded && !userId) {
       navigate('/sign-in');
     }
-  }, []);
+  }, [isLoaded, userId, navigate]);
 
   if (!isLoaded) return 'Loading...';
 
@@ -50,7 +44,7 @@ const App = () => (
         </Route>
         <Route path="/dashboard" element={<ProtectedPages />}>
           <Route path=":username" element={<Dashboard />} />
-          <Route path=":username/settings" element={<UserSettingsPage />} />
+          <Route path=":username/settings" element={<UserProfile routing="virtual" />} />
           <Route path="trucks" element={<ProtectedPages />}>
             <Route path="new" element={<CreateTruckForm />} />
             <Route path=":id/edit" element={<EditTruck />} />

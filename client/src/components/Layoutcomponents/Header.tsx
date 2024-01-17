@@ -1,3 +1,4 @@
+import { Pizza, Truck } from 'lucide-react';
 import {
   Box,
   Button,
@@ -14,19 +15,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
-import { FaPizzaSlice, FaTruck } from 'react-icons/fa';
-import { useQueryClient } from '@tanstack/react-query';
 import { Link as RLink, useNavigate } from 'react-router-dom';
-import { isLoggedIn } from '../../utils/isLoggedIn';
-import LoginBtnModal from './LoginBtnModal';
-import DrawerExample from './MobileMenu';
-import SignUpBtnModal from './SignUpBtnModal';
-import { useLogout, useUser } from '~/lib/auth';
 import { SignedIn, SignedOut } from '@clerk/clerk-react';
+import { useUser } from '~/features/auth/auth.hooks';
 
 export default function Header() {
   const navigate = useNavigate();
-  const user = {};
+  const { data: user } = useUser();
+  const isOperator = user?.roles.some((role) => role.name === 'operator');
 
   return (
     <Flex as="header" w="full" py=".5rem" boxShadow="md" zIndex={10}>
@@ -57,13 +53,13 @@ export default function Header() {
             >
               <SignedIn>
                 <>
-                  {user?.role?.name === 'user' ? (
+                  {!isOperator ? (
                     <Button
                       as={RLink}
                       to="/trucks"
                       mr={['0', '0', '1rem']}
                       colorScheme="red"
-                      rightIcon={<FaPizzaSlice />}
+                      rightIcon={<Pizza />}
                       size="lg"
                     >
                       Find Food
@@ -74,7 +70,7 @@ export default function Header() {
                       to="/trucks/new"
                       mr={['0', '0', '1rem']}
                       colorScheme="red"
-                      rightIcon={<FaTruck />}
+                      rightIcon={<Truck />}
                       size="lg"
                     >
                       Add Listing
@@ -117,12 +113,12 @@ export default function Header() {
               </SignedIn>
               <SignedOut>
                 <Button
-                  rightIcon={<FaPizzaSlice />}
                   as={RLink}
                   to="/trucks"
                   mr={['0', '0', '1rem']}
                   colorScheme="red"
                   size="lg"
+                  rightIcon={<Pizza />}
                 >
                   Find Food
                 </Button>

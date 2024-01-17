@@ -1,14 +1,6 @@
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Heading,
-  Input,
-  Text,
-} from '@chakra-ui/react';
+import { Mail } from 'lucide-react';
 import React from 'react';
-import { MdMailOutline } from 'react-icons/md';
+import { Box, Button, Container, Flex, Heading, Input, Text } from '@chakra-ui/react';
 import BGIMG from '../assets/bg-new.png';
 
 export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
@@ -26,12 +18,7 @@ export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
     >
       <Container maxW="5xl" mx="auto">
         {/* entire */}
-        <Flex
-          direction="column"
-          mx="auto"
-          textAlign="center"
-          alignItems="center"
-        >
+        <Flex direction="column" mx="auto" textAlign="center" alignItems="center">
           <Box color="white">
             <Heading as="h2" mb="5px" fontSize={['1.5rem', '2.5rem']}>
               Get the Latest News
@@ -42,12 +29,7 @@ export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
           </Box>
           <Box maxW="66%" w="full" m="auto">
             {/* form */}
-            <Flex
-              p="0"
-              direction={['column', 'column', 'row']}
-              pos="relative"
-              my="2rem"
-            >
+            <Flex p="0" direction={['column', 'column', 'row']} pos="relative" my="2rem">
               <Flex
                 display="flex"
                 w="100%"
@@ -60,7 +42,7 @@ export default function NewsletterSection({ bgcolor = '#E53E3E' }) {
               >
                 {/* input */}
                 <Box fontSize="1.125rem" p=".5rem .75rem" mb="0">
-                  <MdMailOutline />
+                  <Mail />
                 </Box>
                 <Input
                   type="text"

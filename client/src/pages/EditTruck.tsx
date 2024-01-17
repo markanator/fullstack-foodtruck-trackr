@@ -16,91 +16,61 @@ import {
   Select,
   Text,
   Textarea,
-} from "@chakra-ui/react";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxList,
-  ComboboxOption,
-  ComboboxPopover,
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
-import { useLoadScript } from "@react-google-maps/api";
-import { Field, Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import Layout from "../components/Layout";
-import { CreateTruckSchema } from "../Forms/Schemas/CreateTruckSchema";
-import { useEditTruckMutation } from "../RQ/mutations/useEditTruckMutation";
-import { useFetchTruckDetails } from "../RQ/query/useFetchTruckDetails";
-
-const libraries = ["places"];
+} from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate, useParams } from 'react-router-dom';
+import Layout from '../components/Layout';
+import { CreateTruckSchema } from '../Forms/Schemas/CreateTruckSchema';
+import { useEditTruckMutation } from '../RQ/mutations/useEditTruckMutation';
+import { useFetchTruckDetails } from '../RQ/query/useFetchTruckDetails';
 
 export default function EditTruck() {
   const navigate = useNavigate();
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData(["user"]) as any;
-  const { isLoaded } = useLoadScript({
-    // @ts-ignore
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY!,
-    // @ts-ignore
-    libraries,
-  });
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete();
+  const user = queryClient.getQueryData(['user']) as any;
+
   // const [truckState, setTruckState] = useState({});
   const [latLng, setLatLng] = useState({ lat: 43.0, lng: -87.0 });
-  const [heroImg, setHeroImg] = useState("");
+  const [heroImg, setHeroImg] = useState('');
   // react query fetch
   const { isLoading, isError, data: truckDeets } = useFetchTruckDetails(id);
   const { mutate } = useEditTruckMutation(id);
 
   const cuisineTypes = [
-    "American",
-    "Mexican",
-    "Greek",
-    "SeaFood",
-    "Vegan Exclusive",
-    "Vegetarian",
-    "Chinese",
-    "Thai",
-    "Dessert",
-    "Italian",
-    "Filipino",
-    "Kosher",
+    'American',
+    'Mexican',
+    'Greek',
+    'SeaFood',
+    'Vegan Exclusive',
+    'Vegetarian',
+    'Chinese',
+    'Thai',
+    'Dessert',
+    'Italian',
+    'Filipino',
+    'Kosher',
   ];
 
   const uploadFile = async (e: any) => {
-    console.log("uploading...");
+    console.log('uploading...');
     const { files } = e.target;
     if (files[0].size > 1048576) {
-      alert("Image size larger than 1MB.");
-      console.log("file too big, not uploaded");
+      alert('Image size larger than 1MB.');
+      console.log('file too big, not uploaded');
       return;
     }
 
     const imgData = new FormData();
-    imgData.append("file", files[0]);
-    imgData.append("upload_preset", "foodtrucks");
+    imgData.append('file', files[0]);
+    imgData.append('upload_preset', 'foodtrucks');
 
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dmh43eiaf/image/upload",
-      {
-        method: "POST",
-        body: imgData,
-      }
-    );
+    const res = await fetch('https://api.cloudinary.com/v1_1/dmh43eiaf/image/upload', {
+      method: 'POST',
+      body: imgData,
+    });
     const file = await res.json();
     // console.log('uploaded file:::', file);
     setHeroImg(file.secure_url);
@@ -113,15 +83,15 @@ export default function EditTruck() {
   const handleSubmit = (values: any) => {
     const truck = {
       ...values,
-      address: value,
+      address: values.address,
       lat: latLng.lat,
       lng: latLng.lng,
       hero_image: heroImg,
     };
-    console.log("USER SUBMITTED FORM");
+    console.log('USER SUBMITTED FORM');
     mutate(truck, {
       onSuccess: () => {
-        console.log("it worked!!!");
+        console.log('it worked!!!');
         navigate(`/dashboard/${user.username}`);
       },
     });
@@ -129,7 +99,8 @@ export default function EditTruck() {
 
   useEffect(() => {
     // set gps value to stored address
-    setValue(truckDeets?.address);
+    console.log('truckDeets', truckDeets);
+    // setValue(truckDeets?.address);
     // eslint-disable-next-line
   }, [id]);
 
@@ -161,11 +132,11 @@ export default function EditTruck() {
             {() => (
               <Form
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 {/* FIRST SECTION = TRUCK DETAILS */}
@@ -190,10 +161,7 @@ export default function EditTruck() {
                     {/* Name */}
                     <Field name="name">
                       {({ field, form }: any) => (
-                        <FormControl
-                          isInvalid={form.errors.name && form.touched.name}
-                          mb="1rem"
-                        >
+                        <FormControl isInvalid={form.errors.name && form.touched.name} mb="1rem">
                           <FormLabel htmlFor="email">Name</FormLabel>
                           <Input
                             {...field}
@@ -203,9 +171,7 @@ export default function EditTruck() {
                             bg="white"
                             placeholder="Truck Name"
                           />
-                          <FormErrorMessage>
-                            {form.errors.name}
-                          </FormErrorMessage>
+                          <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
@@ -213,15 +179,10 @@ export default function EditTruck() {
                     <Field name="cuisine_type">
                       {({ field, form }: any) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.cuisine_type &&
-                            form.touched.cuisine_type
-                          }
+                          isInvalid={form.errors.cuisine_type && form.touched.cuisine_type}
                           mb="1rem"
                         >
-                          <FormLabel htmlFor="cuisine_type">
-                            Food Type
-                          </FormLabel>
+                          <FormLabel htmlFor="cuisine_type">Food Type</FormLabel>
                           <Select
                             {...field}
                             type="text"
@@ -237,9 +198,7 @@ export default function EditTruck() {
                               </option>
                             ))}
                           </Select>
-                          <FormErrorMessage>
-                            {form.errors.cuisine_type}
-                          </FormErrorMessage>
+                          <FormErrorMessage>{form.errors.cuisine_type}</FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
@@ -247,14 +206,10 @@ export default function EditTruck() {
                     <Field name="price_range">
                       {({ field, form }: any) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.price_range && form.touched.price_range
-                          }
+                          isInvalid={form.errors.price_range && form.touched.price_range}
                           mb="1rem"
                         >
-                          <FormLabel htmlFor="price_range">
-                            Price Range
-                          </FormLabel>
+                          <FormLabel htmlFor="price_range">Price Range</FormLabel>
                           <Select
                             {...field}
                             id="price_range"
@@ -266,9 +221,7 @@ export default function EditTruck() {
                             <option value="$$">$$</option>
                             <option value="$$$">$$$</option>
                           </Select>
-                          <FormErrorMessage>
-                            {form.errors.price_range}
-                          </FormErrorMessage>
+                          <FormErrorMessage>{form.errors.price_range}</FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
@@ -276,14 +229,10 @@ export default function EditTruck() {
                     <Field name="description">
                       {({ field, form }: any) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.description && form.touched.description
-                          }
+                          isInvalid={form.errors.description && form.touched.description}
                           mb="1rem"
                         >
-                          <FormLabel htmlFor="description">
-                            Description
-                          </FormLabel>
+                          <FormLabel htmlFor="description">Description</FormLabel>
                           <Textarea
                             {...field}
                             id="description"
@@ -293,9 +242,7 @@ export default function EditTruck() {
                             resize="none"
                             placeholder="Truck description..."
                           />
-                          <FormErrorMessage>
-                            {form.errors.description}
-                          </FormErrorMessage>
+                          <FormErrorMessage>{form.errors.description}</FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
@@ -324,14 +271,10 @@ export default function EditTruck() {
                     <Field name="hero_image">
                       {({ field, form }: any) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.hero_image && form.touched.hero_image
-                          }
+                          isInvalid={form.errors.hero_image && form.touched.hero_image}
                           mb="1rem"
                         >
-                          <FormLabel htmlFor="hero_image">
-                            Description
-                          </FormLabel>
+                          <FormLabel htmlFor="hero_image">Description</FormLabel>
                           <Input
                             {...field}
                             type="file"
@@ -343,14 +286,8 @@ export default function EditTruck() {
                             accept="image/*"
                             onChange={uploadFile}
                           />
-                          <FormErrorMessage>
-                            {form.errors.hero_image}
-                          </FormErrorMessage>
-                          <Text
-                            fontSize=".5rem"
-                            color="gray.400"
-                            textAlign="center"
-                          >
+                          <FormErrorMessage>{form.errors.hero_image}</FormErrorMessage>
+                          <Text fontSize=".5rem" color="gray.400" textAlign="center">
                             Image must be smaller than 1MB
                           </Text>
                         </FormControl>
@@ -387,25 +324,25 @@ export default function EditTruck() {
                     <Heading fontSize="1rem">Location</Heading>
                   </Flex>
                   <Box
-                    as={Combobox}
+                    // as={Combobox}
                     w="100%"
                     padding="1rem 1.25rem 0"
                     onSelect={async (location) => {
                       console.log({ location });
                       // @ts-ignore
                       setValue(location, false);
-                      clearSuggestions();
+                      // clearSuggestions();
                       try {
                         // @ts-ignore
                         const results = await getGeocode({ address: location });
-                        const { lat, lng } = await getLatLng(results[0]);
-                        setLatLng({ lat, lng });
+                        // const { lat, lng } = await getLatLng(results[0]);
+                        // setLatLng({ lat, lng });
                       } catch (err) {
                         console.log(err);
                       }
                     }}
                   >
-                    <Input
+                    {/* <Input
                       as={ComboboxInput}
                       value={value}
                       placeholder="e.g 123 Main St"
@@ -414,10 +351,10 @@ export default function EditTruck() {
                       }}
                       disabled={!isLoaded && !ready}
                       mb="1rem"
-                    />
-                    <ComboboxPopover style={{ borderRadius: "5px" }}>
+                    /> */}
+                    {/* <ComboboxPopover style={{ borderRadius: '5px' }}>
                       <List as={ComboboxList} borderRadius="5px" boxShadow="lg">
-                        {status === "OK" &&
+                        {status === 'OK' &&
                           data.map(({ description }) => (
                             <ListItem
                               as={ComboboxOption}
@@ -428,22 +365,16 @@ export default function EditTruck() {
                               px=".875rem"
                               fontSize="1rem"
                               _hover={{
-                                background: "#e2e2e2",
-                                cursor: "pointer",
+                                background: '#e2e2e2',
+                                cursor: 'pointer',
                               }}
                             />
                           ))}
                       </List>
-                    </ComboboxPopover>
+                    </ComboboxPopover> */}
                   </Box>
                   {/* LAT LNG */}
-                  <Box
-                    display="flex"
-                    flexDir="row"
-                    w="100%"
-                    padding="0 1.25rem 1.25rem"
-                    mb=".5rem"
-                  >
+                  <Box display="flex" flexDir="row" w="100%" padding="0 1.25rem 1.25rem" mb=".5rem">
                     <Flex direction="column" w={1 / 2} mr="1rem">
                       <FormLabel htmlFor="lat">Lat:</FormLabel>
                       <Input
@@ -488,26 +419,16 @@ export default function EditTruck() {
                   >
                     <Heading fontSize="1rem">Business Hours</Heading>
                   </Flex>
-                  <Box
-                    display="flex"
-                    flexDir="row"
-                    w="100%"
-                    padding="1rem 1.25rem 1.25rem"
-                  >
+                  <Box display="flex" flexDir="row" w="100%" padding="1rem 1.25rem 1.25rem">
                     {/* ARRIVAL TIME */}
                     <Flex w={1 / 2} mr=".5rem">
                       <Field name="arrival_time">
                         {({ field, form }: any) => (
                           <FormControl
-                            isInvalid={
-                              form.errors.arrival_time &&
-                              form.touched.arrival_time
-                            }
+                            isInvalid={form.errors.arrival_time && form.touched.arrival_time}
                             mb="1rem"
                           >
-                            <FormLabel htmlFor="arrival_time">
-                              Arrival Time
-                            </FormLabel>
+                            <FormLabel htmlFor="arrival_time">Arrival Time</FormLabel>
                             <Input
                               {...field}
                               type="datetime-local"
@@ -516,9 +437,7 @@ export default function EditTruck() {
                               bg="white"
                               py=".25rem"
                             />
-                            <FormErrorMessage>
-                              {form.errors.arrival_time}
-                            </FormErrorMessage>
+                            <FormErrorMessage>{form.errors.arrival_time}</FormErrorMessage>
                           </FormControl>
                         )}
                       </Field>
@@ -527,15 +446,10 @@ export default function EditTruck() {
                       <Field name="departure_time">
                         {({ field, form }: any) => (
                           <FormControl
-                            isInvalid={
-                              form.errors.departure_time &&
-                              form.touched.departure_time
-                            }
+                            isInvalid={form.errors.departure_time && form.touched.departure_time}
                             mb="1rem"
                           >
-                            <FormLabel htmlFor="departure_time">
-                              Departure Time
-                            </FormLabel>
+                            <FormLabel htmlFor="departure_time">Departure Time</FormLabel>
                             <Input
                               {...field}
                               type="datetime-local"
@@ -544,9 +458,7 @@ export default function EditTruck() {
                               bg="white"
                               py=".25rem"
                             />
-                            <FormErrorMessage>
-                              {form.errors.departure_time}
-                            </FormErrorMessage>
+                            <FormErrorMessage>{form.errors.departure_time}</FormErrorMessage>
                           </FormControl>
                         )}
                       </Field>

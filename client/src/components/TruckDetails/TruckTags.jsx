@@ -1,6 +1,5 @@
 import { Flex, Heading, Link, List, ListItem } from '@chakra-ui/react';
 import React from 'react';
-import { FaTag } from 'react-icons/fa';
 import { Link as RLink } from 'react-router-dom';
 
 export default function TruckTags() {

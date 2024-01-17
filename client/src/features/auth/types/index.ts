@@ -1,10 +1,10 @@
 export type AuthUser = {
   id: string;
-  email: string;
   username: string;
-  firstName: string;
-  lastName: string;
-  role: { name: "operator" | "user" | "admin" };
+  email: string;
+  email_verified: boolean;
+  avatar: string;
+  roles: { name: 'operator' | 'user' | 'admin' }[];
 };
 
 export type UserResponse = {

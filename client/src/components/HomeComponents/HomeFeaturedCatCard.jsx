@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
 import React from 'react';
-import { IoFastFood } from 'react-icons/io5';
 import { Link as RLink } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types

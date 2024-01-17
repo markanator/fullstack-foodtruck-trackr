@@ -1,15 +1,6 @@
 /* eslint-disable react/prop-types */
-import {
-  Badge,
-  Box,
-  Heading,
-  IconButton,
-  Image,
-  ListItem,
-  Text,
-} from '@chakra-ui/react';
+import { Badge, Box, Heading, IconButton, Image, ListItem, Text } from '@chakra-ui/react';
 import React from 'react';
-import { FaRegTrashAlt } from 'react-icons/fa';
 import { useDeleteMenuItem } from '../../RQ/mutations/useDeleteMenuItem';
 
 export default function MenuItem({ menuItem, truckID, user }) {
@@ -40,12 +31,7 @@ export default function MenuItem({ menuItem, truckID, user }) {
         </Heading>
         <Text>{menuItem?.item_description}</Text>
       </Box>
-      <Box
-        w={1 / 5}
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="center"
-      >
+      <Box w={1 / 5} display="flex" justifyContent="flex-end" alignItems="center">
         <Badge fontSize="lg" variant="solid" colorScheme="gray">
           ${menuItem?.item_price}
         </Badge>

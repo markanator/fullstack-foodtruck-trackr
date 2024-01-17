@@ -11,16 +11,16 @@ import {
   MenuItem,
   MenuList,
   Text,
-} from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
-import { FaChevronDown } from "react-icons/fa";
-import { useQueryClient } from "@tanstack/react-query";
+} from '@chakra-ui/react';
+import React, { useCallback, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 // locals
-import Layout from "../components/Layout";
-import GMap from "../components/Search/GMap";
-import { TruckListingCard } from "../components/Search/TruckListingCard";
-import { useTrucksQuery } from "../RQ/query/useTrucksQuery";
-import NewsletterSection from "../components/NewsletterSection";
+import Layout from '../components/Layout';
+import GMap from '../components/Search/GMap';
+import { TruckListingCard } from '../components/Search/TruckListingCard';
+import { useTrucksQuery } from '../RQ/query/useTrucksQuery';
+import NewsletterSection from '../components/NewsletterSection';
+import Map from '~/components/Search/Map';
 
 export default function ListingsPage() {
   const queryClient = useQueryClient();
@@ -28,7 +28,7 @@ export default function ListingsPage() {
   // fetch trucks
   const { data: trucks, isLoading, isError } = useTrucksQuery(page);
   // fetch cached pageInfo that was set above
-  const info = queryClient.getQueryData(["pageInfo"]) as any;
+  const info = queryClient.getQueryData(['pageInfo']) as any;
 
   const handleNextClick = useCallback(() => {
     setPage((old) => old + 1);
@@ -40,16 +40,11 @@ export default function ListingsPage() {
   return (
     <>
       <Flex direction="column">
-        <Flex
-          w="full"
-          pos="relative"
-          alignItems="center"
-          h="505px"
-          direction="column"
-        >
+        <Flex w="full" pos="relative" alignItems="center" h="505px" direction="column">
           {/* MAP & SEARCH */}
-          <GMap trucks={trucks} />
-        </Flex>{" "}
+          {/* <GMap trucks={trucks} /> */}
+          <Map trucks={trucks} />
+        </Flex>{' '}
         <Container maxW="6xl">
           {/* FILTERING */}
           <Flex direction="column">
@@ -72,7 +67,7 @@ export default function ListingsPage() {
                     colorScheme="red"
                     mr="1rem"
                     as={Button}
-                    rightIcon={<FaChevronDown />}
+                    // rightIcon={<FaChevronDown />}
                   >
                     Sort
                   </MenuButton>
@@ -90,16 +85,11 @@ export default function ListingsPage() {
                     colorScheme="red"
                     mr="1rem"
                     as={Button}
-                    rightIcon={<FaChevronDown />}
+                    // rightIcon={<FaChevronDown />}
                   >
                     Categories
                   </MenuButton>
-                  <MenuList
-                    maxH="200px"
-                    overflow="hidden"
-                    overflowY="scroll"
-                    p=".125rem"
-                  >
+                  <MenuList maxH="200px" overflow="hidden" overflowY="scroll" p=".125rem">
                     <MenuItem>American</MenuItem>
                     <MenuItem>Barbeque</MenuItem>
                     <MenuItem>Chinese</MenuItem>
@@ -134,18 +124,9 @@ export default function ListingsPage() {
             ) : null}
           </Box>
           {/* PAGINATIONS */}
-          <Flex
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            mb="4rem"
-          >
+          <Flex direction="row" alignItems="center" justifyContent="center" mb="4rem">
             <ButtonGroup isAttached mx="auto">
-              <Button
-                size="lg"
-                disabled={info?.prev === null}
-                onClick={handlePrevClick}
-              >
+              <Button size="lg" disabled={info?.prev === null} onClick={handlePrevClick}>
                 Prev
               </Button>
               {/* <Button
@@ -156,11 +137,7 @@ export default function ListingsPage() {
               >
                 {}
               </Button> */}
-              <Button
-                size="lg"
-                disabled={info?.next === null}
-                onClick={handleNextClick}
-              >
+              <Button size="lg" disabled={info?.next === null} onClick={handleNextClick}>
                 Next
               </Button>
             </ButtonGroup>

@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
+import { Heart, Tag, MapPin, Eye } from 'lucide-react';
 import { Badge, Box, Flex, Heading, Image, Link } from '@chakra-ui/react';
 import React from 'react';
-import { FaEye, FaMapPin, FaRegHeart, FaTag } from 'react-icons/fa';
 import { Link as RLink } from 'react-router-dom';
 import DefaultTruckImage from '../../assets/default_truck.webp';
 
-export function TruckListingCard({ info }) {
+export function TruckListingCard({ info }: { info: any }) {
   return (
     <Box
       className="truck__listcard"
@@ -125,7 +124,7 @@ export function TruckListingCard({ info }) {
                 rounded="4px"
                 m="2px 0"
               >
-                <FaTag
+                <Tag
                   style={{
                     fontSize: '1rem',
                     color: 'red',
@@ -158,7 +157,7 @@ export function TruckListingCard({ info }) {
               display="block"
               color="rgba(255,255,255,.85)"
             >
-              <FaMapPin
+              <MapPin
                 style={{
                   display: 'inline-block',
                   fontSize: '1rem',
@@ -237,7 +236,7 @@ export function TruckListingCard({ info }) {
             fontSize=".875rem"
             bottom="15px"
           >
-            <FaEye
+            <Eye
               style={{
                 display: 'inline-block',
                 fontSize: '15px',
@@ -261,7 +260,7 @@ export function TruckListingCard({ info }) {
             justifyContent="center"
             alignItems="center"
           >
-            <FaRegHeart
+            <Heart
               style={{
                 color: 'red',
               }}

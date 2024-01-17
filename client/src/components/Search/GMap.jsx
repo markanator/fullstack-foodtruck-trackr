@@ -11,27 +11,8 @@ import {
   ListItem,
   Text,
 } from '@chakra-ui/react';
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxList,
-  ComboboxOption,
-  ComboboxPopover,
-} from '@reach/combobox';
-import '@reach/combobox/styles.css';
-import {
-  GoogleMap,
-  InfoWindow,
-  Marker,
-  useLoadScript,
-} from '@react-google-maps/api';
 import React, { useState } from 'react';
-import { IoMdLocate } from 'react-icons/io';
 import { Link as RLink } from 'react-router-dom';
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from 'use-places-autocomplete';
 import DefaultTruckImage from '../../assets/default_truck.webp';
 import mapStyles from './mapStyles';
 
@@ -68,7 +49,7 @@ export function Locate({ panTo }) {
             });
           },
           () => null,
-          options
+          options,
         );
       }}
     />
@@ -141,12 +122,7 @@ export default function GMap({ trucks }) {
               setSelected(null);
             }}
           >
-            <Box
-              className="truckInfoBox"
-              backgroundColor="#fff"
-              rounded="md"
-              pos="relative"
-            >
+            <Box className="truckInfoBox" backgroundColor="#fff" rounded="md" pos="relative">
               <Link
                 as={RLink}
                 to={`/truck/${selected.id}`}
@@ -165,18 +141,10 @@ export default function GMap({ trucks }) {
                   objectFit="cover"
                 />
               </Link>
-              <Heading
-                as="h3"
-                color="#444"
-                fontSize="1.25rem"
-                fontWeight="600"
-                py=".5rem"
-              >
+              <Heading as="h3" color="#444" fontSize="1.25rem" fontWeight="600" py=".5rem">
                 {selected.name}
               </Heading>
-              <Text fontSize=".875rem">
-                {`${selected.description.slice(0, 40)}...`}
-              </Text>
+              <Text fontSize=".875rem">{`${selected.description.slice(0, 40)}...`}</Text>
             </Box>
           </InfoWindow>
         ) : null}
@@ -187,18 +155,18 @@ export default function GMap({ trucks }) {
 
 // eslint-disable-next-line react/prop-types
 function SearchBar({ panTo }) {
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 44, lng: () => -87.7 },
-      radius: 200 * 1000,
-    },
-  });
+  // const {
+  //   ready,
+  //   value,
+  //   suggestions: { status, data },
+  //   setValue,
+  //   clearSuggestions,
+  // } = usePlacesAutocomplete({
+  //   requestOptions: {
+  //     location: { lat: () => 44, lng: () => -87.7 },
+  //     radius: 200 * 1000,
+  //   },
+  // });
 
   return (
     <Container

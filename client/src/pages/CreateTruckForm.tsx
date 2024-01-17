@@ -14,66 +14,53 @@ import {
   Select,
   Text,
   Textarea,
-} from "@chakra-ui/react";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxList,
-  ComboboxOption,
-  ComboboxPopover,
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
-import { useLoadScript } from "@react-google-maps/api";
-import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { Link as RLink } from "react-router-dom";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+} from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
+import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { Link as RLink } from 'react-router-dom';
 // locals
-import Layout from "../components/Layout";
-import { CreateTruckSchema } from "../Forms/Schemas/CreateTruckSchema";
-import { useCreateTruckMutation } from "../RQ/mutations/useCreateTruckMutation";
+import Layout from '../components/Layout';
+import { CreateTruckSchema } from '../Forms/Schemas/CreateTruckSchema';
+import { useCreateTruckMutation } from '../RQ/mutations/useCreateTruckMutation';
 
-const libraries = ["places"];
+const libraries = ['places'];
 
 // ! MAIN EXPORT
 export default function CreateTruckForm() {
   const queryClient = useQueryClient();
-  const { isLoaded } = useLoadScript({
-    // @ts-ignore
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
-    // @ts-ignore
-    libraries,
-  });
+  // const { isLoaded } = useLoadScript({
+  //   // @ts-ignore
+  //   googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
+  //   // @ts-ignore
+  //   libraries,
+  // });
 
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete();
+  // const {
+  //   ready,
+  //   value,
+  //   suggestions: { status, data },
+  //   setValue,
+  //   clearSuggestions,
+  // } = usePlacesAutocomplete();
 
   const [latLng, setLatLng] = useState({ lat: 43.0, lng: -87.0 });
-  const [heroImg, setHeroImg] = useState("");
+  const [heroImg, setHeroImg] = useState('');
   const [truckDeets, setTruckDeets] = useState({ id: null });
 
   const cuisineTypes = [
-    "American",
-    "Mexican",
-    "Greek",
-    "SeaFood",
-    "Vegan",
-    "Vegetarian",
-    "Chinese",
-    "Thai",
-    "Dessert",
-    "Italian",
-    "Filipino",
-    "Kosher",
+    'American',
+    'Mexican',
+    'Greek',
+    'SeaFood',
+    'Vegan',
+    'Vegetarian',
+    'Chinese',
+    'Thai',
+    'Dessert',
+    'Italian',
+    'Filipino',
+    'Kosher',
   ];
 
   const handleLatLngChange = (e: any) => {
@@ -81,36 +68,33 @@ export default function CreateTruckForm() {
   };
 
   const uploadFile = async (e: any) => {
-    console.log("uploading...");
+    console.log('uploading...');
     const { files } = e.target;
     if (files[0].size > 1048576) {
-      alert("Image size larger than 1MB.");
-      console.log("file too big, not uploaded");
+      alert('Image size larger than 1MB.');
+      console.log('file too big, not uploaded');
       return;
     }
 
     const imgData = new FormData();
-    imgData.append("file", files[0]);
-    imgData.append("upload_preset", "foodtrucks");
+    imgData.append('file', files[0]);
+    imgData.append('upload_preset', 'foodtrucks');
 
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dmh43eiaf/image/upload",
-      {
-        method: "POST",
-        body: imgData,
-      }
-    );
+    const res = await fetch('https://api.cloudinary.com/v1_1/dmh43eiaf/image/upload', {
+      method: 'POST',
+      body: imgData,
+    });
     const file = await res.json();
     // console.log('uploaded file:::', file);
     setHeroImg(file.secure_url);
   };
 
-  const { mutate, isSuccess, isLoading, isIdle } = useCreateTruckMutation();
+  const { mutate, isSuccess, isIdle } = useCreateTruckMutation();
 
   const handleSubmit = (values: any) => {
     const truck = {
       ...values,
-      address: value,
+      // address: value,
       lat: latLng.lat,
       lng: latLng.lng,
       hero_image: heroImg,
@@ -121,7 +105,7 @@ export default function CreateTruckForm() {
         setTruckDeets({
           ...deets.data,
         });
-        queryClient.setQueryData(["truck", deets?.data.id], deets?.data);
+        queryClient.setQueryData(['truck', deets?.data.id], deets?.data);
       },
     });
   };
@@ -132,12 +116,12 @@ export default function CreateTruckForm() {
         <Container maxW="5xl" py="4rem">
           <Formik
             initialValues={{
-              name: "",
-              cuisine_type: "",
-              price_range: "",
-              description: "",
-              arrival_time: "",
-              departure_time: "",
+              name: '',
+              cuisine_type: '',
+              price_range: '',
+              description: '',
+              arrival_time: '',
+              departure_time: '',
             }}
             validationSchema={CreateTruckSchema}
             onSubmit={handleSubmit}
@@ -145,11 +129,11 @@ export default function CreateTruckForm() {
             {() => (
               <Form
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 {/* FIRST SECTION = TRUCK DETAILS */}
@@ -174,10 +158,7 @@ export default function CreateTruckForm() {
                     {/* Name */}
                     <Field name="name">
                       {({ field, form }: any) => (
-                        <FormControl
-                          isInvalid={form.errors.name && form.touched.name}
-                          mb="1rem"
-                        >
+                        <FormControl isInvalid={form.errors.name && form.touched.name} mb="1rem">
                           <FormLabel htmlFor="email">Name</FormLabel>
                           <Input
                             {...field}
@@ -187,9 +168,7 @@ export default function CreateTruckForm() {
                             bg="white"
                             placeholder="Truck Name"
                           />
-                          <FormErrorMessage>
-                            {form.errors.name}
-                          </FormErrorMessage>
+                          <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
@@ -197,15 +176,10 @@ export default function CreateTruckForm() {
                     <Field name="cuisine_type">
                       {({ field, form }: any) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.cuisine_type &&
-                            form.touched.cuisine_type
-                          }
+                          isInvalid={form.errors.cuisine_type && form.touched.cuisine_type}
                           mb="1rem"
                         >
-                          <FormLabel htmlFor="cuisine_type">
-                            Food Type
-                          </FormLabel>
+                          <FormLabel htmlFor="cuisine_type">Food Type</FormLabel>
                           <Select
                             {...field}
                             type="text"
@@ -221,9 +195,7 @@ export default function CreateTruckForm() {
                               </option>
                             ))}
                           </Select>
-                          <FormErrorMessage>
-                            {form.errors.cuisine_type}
-                          </FormErrorMessage>
+                          <FormErrorMessage>{form.errors.cuisine_type}</FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
@@ -231,14 +203,10 @@ export default function CreateTruckForm() {
                     <Field name="price_range">
                       {({ field, form }: any) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.price_range && form.touched.price_range
-                          }
+                          isInvalid={form.errors.price_range && form.touched.price_range}
                           mb="1rem"
                         >
-                          <FormLabel htmlFor="price_range">
-                            Price Range
-                          </FormLabel>
+                          <FormLabel htmlFor="price_range">Price Range</FormLabel>
                           <Select
                             {...field}
                             id="price_range"
@@ -250,9 +218,7 @@ export default function CreateTruckForm() {
                             <option value="$$">$$</option>
                             <option value="$$$">$$$</option>
                           </Select>
-                          <FormErrorMessage>
-                            {form.errors.price_range}
-                          </FormErrorMessage>
+                          <FormErrorMessage>{form.errors.price_range}</FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
@@ -260,14 +226,10 @@ export default function CreateTruckForm() {
                     <Field name="description">
                       {({ field, form }: any) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.description && form.touched.description
-                          }
+                          isInvalid={form.errors.description && form.touched.description}
                           mb="1rem"
                         >
-                          <FormLabel htmlFor="description">
-                            Description
-                          </FormLabel>
+                          <FormLabel htmlFor="description">Description</FormLabel>
                           <Textarea
                             {...field}
                             id="description"
@@ -277,9 +239,7 @@ export default function CreateTruckForm() {
                             resize="none"
                             placeholder="Truck description..."
                           />
-                          <FormErrorMessage>
-                            {form.errors.description}
-                          </FormErrorMessage>
+                          <FormErrorMessage>{form.errors.description}</FormErrorMessage>
                         </FormControl>
                       )}
                     </Field>
@@ -308,14 +268,10 @@ export default function CreateTruckForm() {
                     <Field name="hero_image">
                       {({ field, form }: any) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.hero_image && form.touched.hero_image
-                          }
+                          isInvalid={form.errors.hero_image && form.touched.hero_image}
                           mb="1rem"
                         >
-                          <FormLabel htmlFor="hero_image">
-                            Description
-                          </FormLabel>
+                          <FormLabel htmlFor="hero_image">Description</FormLabel>
                           <Input
                             {...field}
                             type="file"
@@ -327,14 +283,8 @@ export default function CreateTruckForm() {
                             accept="image/*"
                             onChange={uploadFile}
                           />
-                          <FormErrorMessage>
-                            {form.errors.hero_image}
-                          </FormErrorMessage>
-                          <Text
-                            fontSize=".5rem"
-                            color="gray.400"
-                            textAlign="center"
-                          >
+                          <FormErrorMessage>{form.errors.hero_image}</FormErrorMessage>
+                          <Text fontSize=".5rem" color="gray.400" textAlign="center">
                             Image must be smaller than 1MB
                           </Text>
                         </FormControl>
@@ -398,9 +348,9 @@ export default function CreateTruckForm() {
                       disabled={!isLoaded && !ready}
                       mb="1rem"
                     />
-                    <ComboboxPopover style={{ borderRadius: "5px" }}>
+                    <ComboboxPopover style={{ borderRadius: '5px' }}>
                       <List as={ComboboxList} borderRadius="5px" boxShadow="lg">
-                        {status === "OK" &&
+                        {status === 'OK' &&
                           data.map(({ description }) => (
                             <ListItem
                               as={ComboboxOption}
@@ -411,8 +361,8 @@ export default function CreateTruckForm() {
                               px=".875rem"
                               fontSize="1rem"
                               _hover={{
-                                background: "#e2e2e2",
-                                cursor: "pointer",
+                                background: '#e2e2e2',
+                                cursor: 'pointer',
                               }}
                             />
                           ))}
@@ -420,13 +370,7 @@ export default function CreateTruckForm() {
                     </ComboboxPopover>
                   </Box>
                   {/* LAT LNG */}
-                  <Box
-                    display="flex"
-                    flexDir="row"
-                    w="100%"
-                    padding="0 1.25rem 1.25rem"
-                    mb=".5rem"
-                  >
+                  <Box display="flex" flexDir="row" w="100%" padding="0 1.25rem 1.25rem" mb=".5rem">
                     <Flex direction="column" w={1 / 2} mr="1rem">
                       <FormLabel htmlFor="lat">Lat:</FormLabel>
                       <Input
@@ -471,26 +415,16 @@ export default function CreateTruckForm() {
                   >
                     <Heading fontSize="1rem">Business Hours</Heading>
                   </Flex>
-                  <Box
-                    display="flex"
-                    flexDir="row"
-                    w="100%"
-                    padding="1rem 1.25rem 1.25rem"
-                  >
+                  <Box display="flex" flexDir="row" w="100%" padding="1rem 1.25rem 1.25rem">
                     {/* ARRIVAL TIME */}
                     <Flex w={1 / 2} mr=".5rem">
                       <Field name="arrival_time">
                         {({ field, form }: any) => (
                           <FormControl
-                            isInvalid={
-                              form.errors.arrival_time &&
-                              form.touched.arrival_time
-                            }
+                            isInvalid={form.errors.arrival_time && form.touched.arrival_time}
                             mb="1rem"
                           >
-                            <FormLabel htmlFor="arrival_time">
-                              Arrival Time
-                            </FormLabel>
+                            <FormLabel htmlFor="arrival_time">Arrival Time</FormLabel>
                             <Input
                               {...field}
                               type="datetime-local"
@@ -499,9 +433,7 @@ export default function CreateTruckForm() {
                               bg="white"
                               py=".25rem"
                             />
-                            <FormErrorMessage>
-                              {form.errors.arrival_time}
-                            </FormErrorMessage>
+                            <FormErrorMessage>{form.errors.arrival_time}</FormErrorMessage>
                           </FormControl>
                         )}
                       </Field>
@@ -510,15 +442,10 @@ export default function CreateTruckForm() {
                       <Field name="departure_time">
                         {({ field, form }: any) => (
                           <FormControl
-                            isInvalid={
-                              form.errors.departure_time &&
-                              form.touched.departure_time
-                            }
+                            isInvalid={form.errors.departure_time && form.touched.departure_time}
                             mb="1rem"
                           >
-                            <FormLabel htmlFor="departure_time">
-                              Departure Time
-                            </FormLabel>
+                            <FormLabel htmlFor="departure_time">Departure Time</FormLabel>
                             <Input
                               {...field}
                               type="datetime-local"
@@ -527,9 +454,7 @@ export default function CreateTruckForm() {
                               bg="white"
                               py=".25rem"
                             />
-                            <FormErrorMessage>
-                              {form.errors.departure_time}
-                            </FormErrorMessage>
+                            <FormErrorMessage>{form.errors.departure_time}</FormErrorMessage>
                           </FormControl>
                         )}
                       </Field>
@@ -554,11 +479,11 @@ export default function CreateTruckForm() {
                     disabled={isSuccess}
                   >
                     {isLoading
-                      ? "Submitting..."
+                      ? 'Submitting...'
                       : isSuccess
-                      ? "Truck Created!"
+                      ? 'Truck Created!'
                       : isIdle
-                      ? "Submit"
+                      ? 'Submit'
                       : null}
                   </Button>
                   {isSuccess ? (

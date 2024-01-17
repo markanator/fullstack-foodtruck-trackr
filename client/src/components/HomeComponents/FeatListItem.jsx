@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Flex, Heading, Image, Link, ListItem } from '@chakra-ui/react';
 import React from 'react';
-import { IoFastFood } from 'react-icons/io5';
 import { Link as RLink } from 'react-router-dom';
 // locals
 import DefImg from '../../assets/default_truck.webp';
@@ -50,14 +49,7 @@ export default function FeatListItem({ deets }) {
             />
           </Link>
           {/* DEETS */}
-          <Box
-            display="block"
-            m="0"
-            pos="absolute"
-            left="2rem"
-            bottom="2rem"
-            color="white"
-          >
+          <Box display="block" m="0" pos="absolute" left="2rem" bottom="2rem" color="white">
             <Heading fontSize="1.125rem" fontWeight="500" mb="3px">
               <Link as={RLink} to={`/truck/${deets.id}`}>
                 {deets.name}
