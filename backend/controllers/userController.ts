@@ -4,7 +4,6 @@ import * as User from '../models/User.js';
 import addFavoritesAndOwned from '../utils/addFavoritesAndOwned.js';
 import addTotalTruckViews from '../utils/addTotalViews.js';
 import addTotalTruckReviews from '../utils/addTotalTruckReviews.js';
-import { ReqWithUser } from '../types.js';
 
 export const getUser = async (req: RequireAuthProp<Request>, res: Response) => {
   let user = await User.findById(req.auth?.userId);
