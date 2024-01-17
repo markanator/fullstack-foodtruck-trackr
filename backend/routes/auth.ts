@@ -1,13 +1,9 @@
-import { Router } from "express";
-import * as AuthController from "../controllers/Auth.controller.js";
-import createUserRequirements from "../middleware/createUserRequirements.js";
-import validateToken from "../middleware/validateToken.js";
+import { Router } from 'express';
+import * as AuthController from '../controllers/Auth.controller.js';
+import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
 
 const router = Router();
 
-router.post("/register", [createUserRequirements], AuthController.register);
-router.post("/login", AuthController.loginUser);
-router.post("/logout", validateToken, AuthController.logout);
-router.get("/me", validateToken, AuthController.me);
+router.get('/me', ClerkExpressRequireAuth(), AuthController.me);
 
 export default router;
