@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import prisma from "../data/db.server.js";
+import prisma from "../lib/db.server.js";
 import { baseURL } from "../utils/helpers.js";
 import * as Truck from "../models/Truck.js";
 

@@ -1,4 +1,4 @@
-import prisma from "../data/db.server.js";
+import prisma from "../lib/db.server.js";
 
 const find = (user_id: string, truck_id: string) => {
   return prisma.review.findFirst({

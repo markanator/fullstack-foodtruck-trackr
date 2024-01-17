@@ -1,6 +1,6 @@
 import { Response } from "express";
 import type { ReqWithUser } from "../types.js";
-import prisma from "../data/db.server.js";
+import prisma from "../lib/db.server.js";
 import addFavoritesAndOwned from "../utils/addFavoritesAndOwned.js";
 import createToken from "../utils/createToken.js";
 import jwt from "jsonwebtoken";
