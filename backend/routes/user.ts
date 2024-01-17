@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import * as UserController from '../controllers/userController.js';
-import editUserRequirements from '../middleware/editUserRequirements.js';
+
+import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
 
 const router = Router();
 
-// router.use(validateToken);
-router.get('/', UserController.getUser);
-router.put('/', [editUserRequirements], UserController.editUser);
-router.delete('/', UserController.deleteUser);
+router.get('/', ClerkExpressRequireAuth(), UserController.getUser);
+// router.put('/', ClerkExpressRequireAuth(), [editUserRequirements], UserController.editUser);
+// router.delete('/', ClerkExpressRequireAuth(), UserController.deleteUser);
 
 export default router;

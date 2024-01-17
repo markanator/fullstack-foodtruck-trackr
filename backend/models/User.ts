@@ -1,4 +1,4 @@
-import prisma from "../lib/db.server.js";
+import prisma from '../lib/db.server.js';
 
 /**
  * finds a user by id
@@ -6,7 +6,7 @@ import prisma from "../lib/db.server.js";
  * @returns {Promise<import(".prisma/client").User>} user
  */
 const findById = (id: string) => {
-  return prisma.user.findUnique({ where: { id } });
+  return prisma.user.findUnique({ where: { id }, include: { roles: true } });
 };
 
 /**
@@ -33,21 +33,14 @@ interface INewUser {
   lastName: string;
   role: string;
 }
-const insert = async ({
-  email,
-  password,
-  username,
-  firstName,
-  lastName,
-  role,
-}: INewUser) => {
+const insert = async ({ email, password, username, firstName, lastName, role }: INewUser) => {
   try {
     return prisma.user.create({
       data: {
         username,
-        // email,
-        firstName,
-        lastName,
+        email,
+        // firstName,
+        // lastName,
         roles: {
           connect: {
             name: role,
@@ -66,10 +59,7 @@ const insert = async ({
   }
 };
 
-const update = async (
-  user: Omit<INewUser, "password" | "role">,
-  id: string
-) => {
+const update = async (user: Omit<INewUser, 'password' | 'role'>, id: string) => {
   return prisma.user.update({
     where: { id },
     data: user,
