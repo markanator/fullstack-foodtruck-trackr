@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/prietop97/FoodTracker-Backend#readme",
   "dependencies": {
+    "@lucia-auth/adapter-prisma": "^3.0.2",
     "@prisma/client": "^5.8.1",
     "bcrypt": "5.1.1",
     "compression": "^1.7.4",
