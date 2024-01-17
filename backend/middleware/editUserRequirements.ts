@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import { ReqWithUser } from "../types.js";
-import { findByEmail, findByUsername } from "../models/User.js";
+import { findByUsername } from "../models/User.js";
 
 const editUserRequirements = async (
   req: ReqWithUser,
@@ -16,14 +16,14 @@ const editUserRequirements = async (
           .json({ error: "User with that username already exist" });
       }
     }
-    if (req.body.email) {
-      const email = await findByEmail(req.body.email);
-      if (email && email.id !== req.user!.id) {
-        return res
-          .status(400)
-          .json({ error: "User with that email already exist" });
-      }
-    }
+    // if (req.body.email) {
+    //   const email = await findByEmail(req.body.email);
+    //   if (email && email.id !== req.user!.id) {
+    //     return res
+    //       .status(400)
+    //       .json({ error: "User with that email already exist" });
+    //   }
+    // }
     next();
   } catch (error) {
     console.log(error);

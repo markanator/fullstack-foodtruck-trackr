@@ -11,11 +11,12 @@ import TruckRouter from "./routes/truck.js";
 const server: Express = express();
 const __prod__ = process.env.NODE_ENV === "production";
 
-server.use(express.json());
 server.use(cors());
 server.use(helmet());
 server.use(compression());
 server.use(morgan("dev"));
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 
 if (__prod__) {
   server.use(express.static(path.resolve(__dirname, "dist")));

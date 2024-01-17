@@ -1,9 +1,9 @@
 import { Response } from "express";
 import type { ReqWithUser } from "../types.js";
-import prisma from "../lib/db.server.js";
 import addFavoritesAndOwned from "../utils/addFavoritesAndOwned.js";
-import createToken from "../utils/createToken.js";
 import jwt from "jsonwebtoken";
+import { auth } from "../lib/lucia.js";
+import { LuciaError } from "lucia";
 
 export const register = async (req: ReqWithUser, res: Response) => {
   try {
@@ -15,42 +15,48 @@ export const register = async (req: ReqWithUser, res: Response) => {
       password,
       user_role,
     } = req.body as any;
-    const user = await prisma.user.create({
-      data: {
-        email,
-        username,
+    const user = await auth.createUser({
+			key: {
+				providerId: "email", // auth method
+				providerUserId: email, // unique id when using "username" auth method
+				password // hashed by Lucia
+			},
+			attributes: {
+				username,
         firstName,
         lastName,
-        password: {
-          create: {
-            hash: password,
-          },
-        },
         roles: {
           connect: {
             name: user_role || "user",
           },
         },
-      },
-      include: {
-        roles: true,
-      },
-    });
-    const token = await createToken(user);
-    await addFavoritesAndOwned(user);
-    return res.status(201).json({ user, token });
-  } catch (error) {
+			}
+		});
+    const session = await auth.createSession({
+			userId: user.userId,
+			attributes: {}
+		});
+		const authRequest = auth.handleRequest(req, res);
+		authRequest.setSession(session);
+		// redirect to profile page
+		return res.status(201).json({ success: true, message: "User created" });
+  } catch (error: any) {
     console.log(error);
+    if (
+			error instanceof LuciaError && error?.message === "AUTH_DUPLICATE_KEY_ID"
+		) {
+			return res.status(400).send("Username and/or email already taken");
+		}
     return res.status(500).json({ error: "Server is malfunctioning" });
   }
 };
 
 export const loginUser = async (req: ReqWithUser, res: Response) => {
   try {
-    const token = await createToken(req.user!);
+    // const token = await createToken(req.user!);
     // delete req.user.password;
     await addFavoritesAndOwned(req.user as any);
-    return res.status(200).json({ user: req.user, token });
+    return res.status(200).json({ user: req.user, token: "TOKEN" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Server is malfunctioning" });

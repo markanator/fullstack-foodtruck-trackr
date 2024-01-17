@@ -14,9 +14,9 @@ const findById = (id: string) => {
  * @param {string} email
  * @returns {Promise<import(".prisma/client").User>} user
  */
-const findByEmail = (email: string) => {
-  return prisma.user.findUnique({ where: { email } });
-};
+// const findByEmail = (email: string) => {
+//   return prisma.user.findUnique({ where: { email } });
+// };
 /**
  * finds a user by username
  * @param {string} username
@@ -45,7 +45,7 @@ const insert = async ({
     return prisma.user.create({
       data: {
         username,
-        email,
+        // email,
         firstName,
         lastName,
         roles: {
@@ -53,11 +53,11 @@ const insert = async ({
             name: role,
           },
         },
-        password: {
-          create: {
-            hash: password,
-          },
-        },
+        // password: {
+        //   create: {
+        //     hash: password,
+        //   },
+        // },
       },
     });
   } catch (error) {
@@ -82,4 +82,4 @@ const remove = (id: string) => {
   });
 };
 
-export { findById, findByEmail, findByUsername, insert, update, remove };
+export { findById, findByUsername, insert, update, remove };
